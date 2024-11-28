@@ -1,9 +1,9 @@
 package io;
 
-import core.Missao;
+import core.Jogo;
 
 public class JSONHandler {
-    public void importData(Missao missao) {
-        
+    public void importData(Jogo jogo) {
+
     }
 }
