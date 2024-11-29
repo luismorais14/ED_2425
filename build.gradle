@@ -13,7 +13,6 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
-    implementation 'com.google.guava:guava:31.0.1-jre'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 

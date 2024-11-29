@@ -2,12 +2,12 @@ import Exceptions.JogoException;
 import core.Jogo;
 import core.Missao;
 import io.JSONHandler;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class JSONHandlerClassTest {
+public class TestJSONHandlerClass {
 
     @Test
     void testImportData() throws JogoException {
@@ -15,9 +15,11 @@ public class JSONHandlerClassTest {
         Jogo jogo = new Jogo(missao, null);
         JSONHandler jsonHandler = new JSONHandler();
         jsonHandler.importData(jogo);
-        String expected = "pata de coelho";
+        String expectedCod = "pata de coelho";
+        int expectedVersao = 1;
 
-        assertEquals("CodMissao should be 'pata de coelho'", expected, jogo.getMissao().getCodMissao());
+        assertEquals(expectedCod, jogo.getMissao().getCodMissao());
+        assertEquals(expectedVersao, jogo.getMissao().getVersao());
 
         JogoException exception = assertThrows(JogoException.class, () -> {
             jsonHandler.importData(null);

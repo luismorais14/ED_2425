@@ -17,7 +17,7 @@ public class JSONHandler {
         }
 
         readCodMissao(jogo);
-        //TODO ler versao
+        readVersao(jogo);
         //TODO ler array do edificio
         //TODO ler array de ligacoes
         //TODO ler array de inimigos
@@ -43,6 +43,27 @@ public class JSONHandler {
             codMissao = (String) jsonObject.get("cod-missao");
 
             jogo.getMissao().setCodMissao(codMissao);
+        } catch (ParseException e) {
+            System.out.println("Parse Exception");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("IO Exception");
+        }
+    }
+
+    private void readVersao(Jogo jogo) {
+        JSONParser parser = new JSONParser();
+        int versao = 0;
+
+        try {
+            FileReader fr = readJsonFile();
+            Object obj = parser.parse(fr);
+            JSONObject jsonObject = (JSONObject) obj;
+
+            versao = ((Number) jsonObject.get("versao")).intValue();
+
+            jogo.getMissao().setVersao(versao);
         } catch (ParseException e) {
             System.out.println("Parse Exception");
         } catch (FileNotFoundException e) {
