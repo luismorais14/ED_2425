@@ -4,6 +4,16 @@ public class Jogo {
     private Missao missao;
     private TiposSimulacao tipoSimulacao;
 
+    public Jogo() {
+        this.missao = new Missao();
+        this.tipoSimulacao = null;
+    }
+
+    public Jogo(Missao missao, TiposSimulacao tipoSimulacao) {
+        this.missao = missao;
+        this.tipoSimulacao = tipoSimulacao;
+    }
+
     public Missao getMissao() {
         return missao;
     }
