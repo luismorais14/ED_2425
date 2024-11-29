@@ -3,6 +3,7 @@ package core;
 public class Jogo {
     private Missao missao;
     private TiposSimulacao tipoSimulacao;
+    private Edificio edificio;
 
     public Jogo() {
         this.missao = new Missao();
@@ -28,5 +29,13 @@ public class Jogo {
 
     public void setTipoSimulacao(TiposSimulacao tipoSimulacao) {
         this.tipoSimulacao = tipoSimulacao;
+    }
+
+    public Edificio getEdificio() {
+        return edificio;
+    }
+
+    public void setEdificio(Edificio edificio) {
+        this.edificio = edificio;
     }
 }

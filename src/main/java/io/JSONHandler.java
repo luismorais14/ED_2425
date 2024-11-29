@@ -1,7 +1,11 @@
 package io;
 
+import ADT.ListADT;
+import ADT.UnorderedListADT;
 import Exceptions.JogoException;
 import core.Jogo;
+import implementations.ArrayUnorderedList;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -64,6 +68,28 @@ public class JSONHandler {
             versao = ((Number) jsonObject.get("versao")).intValue();
 
             jogo.getMissao().setVersao(versao);
+        } catch (ParseException e) {
+            System.out.println("Parse Exception");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("IO Exception");
+        }
+    }
+
+    private void readEdificio(Jogo jogo) {
+        JSONParser parser = new JSONParser();
+        JSONArray ja;
+        String divisao = "";
+
+        try {
+            ja = (JSONArray) parser.parse(readJsonFile());
+            for (int i = 0; i < ja.size(); i++) {
+                JSONObject jsonObject = (JSONObject) ja.get(i);
+                divisao = (String) jsonObject.get("edificio").toString();
+
+                jogo.getEdificio().setDivisao(divisao);
+            }
         } catch (ParseException e) {
             System.out.println("Parse Exception");
         } catch (FileNotFoundException e) {
