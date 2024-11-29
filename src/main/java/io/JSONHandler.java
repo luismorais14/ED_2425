@@ -28,7 +28,7 @@ public class JSONHandler {
     }
 
     private FileReader readJsonFile() throws FileNotFoundException {
-        return new FileReader("anexo.json");
+        return new FileReader("resources\\anexo.json");
     }
 
     private void readCodMissao(Jogo jogo) {

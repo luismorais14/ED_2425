@@ -7,9 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestJSONHandlerClass {
+public class JSONHandlerClassTest {
+
     @Test
-    public void testImportData() throws JogoException {
+    void testImportData() throws JogoException {
         Missao missao = new Missao();
         Jogo jogo = new Jogo(missao, null);
         JSONHandler jsonHandler = new JSONHandler();
