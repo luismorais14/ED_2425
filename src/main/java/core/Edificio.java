@@ -13,4 +13,9 @@ public class Edificio {
     public void setDivisao(String divisao) {
         this.divisoes.addToFront(divisao);
     }
+
+    public boolean containsDivisao(String divisao) {
+        return divisoes.contains(divisao);
+    }
+
 }

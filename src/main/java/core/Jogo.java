@@ -8,11 +8,13 @@ public class Jogo {
     public Jogo() {
         this.missao = new Missao();
         this.tipoSimulacao = null;
+        this.edificio = new Edificio();
     }
 
-    public Jogo(Missao missao, TiposSimulacao tipoSimulacao) {
+    public Jogo(Missao missao, TiposSimulacao tipoSimulacao, Edificio edificio) {
         this.missao = missao;
         this.tipoSimulacao = tipoSimulacao;
+        this.edificio = edificio;
     }
 
     public Missao getMissao() {

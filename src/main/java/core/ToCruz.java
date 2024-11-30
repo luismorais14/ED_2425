@@ -1,8 +1,8 @@
 package core;
 
-import ADT.QueueADT;
+import ADT.StackADT;
 
 public class ToCruz {
     private int vida;
-    private QueueADT<Item> mochila;
+    private StackADT<Item> mochila;
 }

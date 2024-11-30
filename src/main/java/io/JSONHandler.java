@@ -22,7 +22,7 @@ public class JSONHandler {
 
         readCodMissao(jogo);
         readVersao(jogo);
-        //TODO ler array do edificio
+        readEdificio(jogo);
         //TODO ler array de ligacoes
         //TODO ler array de inimigos
         //TODO ler array de entradas e saidas
@@ -79,14 +79,16 @@ public class JSONHandler {
 
     private void readEdificio(Jogo jogo) {
         JSONParser parser = new JSONParser();
-        JSONArray ja;
-        String divisao = "";
 
         try {
-            ja = (JSONArray) parser.parse(readJsonFile());
+            FileReader fr = readJsonFile();
+            Object obj = parser.parse(fr);
+            JSONObject jsonObject = (JSONObject) obj;
+
+            JSONArray ja = (JSONArray) jsonObject.get("edificio");
+
             for (int i = 0; i < ja.size(); i++) {
-                JSONObject jsonObject = (JSONObject) ja.get(i);
-                divisao = (String) jsonObject.get("edificio").toString();
+                String divisao = (String) ja.get(i);
 
                 jogo.getEdificio().setDivisao(divisao);
             }
