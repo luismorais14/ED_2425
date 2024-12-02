@@ -5,8 +5,7 @@ import core.Missao;
 import io.JSONHandler;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestJSONHandlerClass {
 
@@ -38,7 +37,7 @@ public class TestJSONHandlerClass {
 
         //Test for divisoes reader
         for (String divisao : expectedDivisoes) {
-            assertEquals(true, jogo.getEdificio().containsDivisao(divisao));
+            assertTrue(jogo.getEdificio().containsDivisao(divisao));
         }
     }
 }

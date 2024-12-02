@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrayList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ED_2425</a> &gt; <a href="index.source.html" class="el_package">implementations</a> &gt; <span class="el_source">ArrayList.java</span></div><h1>ArrayList.java</h1><pre class="source lang-java linenums">package implementations;
+
+import ADT.ListADT;
+import Exceptions.ElementNotFoundException;
+import Exceptions.EmptyCollectionException;
+
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+
+public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
+    private static final int INITIAL_CAPACITY = 10;
+    private static final int INCREMENT_VALUE = 2;
+
+    protected T[] array;
+    protected int counter;
+    protected static int modCount;
+
+<span class="fc" id="L20">    public ArrayList() {</span>
+<span class="fc" id="L21">        array = (T[]) new Object[INITIAL_CAPACITY];</span>
+<span class="fc" id="L22">        counter = 0;</span>
+<span class="fc" id="L23">        modCount = 0;</span>
+<span class="fc" id="L24">    }</span>
+
+    @Override
+    public T removeFirst() throws EmptyCollectionException {
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L29">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+        }
+
+<span class="nc" id="L32">        T element = array[0];</span>
+
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        for (int i = 0; i &lt; counter - 1; i++) {</span>
+<span class="nc" id="L35">            array[i] = array[i + 1];</span>
+        }
+
+<span class="nc" id="L38">        array[counter - 1] = null;</span>
+<span class="nc" id="L39">        counter--;</span>
+<span class="nc" id="L40">        modCount++;</span>
+<span class="nc" id="L41">        return element;</span>
+    }
+
+    @Override
+    public T removeLast() throws EmptyCollectionException {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L47">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+        }
+
+<span class="nc" id="L50">        counter--;</span>
+<span class="nc" id="L51">        T element = array[counter];</span>
+<span class="nc" id="L52">        array[counter] = null;</span>
+<span class="nc" id="L53">        modCount++;</span>
+
+<span class="nc" id="L55">        return element;</span>
+    }
+
+    protected int find(T element) {
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">            if (array[i] != null &amp;&amp; array[i].equals(element)) {</span>
+<span class="fc" id="L61">                return i;</span>
+            }
+        }
+<span class="nc" id="L64">        return -1;</span>
+    }
+
+    @Override
+    public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L70">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+        }
+
+<span class="nc" id="L73">        T removedElement = null;</span>
+
+<span class="nc" id="L75">        int index = find(element);</span>
+
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (index == -1) {</span>
+<span class="nc" id="L78">            throw new ElementNotFoundException(&quot;Element not found!&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        for (int i = index; i &lt; counter - 1; i++) {</span>
+<span class="nc" id="L82">            array[i] = array[i + 1];</span>
+        }
+
+<span class="nc" id="L85">        array[--counter] = null;</span>
+<span class="nc" id="L86">        modCount++;</span>
+        
+<span class="nc" id="L88">        return removedElement;</span>
+    }
+
+    @Override
+    public T first() throws EmptyCollectionException {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L94">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+        }
+
+<span class="nc" id="L97">        return array[0];</span>
+    }
+
+    @Override
+    public T last() throws EmptyCollectionException {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L103">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+        }
+
+<span class="nc" id="L106">        return array[counter - 1];</span>
+    }
+
+    @Override
+    public boolean contains(T target) {
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        return find(target) != -1;</span>
+    }
+
+    @Override
+    public boolean isEmpty() {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        return counter == 0;</span>
+    }
+
+    @Override
+    public int size() {
+<span class="nc" id="L121">        return counter;</span>
+    }
+
+    @Override
+    public Iterator&lt;T&gt; iterator() {
+<span class="nc" id="L126">        return new BasicIterator&lt;&gt;();</span>
+    }
+
+    protected void expandCapacity() {
+<span class="fc" id="L130">        T[] newArray = (T[]) new Object[array.length + INCREMENT_VALUE];</span>
+
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="fc" id="L133">            newArray[i] = array[i];</span>
+        }
+<span class="fc" id="L135">        array = newArray;</span>
+<span class="fc" id="L136">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L140">        String txt = &quot;&quot;;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">            if (array[i] != null) {</span>
+<span class="nc" id="L143">                txt += array[i].toString() + &quot;\n&quot;;</span>
+            }
+        }
+<span class="nc" id="L146">        return txt;</span>
+    }
+
+    private class BasicIterator&lt;E&gt; implements Iterator&lt;E&gt; {
+        private int expectedModCount;
+        private int current;
+        private boolean okToRemove;
+
+<span class="nc" id="L154">        public BasicIterator() {</span>
+<span class="nc" id="L155">            current = 0;</span>
+<span class="nc" id="L156">            expectedModCount = modCount;</span>
+<span class="nc" id="L157">            okToRemove = false;</span>
+<span class="nc" id="L158">        }</span>
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            return this.current &lt; counter;</span>
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public E next() throws ConcurrentModificationException, NoSuchElementException {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">            if (modCount != expectedModCount) {</span>
+<span class="nc" id="L181">                throw new ConcurrentModificationException();</span>
+            }
+
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (!hasNext()) {</span>
+<span class="nc" id="L185">                throw new NoSuchElementException();</span>
+            }
+
+<span class="nc" id="L188">            E element = (E) array[current];</span>
+<span class="nc" id="L189">            current++;</span>
+
+<span class="nc" id="L191">            okToRemove = true;</span>
+
+<span class="nc" id="L193">            return element ;</span>
+        }
+
+        /**
+         * Removes from the underlying collection the last element returned
+         * by this iterator (optional operation).  This method can be called
+         * only once per call to {@link #next}.
+         * &lt;p&gt;
+         * The behavior of an iterator is unspecified if the underlying collection
+         * is modified while the iteration is in progress in any way other than by
+         * calling this method, unless an overriding class has specified a
+         * concurrent modification policy.
+         * &lt;p&gt;
+         * The behavior of an iterator is unspecified if this method is called
+         * after a call to the {@link #forEachRemaining forEachRemaining} method.
+         *
+         * @throws UnsupportedOperationException if the {@code remove}
+         *                                       operation is not supported by this iterator
+         * @throws IllegalStateException         if the {@code next} method has not
+         *                                       yet been called, or the {@code remove} method has already
+         *                                       been called after the last call to the {@code next}
+         *                                       method
+         * @implSpec The default implementation throws an instance of
+         * {@link UnsupportedOperationException} and performs no other action.
+         */
+        @Override
+        public void remove() throws ConcurrentModificationException, IllegalStateException, NoSuchElementException {
+<span class="nc bnc" id="L220" title="All 2 branches missed.">            if (expectedModCount != modCount) {</span>
+<span class="nc" id="L221">                throw new ConcurrentModificationException();</span>
+            }
+
+<span class="nc bnc" id="L224" title="All 2 branches missed.">            if (!okToRemove) {</span>
+<span class="nc" id="L225">                throw new IllegalStateException(&quot;Next must be called before remove.&quot;);</span>
+            }
+
+            try {
+<span class="nc" id="L229">                ArrayList.this.remove(array[current]);</span>
+<span class="nc" id="L230">            } catch (ElementNotFoundException ex) {</span>
+<span class="nc" id="L231">                throw new NoSuchElementException();</span>
+<span class="nc" id="L232">            }</span>
+
+<span class="nc" id="L234">            expectedModCount++;</span>
+<span class="nc" id="L235">            okToRemove = false;</span>
+<span class="nc" id="L236">            current--;</span>
+<span class="nc" id="L237">        }</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

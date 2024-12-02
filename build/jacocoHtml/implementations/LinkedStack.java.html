@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkedStack.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ED_2425</a> &gt; <a href="index.source.html" class="el_package">implementations</a> &gt; <span class="el_source">LinkedStack.java</span></div><h1>LinkedStack.java</h1><pre class="source lang-java linenums">package implementations;
+
+
+import ADT.StackADT;
+import Exceptions.*;
+
+public class LinkedStack&lt;T&gt; implements StackADT&lt;T&gt; {
+    private LinearNode&lt;T&gt; head;
+    private int top;
+
+    /**
+     * Creates an empty stack using the default capacity.
+     */
+<span class="nc" id="L14">    public LinkedStack() {</span>
+<span class="nc" id="L15">        top = 0;</span>
+<span class="nc" id="L16">        head = null;</span>
+<span class="nc" id="L17">    }</span>
+
+    /**
+     * Adds the specified element to the top of this stack,
+     * expanding the capacity of the stack array if necessary.
+     * @param element generic element to be pushed onto stack
+     */
+    @Override
+    public void push(T element) {
+<span class="nc" id="L26">        LinearNode&lt;T&gt; newNode = new LinearNode&lt;T&gt;(element);</span>
+
+<span class="nc" id="L28">        newNode.setNext(head);</span>
+<span class="nc" id="L29">        head = newNode;</span>
+
+<span class="nc" id="L31">        top++;</span>
+<span class="nc" id="L32">    }</span>
+
+    /**
+     * Removes the element at the top of this stack and
+     * returns a reference to it.
+     * Throws an EmptyCollectionException if the stack is empty.
+     *
+     * @return T element removed from top of stack
+     * @throws EmptyCollectionException if a pop
+     *                                  is attempted on empty stack
+     */
+    @Override
+    public T pop() throws EmptyCollectionException {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L46">            throw new EmptyCollectionException(&quot;Stack&quot;);</span>
+        }
+<span class="nc" id="L48">        top--;</span>
+<span class="nc" id="L49">        LinearNode&lt;T&gt; nextElement = head.getNext();</span>
+<span class="nc" id="L50">        T result = head.getElement();</span>
+<span class="nc" id="L51">        head.setNext(nextElement.getNext());</span>
+
+<span class="nc" id="L53">        return result;</span>
+    }
+
+    /**
+     * Returns a reference to the element at the top of this stack.
+     * The element is not removed from the stack.
+     * Throws an EmptyCollectionException if the stack is empty.
+     *
+     * @return T element on top of stack
+     * @throws EmptyCollectionException if a
+     *                                  peek is attempted on empty stack
+     */
+    @Override
+    public T peek() throws EmptyCollectionException {
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L68">            throw new EmptyCollectionException(&quot;Stack&quot;);</span>
+        }
+<span class="nc" id="L70">        return head.getElement();</span>
+    }
+
+    /**
+     * Verifies if the stack is empty or not
+     *
+     * @return true if the stack is empty, false otherwise
+     */
+    @Override
+    public boolean isEmpty() {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        return (this.size() == 0);</span>
+    }
+
+    /**
+     * Returns the number of elements in the stack
+     *
+     * @return the number of elements in the stack the stack
+     */
+    @Override
+    public int size() {
+<span class="nc" id="L90">        return this.top;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L95">        String txt = &quot;&quot;;</span>
+<span class="nc" id="L96">        LinearNode&lt;T&gt; current = head;</span>
+        
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        while (current != null) {</span>
+<span class="nc" id="L99">            txt += current.getElement().toString() + &quot;\n&quot;;</span>
+<span class="nc" id="L100">            current = current.getNext();</span>
+        }
+        
+<span class="nc" id="L103">        return txt;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

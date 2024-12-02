@@ -1,10 +1,8 @@
 package io;
 
-import ADT.ListADT;
-import ADT.UnorderedListADT;
 import Exceptions.JogoException;
+import core.Divisao;
 import core.Jogo;
-import implementations.ArrayUnorderedList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,11 +13,17 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JSONHandler {
+    /**
+     * Reads the entire data from the .json file
+     * @param jogo the game where the data will be saved
+     * @throws JogoException exception to be thrown if the game object is null
+     */
     public void importData(Jogo jogo) throws JogoException {
         if (jogo == null) {
             throw new JogoException("Jogo object is null");
         }
 
+        //TODO fix na ordem de ler
         readCodMissao(jogo);
         readVersao(jogo);
         readEdificio(jogo);
@@ -31,10 +35,19 @@ public class JSONHandler {
 
     }
 
+    /**
+     * Reads the .json file
+     * @return a FileReader object
+     * @throws FileNotFoundException exception to be thrown if the file was not found
+     */
     private FileReader readJsonFile() throws FileNotFoundException {
         return new FileReader("resources\\anexo.json");
     }
 
+    /**
+     * Reads the mission code from the .json file
+     * @param jogo the game where the data will be saved
+     */
     private void readCodMissao(Jogo jogo) {
         JSONParser parser = new JSONParser();
         String codMissao = "";
@@ -56,6 +69,10 @@ public class JSONHandler {
         }
     }
 
+    /**
+     * Reads the mission version from the .json file
+     * @param jogo the game where the data will be saved
+     */
     private void readVersao(Jogo jogo) {
         JSONParser parser = new JSONParser();
         int versao = 0;
@@ -77,6 +94,10 @@ public class JSONHandler {
         }
     }
 
+    /**
+     * Reads the game building from the .json file
+     * @param jogo the game where the data will be saved
+     */
     private void readEdificio(Jogo jogo) {
         JSONParser parser = new JSONParser();
 
@@ -90,7 +111,9 @@ public class JSONHandler {
             for (int i = 0; i < ja.size(); i++) {
                 String divisao = (String) ja.get(i);
 
-                jogo.getEdificio().setDivisao(divisao);
+                Divisao div = new Divisao(divisao, null, null, null);
+
+                jogo.getEdificio().addDivison(div);
             }
         } catch (ParseException e) {
             System.out.println("Parse Exception");
@@ -98,6 +121,36 @@ public class JSONHandler {
             System.out.println("File not found");
         } catch (IOException e) {
             System.out.println("IO Exception");
+        }
+    }
+
+    /**
+     * Reads the enemies from the .json file
+     * @param jogo the game where the data will be saved
+     */
+    private void readInimigos(Jogo jogo) {
+        JSONParser parser = new JSONParser();
+        JSONArray ja;
+        String nomeInimigo = "";
+        String divisaoInimigo = "";
+        int poder = 0;
+
+        try {
+            ja = (JSONArray) parser.parse(readJsonFile());
+
+            for (int i = 0; i < ja.size(); i++) {
+                JSONObject obj = (JSONObject) ja.get(i);
+                nomeInimigo = (String) obj.get("nome-inimigo");
+                divisaoInimigo = (String) obj.get("divisao-inimigo");
+                poder = ((Number) obj.get("poder")).intValue();
+
+                jogo.getEdificio().;
+            }
+
+        } catch (IOException e) {
+            System.out.println("IO Exception");
+        } catch (ParseException e) {
+            System.out.println("Parse Exception");
         }
     }
 }
