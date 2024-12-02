@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinkedList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ED_2425</a> &gt; <a href="index.source.html" class="el_package">implementations</a> &gt; <span class="el_source">LinkedList.java</span></div><h1>LinkedList.java</h1><pre class="source lang-java linenums">package implementations;
+
+import Exceptions.ElementNotFoundException;
+import Exceptions.EmptyCollectionException;
+
+public class LinkedList&lt;T&gt; {
+    private int counter;
+    private LinearNode&lt;T&gt; head;
+    private LinearNode&lt;T&gt; tail;
+
+<span class="nc" id="L11">    public LinkedList() {</span>
+<span class="nc" id="L12">        counter = 0;</span>
+<span class="nc" id="L13">        head = tail = null;</span>
+<span class="nc" id="L14">    }</span>
+
+    public void add(T data) {
+<span class="nc" id="L17">        LinearNode&lt;T&gt; newNode = new LinearNode&lt;T&gt;(data);</span>
+
+<span class="nc bnc" id="L19" title="All 2 branches missed.">        if (head == null) {</span>
+<span class="nc" id="L20">            tail = newNode;</span>
+        } else {
+<span class="nc" id="L22">            newNode.setNext(head);</span>
+        }
+<span class="nc" id="L24">        head = newNode;</span>
+
+<span class="nc" id="L26">        counter++;</span>
+<span class="nc" id="L27">    }</span>
+
+    public void remove(T element) throws EmptyCollectionException, ElementNotFoundException {
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (head == null) {</span>
+<span class="nc" id="L31">            throw new EmptyCollectionException(&quot;Empty List&quot;);</span>
+        }
+<span class="nc" id="L33">        LinearNode&lt;T&gt; previous = null;</span>
+<span class="nc" id="L34">        LinearNode&lt;T&gt; current = head;</span>
+
+<span class="nc" id="L36">        boolean found = false;</span>
+<span class="nc bnc" id="L37" title="All 4 branches missed.">        while (current != null &amp;&amp; !found) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">            if (element.equals(current.getElement())) {</span>
+<span class="nc" id="L39">                found = true;</span>
+            } else {
+<span class="nc" id="L41">                previous = current;</span>
+<span class="nc" id="L42">                current = current.getNext();</span>
+            }
+        }
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (!found) {</span>
+<span class="nc" id="L46">            throw new ElementNotFoundException(&quot;Element Not Found&quot;);</span>
+        }
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (counter == 1) {</span>
+<span class="nc" id="L50">            head = tail = null;</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        } else if (current.equals(head)) {</span>
+<span class="nc" id="L52">            head = current.getNext();</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        } else if (current.equals(tail)) {</span>
+<span class="nc" id="L54">            tail = previous;</span>
+<span class="nc" id="L55">            tail.setNext(null);</span>
+        } else {
+<span class="nc" id="L57">            previous.setNext(current.getNext());</span>
+        }
+
+<span class="nc" id="L60">        counter--;</span>
+<span class="nc" id="L61">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L65">        String text = &quot;&quot;;</span>
+<span class="nc" id="L66">        LinearNode&lt;T&gt; current = head;</span>
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        while (current != null) {</span>
+<span class="nc" id="L69">            text += current.getElement().toString() + &quot;\n&quot;;</span>
+<span class="nc" id="L70">            current = current.getNext();</span>
+        }
+<span class="nc" id="L72">        return text;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
