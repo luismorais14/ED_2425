@@ -31,13 +31,5 @@ public class Edificio {
         this.divisoes.addEdge(divisao1, divisao2);
     }
 
-    /**
-     * Verifies if the building contains the division parameterized
-     * @param divisao the division to be checked
-     * @return true if the division exists, false otherwise
-     */
-    public boolean containsDivisao(Divisao divisao) {
-        return divisoes.;
-    }
 
 }

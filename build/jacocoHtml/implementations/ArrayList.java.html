@@ -20,11 +20,11 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
     /**
      * Creates an empty list using the default capacity.
      */
-<span class="fc" id="L23">    public ArrayList() {</span>
-<span class="fc" id="L24">        array = (T[]) new Object[INITIAL_CAPACITY];</span>
-<span class="fc" id="L25">        counter = 0;</span>
-<span class="fc" id="L26">        modCount = 0;</span>
-<span class="fc" id="L27">    }</span>
+<span class="nc" id="L23">    public ArrayList() {</span>
+<span class="nc" id="L24">        array = (T[]) new Object[INITIAL_CAPACITY];</span>
+<span class="nc" id="L25">        counter = 0;</span>
+<span class="nc" id="L26">        modCount = 0;</span>
+<span class="nc" id="L27">    }</span>
 
     /**
      * Removes and returns the first element in the list.
@@ -75,12 +75,12 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
      * @return the index of the element in the list, -1 if the element was not found
      */
     protected int find(T element) {
-<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (int i = 0; i &lt; counter; i++) {</span>
-<span class="pc bpc" id="L79" title="2 of 4 branches missed.">            if (array[i] != null &amp;&amp; array[i].equals(element)) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">            if (array[i] != null &amp;&amp; array[i].equals(element)) {</span>
 <span class="nc" id="L80">                return i;</span>
             }
         }
-<span class="fc" id="L83">        return -1;</span>
+<span class="nc" id="L83">        return -1;</span>
     }
 
     /**
@@ -149,7 +149,7 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
      */
     @Override
     public boolean contains(T target) {
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        return find(target) != -1;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        return find(target) != -1;</span>
     }
 
     /**
@@ -183,13 +183,13 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
      * Creates a new array to store the contents of the list with twice the capacity of the old one.
      */
     protected void expandCapacity() {
-<span class="fc" id="L186">        T[] newArray = (T[]) new Object[array.length + INCREMENT_VALUE];</span>
+<span class="nc" id="L186">        T[] newArray = (T[]) new Object[array.length + INCREMENT_VALUE];</span>
 
-<span class="fc bfc" id="L188" title="All 2 branches covered.">        for (int i = 0; i &lt; counter; i++) {</span>
-<span class="fc" id="L189">            newArray[i] = array[i];</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="nc" id="L189">            newArray[i] = array[i];</span>
         }
-<span class="fc" id="L191">        array = newArray;</span>
-<span class="fc" id="L192">    }</span>
+<span class="nc" id="L191">        array = newArray;</span>
+<span class="nc" id="L192">    }</span>
 
     /**
      * Returns a string representation of this list.
