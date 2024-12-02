@@ -1,4 +1,5 @@
 import Exceptions.JogoException;
+import core.Divisao;
 import core.Edificio;
 import core.Jogo;
 import core.Missao;
@@ -37,7 +38,9 @@ public class TestJSONHandlerClass {
 
         //Test for divisoes reader
         for (String divisao : expectedDivisoes) {
-            assertTrue(jogo.getEdificio().containsDivisao(divisao));
+            Divisao div = new Divisao();
+            div.setNome(divisao);
+            assertTrue(jogo.getEdificio().containsDivisao(div));
         }
     }
 }
