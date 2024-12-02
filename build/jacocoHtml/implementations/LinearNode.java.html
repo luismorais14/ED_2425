@@ -4,30 +4,53 @@ public class LinearNode&lt;T&gt; {
     private T element;
     private LinearNode&lt;T&gt; next;
 
-<span class="nc" id="L7">    public LinearNode() {</span>
-<span class="nc" id="L8">        element = null;</span>
-<span class="nc" id="L9">        next = null;</span>
-<span class="nc" id="L10">    }</span>
+    /**
+     * Creates an empty node.
+     */
+<span class="nc" id="L10">    public LinearNode() {</span>
+<span class="nc" id="L11">        element = null;</span>
+<span class="nc" id="L12">        next = null;</span>
+<span class="nc" id="L13">    }</span>
 
-<span class="nc" id="L12">    public LinearNode(T element) {</span>
-<span class="nc" id="L13">        this.element = element;</span>
-<span class="nc" id="L14">        next = null;</span>
-<span class="nc" id="L15">    }</span>
+    /**
+     * Creates a node storing the specified element.
+     * @param element the specified element
+     */
+<span class="nc" id="L19">    public LinearNode(T element) {</span>
+<span class="nc" id="L20">        this.element = element;</span>
+<span class="nc" id="L21">        next = null;</span>
+<span class="nc" id="L22">    }</span>
 
+    /**
+     * Returns the element stored in this node.
+     * @return the element stored in this node.
+     */
     public T getElement() {
-<span class="nc" id="L18">        return element;</span>
+<span class="nc" id="L29">        return element;</span>
     }
 
+    /**
+     * Sets the element stored in this node.
+     * @param element the element stored in this node.
+     */
     public void setElement(T element) {
-<span class="nc" id="L22">        this.element = element;</span>
-<span class="nc" id="L23">    }</span>
+<span class="nc" id="L37">        this.element = element;</span>
+<span class="nc" id="L38">    }</span>
 
+    /**
+     * Returns the node that follows this one.
+     * @return the node that follows this one.
+     */
     public LinearNode&lt;T&gt; getNext() {
-<span class="nc" id="L26">        return next;</span>
+<span class="nc" id="L45">        return next;</span>
     }
 
+    /**
+     * Sets the node that follows this one.
+     * @param next the node that follows this one.
+     */
     public void setNext(LinearNode&lt;T&gt; next) {
-<span class="nc" id="L30">        this.next = next;</span>
-<span class="nc" id="L31">    }</span>
+<span class="nc" id="L53">        this.next = next;</span>
+<span class="nc" id="L54">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

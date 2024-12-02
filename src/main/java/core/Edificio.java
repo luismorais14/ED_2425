@@ -1,16 +1,17 @@
 package core;
 
-import ADT.UnorderedListADT;
+import ADT.GraphADT;
 import implementations.ArrayUnorderedList;
+import implementations.Graph;
 
 public class Edificio {
-    private UnorderedListADT<Divisao> divisoes;
+    private GraphADT<Divisao> divisoes;
 
     /**
      * Creates an empty building
      */
     public Edificio() {
-        divisoes = new ArrayUnorderedList<>();
+        divisoes = new Graph<Divisao>();
     }
 
     /**
@@ -18,16 +19,19 @@ public class Edificio {
      * @param divisao
      */
     public void addDivison(Divisao divisao) {
-        this.divisoes.addToFront(divisao);
+        this.divisoes.addVertex(divisao);
     }
 
     /**
-     * Verifies if the building contains the division parameterized
-     * @param divisao the division to be checked
-     * @return true if the division exists, false otherwise
+     * Adds a connection between two divisions
+     * @param divisao1 the first division
+     * @param divisao2 the second division
      */
-    public boolean containsDivisao(Divisao divisao) {
-        return divisoes.contains(divisao);
+    public void addConnection(Divisao divisao1, Divisao divisao2) {
+        this.divisoes.addEdge(divisao1, divisao2);
     }
+
+    //TODO criar método para procurar divisao (talvez com iteradores???) (usar compareTo ou equals)
+
 
 }

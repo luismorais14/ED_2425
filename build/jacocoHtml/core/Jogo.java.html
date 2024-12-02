@@ -5,40 +5,74 @@ public class Jogo {
     private TiposSimulacao tipoSimulacao;
     private Edificio edificio;
 
-<span class="nc" id="L8">    public Jogo() {</span>
-<span class="nc" id="L9">        this.missao = new Missao();</span>
-<span class="nc" id="L10">        this.tipoSimulacao = null;</span>
-<span class="nc" id="L11">        this.edificio = new Edificio();</span>
-<span class="nc" id="L12">    }</span>
+    /**
+     * Creates an empty game
+     */
+<span class="nc" id="L11">    public Jogo() {</span>
+<span class="nc" id="L12">        this.missao = new Missao();</span>
+<span class="nc" id="L13">        this.tipoSimulacao = null;</span>
+<span class="nc" id="L14">        this.edificio = new Edificio();</span>
+<span class="nc" id="L15">    }</span>
 
-<span class="fc" id="L14">    public Jogo(Missao missao, TiposSimulacao tipoSimulacao, Edificio edificio) {</span>
-<span class="fc" id="L15">        this.missao = missao;</span>
-<span class="fc" id="L16">        this.tipoSimulacao = tipoSimulacao;</span>
-<span class="fc" id="L17">        this.edificio = edificio;</span>
-<span class="fc" id="L18">    }</span>
 
+    /**
+     * Creates a new game, specifying the mission, the simulation type and the building
+     * @param missao the game mission
+     * @param tipoSimulacao the game type of simulation
+     * @param edificio the game building
+     */
+<span class="fc" id="L24">    public Jogo(Missao missao, TiposSimulacao tipoSimulacao, Edificio edificio) {</span>
+<span class="fc" id="L25">        this.missao = missao;</span>
+<span class="fc" id="L26">        this.tipoSimulacao = tipoSimulacao;</span>
+<span class="fc" id="L27">        this.edificio = edificio;</span>
+<span class="fc" id="L28">    }</span>
+
+    /**
+     * Getter for the game mission
+     * @return the game mission
+     */
     public Missao getMissao() {
-<span class="fc" id="L21">        return missao;</span>
+<span class="fc" id="L35">        return missao;</span>
     }
 
+    /**
+     * Setter for the game mission
+     * @param missao the game mission
+     */
     public void setMissao(Missao missao) {
-<span class="nc" id="L25">        this.missao = missao;</span>
-<span class="nc" id="L26">    }</span>
+<span class="nc" id="L43">        this.missao = missao;</span>
+<span class="nc" id="L44">    }</span>
 
+    /**
+     * Getter for game the simulation types
+     * @return the game simulation types
+     */
     public TiposSimulacao getTipoSimulacao() {
-<span class="nc" id="L29">        return tipoSimulacao;</span>
+<span class="nc" id="L51">        return tipoSimulacao;</span>
     }
 
+    /**
+     * Setter for the game simulation types
+     * @param tipoSimulacao the game simulation types
+     */
     public void setTipoSimulacao(TiposSimulacao tipoSimulacao) {
-<span class="nc" id="L33">        this.tipoSimulacao = tipoSimulacao;</span>
-<span class="nc" id="L34">    }</span>
+<span class="nc" id="L59">        this.tipoSimulacao = tipoSimulacao;</span>
+<span class="nc" id="L60">    }</span>
 
+    /**
+     * Getter for the game buiding
+     * @return the game bulding
+     */
     public Edificio getEdificio() {
-<span class="fc" id="L37">        return edificio;</span>
+<span class="fc" id="L67">        return edificio;</span>
     }
 
+    /**
+     * Setter for the game building
+     * @param edificio the game building
+     */
     public void setEdificio(Edificio edificio) {
-<span class="nc" id="L41">        this.edificio = edificio;</span>
-<span class="nc" id="L42">    }</span>
+<span class="nc" id="L75">        this.edificio = edificio;</span>
+<span class="nc" id="L76">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

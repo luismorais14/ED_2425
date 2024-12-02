@@ -35,12 +35,5 @@ public class TestJSONHandlerClass {
             jsonHandler.importData(null);
         });
         assertEquals("Jogo object is null", exception.getMessage());
-
-        //Test for divisoes reader
-        for (String divisao : expectedDivisoes) {
-            Divisao div = new Divisao();
-            div.setNome(divisao);
-            assertTrue(jogo.getEdificio().containsDivisao(div));
-        }
     }
 }
