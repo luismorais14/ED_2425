@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JSONHandler {
+    //TODO estruturas para guardar temporariamente os objetos
+
     /**
      * Reads the entire data from the .json file
      * @param jogo the game where the data will be saved
@@ -32,6 +34,7 @@ public class JSONHandler {
         //TODO ler array de entradas e saidas
         //TODO ler alvo
         //TODO ler array de items
+
 
     }
 
