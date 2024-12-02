@@ -182,6 +182,20 @@ public class JSONHandler {
                 //procurar divisao já criada no edificio
                 //instanciar divisao/chamar divisao
                 //adicionar ligacao
+
+                Divisao d1 = jogo.getEdificio().searchDivisao(new Divisao(divisao1, null, null, null));
+                Divisao d2 = jogo.getEdificio().searchDivisao(new Divisao(divisao2, null, null, null));
+
+                if (d1 == null) {
+                    d1 = new Divisao(divisao1, null, null, null);
+                    jogo.getEdificio().addDivison(d1);
+                }
+                if (d2 == null) {
+                    d2 = new Divisao(divisao2, null, null, null);
+                    jogo.getEdificio().addDivison(d2);
+                }
+
+                jogo.getEdificio().addConnection(d1, d2);
             }
 
         } catch (IOException e) {
