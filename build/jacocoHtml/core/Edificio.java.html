@@ -4,18 +4,30 @@ import ADT.UnorderedListADT;
 import implementations.ArrayUnorderedList;
 
 public class Edificio {
-    private UnorderedListADT&lt;String&gt; divisoes;
+    private UnorderedListADT&lt;Divisao&gt; divisoes;
 
-<span class="fc" id="L9">    public Edificio() {</span>
-<span class="fc" id="L10">        divisoes = new ArrayUnorderedList&lt;&gt;();</span>
-<span class="fc" id="L11">    }</span>
+    /**
+     * Creates an empty building
+     */
+<span class="fc" id="L12">    public Edificio() {</span>
+<span class="fc" id="L13">        divisoes = new ArrayUnorderedList&lt;&gt;();</span>
+<span class="fc" id="L14">    }</span>
 
-    public void setDivisao(String divisao) {
-<span class="fc" id="L14">        this.divisoes.addToFront(divisao);</span>
-<span class="fc" id="L15">    }</span>
+    /**
+     * Adds a new division on the building
+     * @param divisao
+     */
+    public void addDivison(Divisao divisao) {
+<span class="fc" id="L21">        this.divisoes.addToFront(divisao);</span>
+<span class="fc" id="L22">    }</span>
 
-    public boolean containsDivisao(String divisao) {
-<span class="fc" id="L18">        return divisoes.contains(divisao);</span>
+    /**
+     * Verifies if the building contains the division parameterized
+     * @param divisao the division to be checked
+     * @return true if the division exists, false otherwise
+     */
+    public boolean containsDivisao(Divisao divisao) {
+<span class="fc" id="L30">        return divisoes.contains(divisao);</span>
     }
 
 }

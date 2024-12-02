@@ -144,7 +144,7 @@ public class JSONHandler {
                 divisaoInimigo = (String) obj.get("divisao-inimigo");
                 poder = ((Number) obj.get("poder")).intValue();
 
-                jogo.getEdificio().;
+                //jogo.getEdificio().;
             }
 
         } catch (IOException e) {

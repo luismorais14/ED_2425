@@ -17,133 +17,193 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
     protected int counter;
     protected static int modCount;
 
-<span class="fc" id="L20">    public ArrayList() {</span>
-<span class="fc" id="L21">        array = (T[]) new Object[INITIAL_CAPACITY];</span>
-<span class="fc" id="L22">        counter = 0;</span>
-<span class="fc" id="L23">        modCount = 0;</span>
-<span class="fc" id="L24">    }</span>
+    /**
+     * Creates an empty list using the default capacity.
+     */
+<span class="fc" id="L23">    public ArrayList() {</span>
+<span class="fc" id="L24">        array = (T[]) new Object[INITIAL_CAPACITY];</span>
+<span class="fc" id="L25">        counter = 0;</span>
+<span class="fc" id="L26">        modCount = 0;</span>
+<span class="fc" id="L27">    }</span>
 
+    /**
+     * Removes and returns the first element in the list.
+     * @return the removed element
+     * @throws EmptyCollectionException exception to thrown if the list is empty
+     */
     @Override
     public T removeFirst() throws EmptyCollectionException {
-<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (isEmpty()) {</span>
-<span class="nc" id="L29">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L37">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
         }
 
-<span class="nc" id="L32">        T element = array[0];</span>
+<span class="nc" id="L40">        T element = array[0];</span>
 
-<span class="nc bnc" id="L34" title="All 2 branches missed.">        for (int i = 0; i &lt; counter - 1; i++) {</span>
-<span class="nc" id="L35">            array[i] = array[i + 1];</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        for (int i = 0; i &lt; counter - 1; i++) {</span>
+<span class="nc" id="L43">            array[i] = array[i + 1];</span>
         }
 
-<span class="nc" id="L38">        array[counter - 1] = null;</span>
-<span class="nc" id="L39">        counter--;</span>
-<span class="nc" id="L40">        modCount++;</span>
-<span class="nc" id="L41">        return element;</span>
+<span class="nc" id="L46">        array[counter - 1] = null;</span>
+<span class="nc" id="L47">        counter--;</span>
+<span class="nc" id="L48">        modCount++;</span>
+<span class="nc" id="L49">        return element;</span>
     }
 
+    /**
+     * Removes and returns the last element in the list.
+     * @return the removed element.
+     * @throws EmptyCollectionException exception to thrown if the list is empty
+     */
     @Override
     public T removeLast() throws EmptyCollectionException {
-<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (isEmpty()) {</span>
-<span class="nc" id="L47">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L60">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
         }
 
-<span class="nc" id="L50">        counter--;</span>
-<span class="nc" id="L51">        T element = array[counter];</span>
-<span class="nc" id="L52">        array[counter] = null;</span>
-<span class="nc" id="L53">        modCount++;</span>
+<span class="nc" id="L63">        counter--;</span>
+<span class="nc" id="L64">        T element = array[counter];</span>
+<span class="nc" id="L65">        array[counter] = null;</span>
+<span class="nc" id="L66">        modCount++;</span>
 
-<span class="nc" id="L55">        return element;</span>
+<span class="nc" id="L68">        return element;</span>
     }
 
+
+    /**
+     * Finds the element passed as argument.
+     * @param element the element to be found
+     * @return the index of the element in the list, -1 if the element was not found
+     */
     protected int find(T element) {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        for (int i = 0; i &lt; counter; i++) {</span>
-<span class="pc bpc" id="L60" title="1 of 4 branches missed.">            if (array[i] != null &amp;&amp; array[i].equals(element)) {</span>
-<span class="fc" id="L61">                return i;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="pc bpc" id="L79" title="2 of 4 branches missed.">            if (array[i] != null &amp;&amp; array[i].equals(element)) {</span>
+<span class="nc" id="L80">                return i;</span>
             }
         }
-<span class="nc" id="L64">        return -1;</span>
+<span class="fc" id="L83">        return -1;</span>
     }
 
+    /**
+     * Removes and returns the specified element.
+     * @param element the element to be removed from the list
+     * @return the removed element
+     * @throws EmptyCollectionException exception to thrown if the list is empty
+     * @throws ElementNotFoundException exception to be thrown if the element was not found
+     */
     @Override
     public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (isEmpty()) {</span>
-<span class="nc" id="L70">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L96">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
         }
 
-<span class="nc" id="L73">        T removedElement = null;</span>
+<span class="nc" id="L99">        T removedElement = null;</span>
 
-<span class="nc" id="L75">        int index = find(element);</span>
+<span class="nc" id="L101">        int index = find(element);</span>
 
-<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (index == -1) {</span>
-<span class="nc" id="L78">            throw new ElementNotFoundException(&quot;Element not found!&quot;);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (index == -1) {</span>
+<span class="nc" id="L104">            throw new ElementNotFoundException(&quot;Element not found!&quot;);</span>
         }
         
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        for (int i = index; i &lt; counter - 1; i++) {</span>
-<span class="nc" id="L82">            array[i] = array[i + 1];</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        for (int i = index; i &lt; counter - 1; i++) {</span>
+<span class="nc" id="L108">            array[i] = array[i + 1];</span>
         }
 
-<span class="nc" id="L85">        array[--counter] = null;</span>
-<span class="nc" id="L86">        modCount++;</span>
+<span class="nc" id="L111">        array[--counter] = null;</span>
+<span class="nc" id="L112">        modCount++;</span>
         
-<span class="nc" id="L88">        return removedElement;</span>
+<span class="nc" id="L114">        return removedElement;</span>
     }
 
+    /**
+     * Returns a reference to the element at the front of the list. The element is not removed from the list.
+     * @return a reference to the element at the front of the list.
+     * @throws EmptyCollectionException exception to thrown if the list is empty
+     */
     @Override
     public T first() throws EmptyCollectionException {
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (isEmpty()) {</span>
-<span class="nc" id="L94">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L125">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
         }
 
-<span class="nc" id="L97">        return array[0];</span>
+<span class="nc" id="L128">        return array[0];</span>
     }
 
+    /**
+     * Returns a reference to the element at the rear of the list. The element is not removed from the list.
+     * @return Returns a reference to the element at the rear of the list.
+     * @throws EmptyCollectionException exception to thrown if the list is empty
+     */
     @Override
     public T last() throws EmptyCollectionException {
-<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (isEmpty()) {</span>
-<span class="nc" id="L103">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L139">            throw new EmptyCollectionException(&quot;Empty collection&quot;);</span>
         }
 
-<span class="nc" id="L106">        return array[counter - 1];</span>
+<span class="nc" id="L142">        return array[counter - 1];</span>
     }
 
+    /**
+     * Returns true if this list contains the specified element.
+     * @param target the target that is being sought in the list
+     * @return true if the list contains the specified element, false otherwise
+     */
     @Override
     public boolean contains(T target) {
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        return find(target) != -1;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        return find(target) != -1;</span>
     }
 
+    /**
+     * Returns true if this list is empty and false otherwise.
+     * @return true if this list is empty and false otherwise.
+     */
     @Override
     public boolean isEmpty() {
-<span class="nc bnc" id="L116" title="All 2 branches missed.">        return counter == 0;</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        return counter == 0;</span>
     }
 
+    /**
+     * Returns the number of elements currently in this list.
+     * @return the number of elements currently in this list.
+     */
     @Override
     public int size() {
-<span class="nc" id="L121">        return counter;</span>
+<span class="nc" id="L170">        return counter;</span>
     }
 
+    /**
+     * Returns an iterator for the elements currently in this list.
+     * @return an iterator for the elements currently in this list.
+     */
     @Override
     public Iterator&lt;T&gt; iterator() {
-<span class="nc" id="L126">        return new BasicIterator&lt;&gt;();</span>
+<span class="nc" id="L179">        return new BasicIterator&lt;&gt;();</span>
     }
 
+    /**
+     * Creates a new array to store the contents of the list with twice the capacity of the old one.
+     */
     protected void expandCapacity() {
-<span class="fc" id="L130">        T[] newArray = (T[]) new Object[array.length + INCREMENT_VALUE];</span>
+<span class="fc" id="L186">        T[] newArray = (T[]) new Object[array.length + INCREMENT_VALUE];</span>
 
-<span class="fc bfc" id="L132" title="All 2 branches covered.">        for (int i = 0; i &lt; counter; i++) {</span>
-<span class="fc" id="L133">            newArray[i] = array[i];</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="fc" id="L189">            newArray[i] = array[i];</span>
         }
-<span class="fc" id="L135">        array = newArray;</span>
-<span class="fc" id="L136">    }</span>
+<span class="fc" id="L191">        array = newArray;</span>
+<span class="fc" id="L192">    }</span>
 
+    /**
+     * Returns a string representation of this list.
+     * @return a string representation of this list.
+     */
     @Override
     public String toString() {
-<span class="nc" id="L140">        String txt = &quot;&quot;;</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">        for (int i = 0; i &lt; counter; i++) {</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">            if (array[i] != null) {</span>
-<span class="nc" id="L143">                txt += array[i].toString() + &quot;\n&quot;;</span>
+<span class="nc" id="L200">        String txt = &quot;&quot;;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">            if (array[i] != null) {</span>
+<span class="nc" id="L203">                txt += array[i].toString() + &quot;\n&quot;;</span>
             }
         }
-<span class="nc" id="L146">        return txt;</span>
+<span class="nc" id="L206">        return txt;</span>
     }
 
     private class BasicIterator&lt;E&gt; implements Iterator&lt;E&gt; {
@@ -151,11 +211,14 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
         private int current;
         private boolean okToRemove;
 
-<span class="nc" id="L154">        public BasicIterator() {</span>
-<span class="nc" id="L155">            current = 0;</span>
-<span class="nc" id="L156">            expectedModCount = modCount;</span>
-<span class="nc" id="L157">            okToRemove = false;</span>
-<span class="nc" id="L158">        }</span>
+        /**
+         * Creates an empty iterator
+         */
+<span class="nc" id="L217">        public BasicIterator() {</span>
+<span class="nc" id="L218">            current = 0;</span>
+<span class="nc" id="L219">            expectedModCount = modCount;</span>
+<span class="nc" id="L220">            okToRemove = false;</span>
+<span class="nc" id="L221">        }</span>
 
         /**
          * Returns {@code true} if the iteration has more elements.
@@ -166,7 +229,7 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
          */
         @Override
         public boolean hasNext() {
-<span class="nc bnc" id="L169" title="All 2 branches missed.">            return this.current &lt; counter;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">            return this.current &lt; counter;</span>
         }
 
         /**
@@ -177,20 +240,20 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
          */
         @Override
         public E next() throws ConcurrentModificationException, NoSuchElementException {
-<span class="nc bnc" id="L180" title="All 2 branches missed.">            if (modCount != expectedModCount) {</span>
-<span class="nc" id="L181">                throw new ConcurrentModificationException();</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">            if (modCount != expectedModCount) {</span>
+<span class="nc" id="L244">                throw new ConcurrentModificationException();</span>
             }
 
-<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (!hasNext()) {</span>
-<span class="nc" id="L185">                throw new NoSuchElementException();</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">            if (!hasNext()) {</span>
+<span class="nc" id="L248">                throw new NoSuchElementException();</span>
             }
 
-<span class="nc" id="L188">            E element = (E) array[current];</span>
-<span class="nc" id="L189">            current++;</span>
+<span class="nc" id="L251">            E element = (E) array[current];</span>
+<span class="nc" id="L252">            current++;</span>
 
-<span class="nc" id="L191">            okToRemove = true;</span>
+<span class="nc" id="L254">            okToRemove = true;</span>
 
-<span class="nc" id="L193">            return element ;</span>
+<span class="nc" id="L256">            return element ;</span>
         }
 
         /**
@@ -217,24 +280,24 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
          */
         @Override
         public void remove() throws ConcurrentModificationException, IllegalStateException, NoSuchElementException {
-<span class="nc bnc" id="L220" title="All 2 branches missed.">            if (expectedModCount != modCount) {</span>
-<span class="nc" id="L221">                throw new ConcurrentModificationException();</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">            if (expectedModCount != modCount) {</span>
+<span class="nc" id="L284">                throw new ConcurrentModificationException();</span>
             }
 
-<span class="nc bnc" id="L224" title="All 2 branches missed.">            if (!okToRemove) {</span>
-<span class="nc" id="L225">                throw new IllegalStateException(&quot;Next must be called before remove.&quot;);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">            if (!okToRemove) {</span>
+<span class="nc" id="L288">                throw new IllegalStateException(&quot;Next must be called before remove.&quot;);</span>
             }
 
             try {
-<span class="nc" id="L229">                ArrayList.this.remove(array[current]);</span>
-<span class="nc" id="L230">            } catch (ElementNotFoundException ex) {</span>
-<span class="nc" id="L231">                throw new NoSuchElementException();</span>
-<span class="nc" id="L232">            }</span>
+<span class="nc" id="L292">                ArrayList.this.remove(array[current]);</span>
+<span class="nc" id="L293">            } catch (ElementNotFoundException ex) {</span>
+<span class="nc" id="L294">                throw new NoSuchElementException();</span>
+<span class="nc" id="L295">            }</span>
 
-<span class="nc" id="L234">            expectedModCount++;</span>
-<span class="nc" id="L235">            okToRemove = false;</span>
-<span class="nc" id="L236">            current--;</span>
-<span class="nc" id="L237">        }</span>
+<span class="nc" id="L297">            expectedModCount++;</span>
+<span class="nc" id="L298">            okToRemove = false;</span>
+<span class="nc" id="L299">            current--;</span>
+<span class="nc" id="L300">        }</span>
     }
 
 }
