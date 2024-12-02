@@ -31,5 +31,7 @@ public class Edificio {
         this.divisoes.addEdge(divisao1, divisao2);
     }
 
+    //TODO criar método para procurar divisao (talvez com iteradores???) (usar compareTo ou equals)
+
 
 }

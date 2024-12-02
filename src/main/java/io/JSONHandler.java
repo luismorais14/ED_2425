@@ -163,8 +163,8 @@ public class JSONHandler {
     private void readLigacoes(Jogo jogo) {
         JSONParser parser = new JSONParser();
         JSONArray ja;
-        Divisao divisao1 = null;
-        Divisao divisao2 = null;
+        String divisao1 = "";
+        String divisao2 = "";
 
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(readJsonFile());
@@ -173,10 +173,11 @@ public class JSONHandler {
             for (int i = 0; i < ja.size(); i++) {
                 JSONArray ligacaoArray = (JSONArray) ja.get(i);
 
-                divisao1 = (Divisao) ligacaoArray.get(0);
-                divisao2 = (Divisao) ligacaoArray.get(1);
+                divisao1 = (String) ligacaoArray.get(0);
+                divisao2 = (String) ligacaoArray.get(1);
 
                 //procurar divisao já criada no edificio
+                //instanciar divisao/chamar divisao
                 //adicionar ligacao
             }
 
