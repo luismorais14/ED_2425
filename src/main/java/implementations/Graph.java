@@ -63,7 +63,7 @@ public class Graph<T> implements GraphADT<T> {
         this.numVertices++;
     }
 
-    private int findVertex(T vertex) {
+    protected int findVertex(T vertex) {
         for (int i = 0; i < this.numVertices; i++) {
             if (vertices[i].equals(vertex)) {
                 return i;

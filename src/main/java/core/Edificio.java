@@ -38,12 +38,14 @@ public class Edificio {
 
     //TODO criar método para procurar divisao (talvez com iteradores???) (usar compareTo ou equals)
 
-    public Divisao searchDivisao(Divisao divisao) {
-        if (divisao == null) {
+    public Divisao searchDivisao(String divisao) {
+        if (this.divisoes.isEmpty()) {
             return null;
         }
 
-        Iterator it = divisoes.iteratorBFS(divisao);
+        Divisao tmpDivisao = new Divisao(divisao, null, null, null);
+
+        Iterator it = divisoes.iteratorBFS(tmpDivisao);
 
         while (it.hasNext()) {
             Divisao current = (Divisao) it.next();
