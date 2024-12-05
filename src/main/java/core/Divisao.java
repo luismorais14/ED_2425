@@ -1,8 +1,11 @@
 package core;
 
+import ADT.UnorderedListADT;
+import implementations.ArrayUnorderedList;
+
 public class Divisao {
     private String nome;
-    private Inimigo inimigo;
+    private UnorderedListADT<Inimigo> inimigo;
     private Alvo alvo;
     private Item item;
 
@@ -11,7 +14,7 @@ public class Divisao {
      */
     public Divisao() {
         this.nome = "";
-        this.inimigo = new Inimigo();
+        this.inimigo = new ArrayUnorderedList<Inimigo>();
         this.alvo = new Alvo();
         this.item = new Item();
     }
@@ -23,7 +26,7 @@ public class Divisao {
      * @param alvo target (if exists) on the division
      * @param item item (if exists) on the division
      */
-    public Divisao(String nome, Inimigo inimigo, Alvo alvo, Item item) {
+    public Divisao(String nome, UnorderedListADT<Inimigo> inimigo, Alvo alvo, Item item) {
         this.nome = nome;
         this.inimigo = inimigo;
         this.alvo = alvo;
@@ -47,19 +50,11 @@ public class Divisao {
     }
 
     /**
-     * Getter for the enemy on the division
-     * @return the enemy on the devision
-     */
-    public Inimigo getInimigo() {
-        return inimigo;
-    }
-
-    /**
      * Setter for the enemy on the division
      * @param inimigo the enemy on the devision
      */
     public void setInimigo(Inimigo inimigo) {
-        this.inimigo = inimigo;
+        this.inimigo.addToFront(inimigo);
     }
 
     /**

@@ -3,6 +3,9 @@
 import ADT.GraphADT;
 import implementations.ArrayUnorderedList;
 import implementations.Graph;
+import implementations.LinkedQueue;
+
+import java.util.Iterator;
 
 public class Edificio {
     private GraphADT&lt;Divisao&gt; divisoes;
@@ -10,26 +13,49 @@ public class Edificio {
     /**
      * Creates an empty building
      */
-<span class="fc" id="L13">    public Edificio() {</span>
-<span class="fc" id="L14">        divisoes = new Graph&lt;Divisao&gt;();</span>
-<span class="fc" id="L15">    }</span>
+<span class="nc" id="L16">    public Edificio() {</span>
+<span class="nc" id="L17">        divisoes = new Graph&lt;Divisao&gt;();</span>
+<span class="nc" id="L18">    }</span>
 
     /**
      * Adds a new division on the building
-     * @param divisao
+     *
+     * @param divisao the new division
      */
     public void addDivison(Divisao divisao) {
-<span class="fc" id="L22">        this.divisoes.addVertex(divisao);</span>
-<span class="fc" id="L23">    }</span>
+<span class="nc" id="L26">        this.divisoes.addVertex(divisao);</span>
+<span class="nc" id="L27">    }</span>
 
     /**
      * Adds a connection between two divisions
+     *
      * @param divisao1 the first division
      * @param divisao2 the second division
      */
     public void addConnection(Divisao divisao1, Divisao divisao2) {
-<span class="nc" id="L31">        this.divisoes.addEdge(divisao1, divisao2);</span>
-<span class="nc" id="L32">    }</span>
+<span class="nc" id="L36">        this.divisoes.addEdge(divisao1, divisao2);</span>
+<span class="nc" id="L37">    }</span>
+
+    private Graph&lt;Divisao&gt; getGraph() {
+<span class="nc" id="L40">        return (Graph&lt;Divisao&gt;) divisoes;</span>
+    }
+
+    public Divisao searchDivisao(String divisaoNome) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (this.divisoes.isEmpty()) {</span>
+<span class="nc" id="L45">            return null;</span>
+        }
+
+<span class="nc" id="L48">        Graph&lt;Divisao&gt; tmpGraph = getGraph();</span>
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for (int i = 0; i &lt; this.divisoes.size(); i++) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            if (divisaoNome.equals(tmpGraph.getVertice(i).getNome())) {</span>
+<span class="nc" id="L52">                return tmpGraph.getVertice(i);</span>
+            }
+        }
+
+<span class="nc" id="L56">        return null;</span>
+    }
+
 
 
 }

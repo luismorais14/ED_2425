@@ -1,11 +1,7 @@
 package core;
 
 import ADT.GraphADT;
-import implementations.ArrayUnorderedList;
 import implementations.Graph;
-import implementations.LinkedQueue;
-
-import java.util.Iterator;
 
 public class Edificio {
     private GraphADT<Divisao> divisoes;
@@ -20,7 +16,7 @@ public class Edificio {
     /**
      * Adds a new division on the building
      *
-     * @param divisao
+     * @param divisao the new division
      */
     public void addDivison(Divisao divisao) {
         this.divisoes.addVertex(divisao);
@@ -36,26 +32,26 @@ public class Edificio {
         this.divisoes.addEdge(divisao1, divisao2);
     }
 
-    //TODO criar método para procurar divisao (talvez com iteradores???) (usar compareTo ou equals)
+    private Graph<Divisao> getGraph() {
+        return (Graph<Divisao>) divisoes;
+    }
 
-    public Divisao searchDivisao(String divisao) {
+    public Divisao searchDivisao(String divisaoNome) {
         if (this.divisoes.isEmpty()) {
             return null;
         }
 
-        Divisao tmpDivisao = new Divisao(divisao, null, null, null);
+        Graph<Divisao> tmpGraph = getGraph();
 
-        Iterator it = divisoes.iteratorBFS(tmpDivisao);
-
-        while (it.hasNext()) {
-            Divisao current = (Divisao) it.next();
-            if (current != null && current.equals(divisao)) {
-                return current;
+        for (int i = 0; i < this.divisoes.size(); i++) {
+            if (divisaoNome.equals(tmpGraph.getVertice(i).getNome())) {
+                return tmpGraph.getVertice(i);
             }
         }
-        return null;
 
+        return null;
     }
+
 
 
 }

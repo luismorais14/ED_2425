@@ -1,8 +1,9 @@
 package io;
 
+import ADT.UnorderedListADT;
 import Exceptions.JogoException;
-import core.Divisao;
-import core.Jogo;
+import core.*;
+import implementations.ArrayUnorderedList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,8 +14,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JSONHandler {
-    //TODO estruturas para guardar temporariamente os objetos
-
     /**
      * Reads the entire data from the .json file
      *
@@ -26,15 +25,14 @@ public class JSONHandler {
             throw new JogoException("Jogo object is null");
         }
 
-        //TODO fix na ordem de ler
         readEdificio(jogo);
-        //TODO ler array de ligacoes
+        readLigacoes(jogo);
         readCodMissao(jogo);
         readVersao(jogo);
-        //TODO ler array de inimigos
-        //TODO ler array de entradas e saidas
-        //TODO ler alvo
-        //TODO ler array de items
+        readInimigos(jogo);
+        //TODO ler array de entradas e saidas (não sei o que fazer com os dados, ou onde os guardar)
+        readAlvo(jogo);
+        readItems(jogo);
 
 
     }
@@ -119,7 +117,11 @@ public class JSONHandler {
             for (int i = 0; i < ja.size(); i++) {
                 String divisao = (String) ja.get(i);
 
-                Divisao div = new Divisao(divisao, null, null, null);
+                UnorderedListADT<Inimigo> inimigos = new ArrayUnorderedList<>();
+                Alvo alvo = new Alvo();
+                Item item = new Item();
+
+                Divisao div = new Divisao(divisao, inimigos, alvo, item);
 
                 jogo.getEdificio().addDivison(div);
             }
@@ -145,15 +147,20 @@ public class JSONHandler {
         int poder = 0;
 
         try {
-            ja = (JSONArray) parser.parse(readJsonFile());
+            JSONObject jsonObject = (JSONObject) parser.parse(readJsonFile());
+            ja = (JSONArray) jsonObject.get("inimigos");
 
             for (int i = 0; i < ja.size(); i++) {
                 JSONObject obj = (JSONObject) ja.get(i);
-                nomeInimigo = (String) obj.get("nome-inimigo");
-                divisaoInimigo = (String) obj.get("divisao-inimigo");
+                nomeInimigo = (String) obj.get("nome");
+                divisaoInimigo = (String) obj.get("divisao");
                 poder = ((Number) obj.get("poder")).intValue();
 
-                //jogo.getEdificio().;
+                Divisao div = jogo.getEdificio().searchDivisao(divisaoInimigo);
+
+                Inimigo inimigo = new Inimigo(nomeInimigo, poder);
+
+                div.setInimigo(inimigo);
             }
 
         } catch (IOException e) {
@@ -179,14 +186,15 @@ public class JSONHandler {
                 divisao1 = (String) ligacaoArray.get(0);
                 divisao2 = (String) ligacaoArray.get(1);
 
-                //procurar divisao já criada no edificio
-                //instanciar divisao/chamar divisao
-                //adicionar ligacao
-
                 Divisao d1 = jogo.getEdificio().searchDivisao(divisao1);
                 Divisao d2 = jogo.getEdificio().searchDivisao(divisao2);
 
-                jogo.getEdificio().addConnection(d1, d2);
+                if (d1 == null || d2 == null) {
+                    System.err.println("Division does not exist");
+                } else {
+                    jogo.getEdificio().addConnection(d1, d2);
+                }
+
             }
 
         } catch (IOException e) {
@@ -194,5 +202,60 @@ public class JSONHandler {
         } catch (ParseException e) {
             System.out.println("Parse Exception");
         }
+    }
+
+
+    private void readAlvo(Jogo jogo) {
+        JSONParser parser = new JSONParser();
+        String tipo = "";
+        String divisao = "";
+
+        try {
+            JSONObject jsonObject = (JSONObject) parser.parse(readJsonFile());
+
+            JSONObject obj = (JSONObject) jsonObject.get("alvo");
+
+            tipo = (String) obj.get("tipo");
+            divisao = (String) obj.get("divisao");
+
+            Divisao d1 = jogo.getEdificio().searchDivisao(divisao);
+
+            d1.setAlvo(new Alvo(tipo));
+
+
+        } catch (IOException e) {
+            System.out.println("IO Exception");
+        } catch (ParseException e) {
+            System.out.println("Parse Exception");
+        }
+    }
+
+    private void readItems(Jogo jogo) {
+        JSONParser parser = new JSONParser();
+        JSONArray ja;
+        String divisao = "";
+        int pontos = 0;
+        String tipo = "";
+
+        try {
+            JSONObject jsonObject = (JSONObject) parser.parse(readJsonFile());
+            ja = (JSONArray) jsonObject.get("itens");
+
+            for (int i = 0; i < ja.size(); i++) {
+                JSONObject obj = (JSONObject) ja.get(i);
+                pontos = ((Number) obj.get("pontos-recuperados")).intValue();
+                tipo = (String) obj.get("tipo");
+                divisao = (String) obj.get("divisao");
+
+                Divisao d1 = jogo.getEdificio().searchDivisao(divisao);
+                d1.setItem(new Item(tipo, pontos));
+            }
+
+        } catch (IOException e) {
+            System.out.println("IO Exception");
+        } catch (ParseException e) {
+            System.out.println("Parse Exception");
+        }
+
     }
 }

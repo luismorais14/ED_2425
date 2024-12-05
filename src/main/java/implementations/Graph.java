@@ -48,6 +48,18 @@ public class Graph<T> implements GraphADT<T> {
         this.adjMatrix = largerAdjMatrix;
     }
 
+    public boolean[][] getAdjMatrix() {
+        return adjMatrix;
+    }
+
+    public int getNumVertices() {
+        return numVertices;
+    }
+
+    public T getVertice(int pos) {
+        return this.vertices[pos];
+    }
+
     /**
      * Adds a vertex to this graph, associating object with vertex.
      *
@@ -313,6 +325,6 @@ public class Graph<T> implements GraphADT<T> {
      */
     @Override
     public int size() {
-        return 0;
+        return this.numVertices;
     }
 }
