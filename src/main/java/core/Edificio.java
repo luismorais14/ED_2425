@@ -32,10 +32,22 @@ public class Edificio {
         this.divisoes.addEdge(divisao1, divisao2);
     }
 
+    /**
+     * Gets a graph of the divisions
+     *
+     * @return the divisions of the graph.
+     */
+
     private Graph<Divisao> getGraph() {
         return (Graph<Divisao>) divisoes;
     }
 
+    /**
+     * Search a division by its name.
+     *
+     * @param divisaoNome the name of the division
+     * @return the index of the found division, null if not.
+     */
     public Divisao searchDivisao(String divisaoNome) {
         if (this.divisoes.isEmpty()) {
             return null;

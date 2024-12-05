@@ -170,6 +170,12 @@ public class JSONHandler {
         }
     }
 
+    /**
+     * Reads the connections between divisions from the .json file
+     *
+     * @param jogo the game where the data will be saved
+     */
+
     private void readLigacoes(Jogo jogo) {
         JSONParser parser = new JSONParser();
         JSONArray ja;
@@ -205,6 +211,12 @@ public class JSONHandler {
     }
 
 
+    /**
+     * Reads where the wanted target is from the .json file
+     *
+     * @param jogo the game where the data will be saved
+     */
+
     private void readAlvo(Jogo jogo) {
         JSONParser parser = new JSONParser();
         String tipo = "";
@@ -229,6 +241,12 @@ public class JSONHandler {
             System.out.println("Parse Exception");
         }
     }
+
+    /**
+     * Reads the items from the .json file
+     *
+     * @param jogo the game where the data will be saved
+     */
 
     private void readItems(Jogo jogo) {
         JSONParser parser = new JSONParser();
