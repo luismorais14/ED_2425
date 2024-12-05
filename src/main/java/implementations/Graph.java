@@ -10,54 +10,80 @@ public class Graph<T> implements GraphADT<T> {
     private final static int RESIZE_FACTOR = 2;
 
     private boolean[][] adjMatrix;
-    private T[] vertices;
+    private T[] vertex;
     private int numVertices;
 
+    /**
+     * Creates and empty graph
+     */
     public Graph() {
-        this.vertices = (T[]) (new Object[INITIAL_CAPACITY]);
+        this.vertex = (T[]) (new Object[INITIAL_CAPACITY]);
         this.adjMatrix = new boolean[INITIAL_CAPACITY][INITIAL_CAPACITY];
         initializeAdjMatrix();
         this.numVertices = 0;
     }
 
+    /**
+     * Creates a graph specifying the inicial capacity
+     * @param initialCapacity the inicial capacity
+     */
     public Graph(int initialCapacity) {
-        this.vertices = (T[]) (new Object[initialCapacity]);
+        this.vertex = (T[]) (new Object[initialCapacity]);
         this.adjMatrix = new boolean[initialCapacity][initialCapacity];
         initializeAdjMatrix();
         this.numVertices = 0;
     }
 
+    /**
+     * Initializes the adjacency matrix with all values false
+     */
     private void initializeAdjMatrix() {
-        for (int i = 0; i < this.vertices.length; i++) {
-            for (int j = 0; j < this.vertices.length; j++) {
+        for (int i = 0; i < this.vertex.length; i++) {
+            for (int j = 0; j < this.vertex.length; j++) {
                 this.adjMatrix[i][j] = false;
             }
         }
     }
 
+    /**
+     * Increases the capacity of the vertex array
+     */
     private void expandCapacity() {
-        T[] largerVertices = (T[]) (new Object[this.vertices.length * RESIZE_FACTOR]);
-        boolean[][] largerAdjMatrix = new boolean[this.vertices.length * RESIZE_FACTOR][this.vertices.length * RESIZE_FACTOR];
-        for (int i = 0; i < this.vertices.length; i++) {
-            for (int j = 0; j < this.vertices.length; j++) {
+        T[] largerVertices = (T[]) (new Object[this.vertex.length * RESIZE_FACTOR]);
+        boolean[][] largerAdjMatrix = new boolean[this.vertex.length * RESIZE_FACTOR][this.vertex.length * RESIZE_FACTOR];
+        for (int i = 0; i < this.vertex.length; i++) {
+            for (int j = 0; j < this.vertex.length; j++) {
                 largerAdjMatrix[i][j] = this.adjMatrix[i][j];
             }
-            largerVertices[i] = this.vertices[i];
+            largerVertices[i] = this.vertex[i];
         }
-        this.vertices = largerVertices;
+        this.vertex = largerVertices;
         this.adjMatrix = largerAdjMatrix;
     }
 
+    /**
+     * Getter for the adjacency matrix
+     * @return the adjacency matrix
+     */
     public boolean[][] getAdjMatrix() {
         return adjMatrix;
     }
 
-    public int getNumVertices() {
+    /**
+     * Getter for the number of vertex
+     * @return the number of vertex
+     */
+    public int getNumVertex() {
         return numVertices;
     }
 
+    /**
+     * Getter for the vertex given a position
+     * @param pos the vertex position
+     * @return the vertex
+     */
     public T getVertice(int pos) {
-        return this.vertices[pos];
+        return this.vertex[pos];
     }
 
     /**
@@ -67,17 +93,22 @@ public class Graph<T> implements GraphADT<T> {
      */
     @Override
     public void addVertex(T vertex) {
-        if (this.numVertices == this.vertices.length) {
+        if (this.numVertices == this.vertex.length) {
             expandCapacity();
         }
 
-        vertices[this.numVertices] = vertex;
+        this.vertex[this.numVertices] = vertex;
         this.numVertices++;
     }
 
+    /**
+     * Searches for a vertex and returns its position
+     * @param vertex The vertex to look for
+     * @return -1 if the vertex does not exist, his position otherwise
+     */
     protected int findVertex(T vertex) {
         for (int i = 0; i < this.numVertices; i++) {
-            if (vertices[i].equals(vertex)) {
+            if (this.vertex[i].equals(vertex)) {
                 return i;
             }
         }
@@ -95,15 +126,15 @@ public class Graph<T> implements GraphADT<T> {
 
         if (index > -1) {
             for (int i = index; i < this.numVertices - 1; i++) {
-                vertices[i] = vertices[i + 1];
+                this.vertex[i] = this.vertex[i + 1];
             }
-            vertices[this.numVertices - 1] = null;
+            this.vertex[this.numVertices - 1] = null;
             this.numVertices--;
         }
     }
 
     /**
-     * Inserts an edge between two vertices of this graph.
+     * Inserts an edge between two vertex of this graph.
      *
      * @param vertex1 the first vertex
      * @param vertex2 the second vertex
@@ -120,7 +151,7 @@ public class Graph<T> implements GraphADT<T> {
     }
 
     /**
-     * Removes an edge between two vertices of this graph.
+     * Removes an edge between two vertex of this graph.
      *
      * @param vertex1 the first vertex
      * @param vertex2 the second vertex
@@ -166,9 +197,9 @@ public class Graph<T> implements GraphADT<T> {
 
         while (!traversalQueue.isEmpty()) {
             x = traversalQueue.dequeue();
-            resultList.addToRear(vertices[x.intValue()]);
+            resultList.addToRear(vertex[x.intValue()]);
 
-            /** Find all vertices adjacent to x that have not been visited
+            /** Find all vertex adjacent to x that have not been visited
              and queue them up */
             for (int i = 0; i < numVertices; i++) {
                 if (adjMatrix[x.intValue()][i] && !visited[i]) {
@@ -202,7 +233,7 @@ public class Graph<T> implements GraphADT<T> {
             visited[i] = false;
 
         traversalStack.push(new Integer(findVertex(startVertex)));
-        resultList.addToRear(vertices[findVertex(startVertex)]);
+        resultList.addToRear(vertex[findVertex(startVertex)]);
         visited[findVertex(startVertex)] = true;
 
         while (!traversalStack.isEmpty()) {
@@ -214,7 +245,7 @@ public class Graph<T> implements GraphADT<T> {
             for (int i = 0; (i < numVertices) && !found; i++) {
                 if (adjMatrix[x.intValue()][i] && !visited[i]) {
                     traversalStack.push(new Integer(i));
-                    resultList.addToRear(vertices[i]);
+                    resultList.addToRear(vertex[i]);
                     visited[i] = true;
                     found = true;
                 }
@@ -227,12 +258,12 @@ public class Graph<T> implements GraphADT<T> {
 
     /**
      * Returns an iterator that contains the shortest path between
-     * the two vertices.
+     * the two vertex.
      *
      * @param startVertex  the starting vertex
      * @param targetVertex the ending vertex
      * @return an iterator that contains the shortest
-     * path between the two vertices
+     * path between the two vertex
      */
     @Override
     public Iterator iteratorShortestPath(T startVertex, T targetVertex) {
@@ -307,7 +338,7 @@ public class Graph<T> implements GraphADT<T> {
         if (isEmpty())
             throw new EmptyCollectionException("Graph is empty.");
 
-        Iterator<T> it = iteratorBFS(vertices[0]);
+        Iterator<T> it = iteratorBFS(vertex[0]);
         int count = 0;
 
         while (it.hasNext())
@@ -319,9 +350,9 @@ public class Graph<T> implements GraphADT<T> {
     }
 
     /**
-     * Returns the number of vertices in this graph.
+     * Returns the number of vertex in this graph.
      *
-     * @return the integer number of vertices in this graph
+     * @return the integer number of vertex in this graph
      */
     @Override
     public int size() {
