@@ -8,6 +8,9 @@ public class Divisao {
     private UnorderedListADT<Inimigo> inimigo;
     private Alvo alvo;
     private Item item;
+    private boolean isEntradaSaida;
+    private UnorderedListADT<Divisao> entradasSaidas = new ArrayUnorderedList<>();
+
 
     /**
      * Creates an empty division
@@ -17,24 +20,28 @@ public class Divisao {
         this.inimigo = new ArrayUnorderedList<Inimigo>();
         this.alvo = new Alvo();
         this.item = new Item();
+        this.isEntradaSaida = false;
     }
 
     /**
      * Creates a division specifying the name, enemy, target and item
-     * @param nome name of the division
+     *
+     * @param nome    name of the division
      * @param inimigo enemy present on the division
-     * @param alvo target (if exists) on the division
-     * @param item item (if exists) on the division
+     * @param alvo    target (if exists) on the division
+     * @param item    item (if exists) on the division
      */
     public Divisao(String nome, UnorderedListADT<Inimigo> inimigo, Alvo alvo, Item item) {
         this.nome = nome;
         this.inimigo = inimigo;
         this.alvo = alvo;
         this.item = item;
+        this.isEntradaSaida = false;
     }
 
     /**
      * Getter for the division name
+     *
      * @return the divisio name
      */
     public String getNome() {
@@ -43,6 +50,7 @@ public class Divisao {
 
     /**
      * Setter for the division name
+     *
      * @param nome the division name
      */
     public void setNome(String nome) {
@@ -51,6 +59,7 @@ public class Divisao {
 
     /**
      * Setter for the enemy on the division
+     *
      * @param inimigo the enemy on the devision
      */
     public void setInimigo(Inimigo inimigo) {
@@ -59,6 +68,7 @@ public class Divisao {
 
     /**
      * Getter for the target on the division
+     *
      * @return the target on the division
      */
     public Alvo getAlvo() {
@@ -67,6 +77,7 @@ public class Divisao {
 
     /**
      * Setter for the target on the division
+     *
      * @param alvo the target on the division
      */
     public void setAlvo(Alvo alvo) {
@@ -75,6 +86,7 @@ public class Divisao {
 
     /**
      * Getter for the item on the division
+     *
      * @return the item on the division
      */
     public Item getItem() {
@@ -83,9 +95,27 @@ public class Divisao {
 
     /**
      * Setter for the item on the division
+     *
      * @param item the item on the division
      */
     public void setItem(Item item) {
         this.item = item;
+    }
+
+
+    public boolean isEntradaSaida() {
+        return isEntradaSaida;
+    }
+
+    public void setEntradaSaida(boolean isEntradaSaida) {
+        this.isEntradaSaida = isEntradaSaida;
+    }
+
+    public UnorderedListADT<Divisao> getEntradasSaidas() {
+        return entradasSaidas;
+    }
+
+    public void addEntradaSaida(Divisao divisao) {
+        entradasSaidas.addToRear(divisao);
     }
 }

@@ -310,4 +310,33 @@ public class JSONHandler {
         }
 
     }
+
+    private void readEntradasSaidas(Jogo jogo) {
+        JSONParser parser = new JSONParser();
+        JSONArray ja;
+
+        try {
+            JSONObject jsonObject = (JSONObject) parser.parse(readJsonFile());
+            ja = (JSONArray) jsonObject.get("entradas-saidas");
+
+            for (int i = 0; i < ja.size(); i++) {
+                String nomeDivisao = (String) ja.get(i);
+
+                Divisao divisao = searchDivisao(nomeDivisao);
+
+
+                if (divisao != null) {
+                    divisao.setEntradaSaida(true);
+                    divisao.addEntradaSaida(divisao);
+                } else {
+                    System.err.println("Division not found: " + nomeDivisao);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("IO Exception");
+        } catch (ParseException e) {
+            System.out.println("Parse Exception");
+        }
+    }
+
 }
