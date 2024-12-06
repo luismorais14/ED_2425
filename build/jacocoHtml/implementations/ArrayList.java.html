@@ -20,11 +20,11 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
     /**
      * Creates an empty list using the default capacity.
      */
-<span class="nc" id="L23">    public ArrayList() {</span>
-<span class="nc" id="L24">        array = (T[]) new Object[INITIAL_CAPACITY];</span>
-<span class="nc" id="L25">        counter = 0;</span>
-<span class="nc" id="L26">        modCount = 0;</span>
-<span class="nc" id="L27">    }</span>
+<span class="fc" id="L23">    public ArrayList() {</span>
+<span class="fc" id="L24">        array = (T[]) new Object[INITIAL_CAPACITY];</span>
+<span class="fc" id="L25">        counter = 0;</span>
+<span class="fc" id="L26">        modCount = 0;</span>
+<span class="fc" id="L27">    }</span>
 
     /**
      * Removes and returns the first element in the list.
@@ -158,7 +158,7 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
      */
     @Override
     public boolean isEmpty() {
-<span class="nc bnc" id="L161" title="All 2 branches missed.">        return counter == 0;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        return counter == 0;</span>
     }
 
     /**
@@ -176,20 +176,20 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
      */
     @Override
     public Iterator&lt;T&gt; iterator() {
-<span class="nc" id="L179">        return new BasicIterator&lt;&gt;();</span>
+<span class="fc" id="L179">        return new BasicIterator&lt;&gt;();</span>
     }
 
     /**
      * Creates a new array to store the contents of the list with twice the capacity of the old one.
      */
     protected void expandCapacity() {
-<span class="nc" id="L186">        T[] newArray = (T[]) new Object[array.length + INCREMENT_VALUE];</span>
+<span class="fc" id="L186">        T[] newArray = (T[]) new Object[array.length + INCREMENT_VALUE];</span>
 
-<span class="nc bnc" id="L188" title="All 2 branches missed.">        for (int i = 0; i &lt; counter; i++) {</span>
-<span class="nc" id="L189">            newArray[i] = array[i];</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="fc" id="L189">            newArray[i] = array[i];</span>
         }
-<span class="nc" id="L191">        array = newArray;</span>
-<span class="nc" id="L192">    }</span>
+<span class="fc" id="L191">        array = newArray;</span>
+<span class="fc" id="L192">    }</span>
 
     /**
      * Returns a string representation of this list.
@@ -214,11 +214,11 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
         /**
          * Creates an empty iterator
          */
-<span class="nc" id="L217">        public BasicIterator() {</span>
-<span class="nc" id="L218">            current = 0;</span>
-<span class="nc" id="L219">            expectedModCount = modCount;</span>
-<span class="nc" id="L220">            okToRemove = false;</span>
-<span class="nc" id="L221">        }</span>
+<span class="fc" id="L217">        public BasicIterator() {</span>
+<span class="fc" id="L218">            current = 0;</span>
+<span class="fc" id="L219">            expectedModCount = modCount;</span>
+<span class="fc" id="L220">            okToRemove = false;</span>
+<span class="fc" id="L221">        }</span>
 
         /**
          * Returns {@code true} if the iteration has more elements.
@@ -229,7 +229,7 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
          */
         @Override
         public boolean hasNext() {
-<span class="nc bnc" id="L232" title="All 2 branches missed.">            return this.current &lt; counter;</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">            return this.current &lt; counter;</span>
         }
 
         /**
@@ -240,20 +240,20 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
          */
         @Override
         public E next() throws ConcurrentModificationException, NoSuchElementException {
-<span class="nc bnc" id="L243" title="All 2 branches missed.">            if (modCount != expectedModCount) {</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">            if (modCount != expectedModCount) {</span>
 <span class="nc" id="L244">                throw new ConcurrentModificationException();</span>
             }
 
-<span class="nc bnc" id="L247" title="All 2 branches missed.">            if (!hasNext()) {</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">            if (!hasNext()) {</span>
 <span class="nc" id="L248">                throw new NoSuchElementException();</span>
             }
 
-<span class="nc" id="L251">            E element = (E) array[current];</span>
-<span class="nc" id="L252">            current++;</span>
+<span class="fc" id="L251">            E element = (E) array[current];</span>
+<span class="fc" id="L252">            current++;</span>
 
-<span class="nc" id="L254">            okToRemove = true;</span>
+<span class="fc" id="L254">            okToRemove = true;</span>
 
-<span class="nc" id="L256">            return element ;</span>
+<span class="fc" id="L256">            return element ;</span>
         }
 
         /**

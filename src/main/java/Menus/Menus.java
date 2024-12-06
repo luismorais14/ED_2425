@@ -55,52 +55,6 @@ public class Menus {
         }
     }
 
-    private void difficultyMenu() {
-        Scanner input = new Scanner(System.in);
-        boolean aux = false;
-        int inputNum = 0;
-        String lixo = "";
-
-        while (!aux || inputNum != 4) {
-            inputNum = 0;
-            System.out.println("=========================================================");
-            System.out.println("|       Please choose simulation difficulty:            |");
-            System.out.println("=========================================================");
-            System.out.println("| Options:                                              |");
-            System.out.println("|                     1. Easy                           |");
-            System.out.println("|                     2. Normal                         |");
-            System.out.println("|                     3. God Mode                       |");
-            System.out.println("|                     4. Go Back                       |");
-            System.out.println("=========================================================");
-            System.out.println("Enter your option: ");
-
-            try {
-                inputNum = input.nextInt();
-                aux = true;
-            } catch (Exception e) {
-                System.out.println("Invalid Option");
-                lixo = input.nextLine(); //limpar o buffer
-            }
-
-            switch (inputNum) {
-                case 1:
-                    //TODO instanciar jogo, colocando o tocruz com grande poder de ataque
-                    break;
-                case 2:
-                    //TODO instanciar jogo, reduzindo o poder de ataque do tocruz para um pouco menos do que o facil
-                    break;
-                case 3:
-                    //TODO instanciar jogo, colocando o poder de ataque do tocruz para bastante reduzido
-                    break;
-                case 4:
-                    return;
-                default:
-                    System.out.println("Invalid Option");
-                    break;
-            }
-        }
-    }
-
     private void simulationTypeMenu() {
         Scanner input = new Scanner(System.in);
         boolean aux = false;
@@ -129,7 +83,8 @@ public class Menus {
 
             switch (inputNum) {
                 case 1:
-                    difficultyMenu();
+                    showMap();
+
                     break;
                 case 2:
                     //TODO instanciar jogo, reduzindo o poder de ataque do tocruz para um pouco menos do que o facil
@@ -142,4 +97,36 @@ public class Menus {
             }
         }
     }
+
+    /**
+     * Shows the map in the console
+     */
+    private void showMap() {
+        String[] map = {
+                "           |-----------------------------------------------------------------------------------|",
+                "           |           |                         Heliporto                                     |",
+                "           |  Escada 6 |-----------------------------------------------------------------------|",
+                "           |           |        Camaratas      |          |          |           Armazem       |",
+                "           |-----------------------------------|          | Escada 5 |--------------|----------|",
+                "           |             Laboratorio           |          |          | Escritorio 3 |          |",
+                "           |------------------------------------------------------------------------| Escada 4 |",
+                "           |     WC    |                    Corredor 2                              |          |",
+                "           |-----------------------------------------------------------------------------------|",
+                "           |             Seguranca             |           Escritorio 3             |          |",
+                "|----------|------------------------------------------------------------------------|          |",
+                "|          |             Escritorio 1          |           Escritorio 2             | Escada 3 |",
+                "|          |------------------------------------------------------------------------|          |",
+                "|  Escada  |           |                    Corredor 1                              |          |",
+                "|    de    |  Escada 2 |-----------------------------------------------------------------------|",
+                "|Emergencia|           |                    Porteiro                                |          |",
+                "|          |------------------------------------------------------------------------| Escada 1 |",
+                "|          |                                Garagem                                 |          |",
+                "|----------|-----------------------------------------------------------------------------------|",
+        };
+
+        for (String linha : map) {
+            System.out.println(linha);
+        }
+    }
 }
+

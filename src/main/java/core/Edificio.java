@@ -5,6 +5,7 @@ import implementations.Graph;
 
 public class Edificio {
     private GraphADT<Divisao> divisoes;
+
     /**
      * Creates an empty building
      */

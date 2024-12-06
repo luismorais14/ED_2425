@@ -289,8 +289,12 @@ public class JSONHandler {
 
             for (int i = 0; i < ja.size(); i++) {
                 JSONObject obj = (JSONObject) ja.get(i);
-                pontos = ((Number) obj.get("pontos-recuperados")).intValue();
                 tipo = (String) obj.get("tipo");
+                if (tipo.equals("colete")) {
+                    pontos = ((Number) obj.get("pontos-extra")).intValue();
+                } else {
+                    pontos = ((Number) obj.get("pontos-recuperados")).intValue();
+                }
                 divisao = (String) obj.get("divisao");
 
                 Divisao d1 = searchDivisao(divisao);
