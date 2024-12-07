@@ -1,5 +1,6 @@
 package GameMode;
 
+import core.Divisao;
 import core.Jogo;
 
 import java.util.Scanner;
@@ -15,6 +16,18 @@ public class Manual {
         this.jogo = jogo;
     }
 
+    private void listEntradaSaida() {
+        while (this.jogo.getEdificio().getDivisoesIterator().hasNext()) {
+            Divisao current = null;
+            if (this.jogo.getEdificio().getDivisoesIterator().next() instanceof Divisao) {
+                current = (Divisao) this.jogo.getEdificio().getDivisoesIterator().next();
+            }
+
+            if (current != null)
+                System.out.println(current.getNome());
+        }
+    }
+
     public void startGame() {
         Scanner input = new Scanner(System.in);
         boolean aux = false;
@@ -23,8 +36,8 @@ public class Manual {
 
         while (!aux || inputNum != 3) {
             inputNum = 0;
-            System.out.println("Choose the entrance through which you want to enter the building: ");
-
+            System.out.println("\nChoose the entrance through which you want to enter the building: ");
+            listEntradaSaida();
             try {
                 inputNum = input.nextInt();
                 aux = true;

@@ -33,11 +33,9 @@ public class JSONHandler {
         readCodMissao(jogo);
         readVersao(jogo);
         readInimigos(jogo);
-        //TODO ler array de entradas e saidas (não sei o que fazer com os dados, ou onde os guardar)
+        readEntradasSaidas(jogo);
         readAlvo(jogo);
         readItems(jogo);
-
-
     }
 
     /**
@@ -125,6 +123,10 @@ public class JSONHandler {
                 Item item = new Item();
 
                 Divisao div = new Divisao(divisao, inimigos, alvo, item);
+
+                if (jogo.getEdificio().getStartVertex() == null) {
+                    jogo.getEdificio().setStartVertex(div);
+                }
 
                 jogo.getEdificio().addDivison(div);
                 this.divisionLists.addToFront(div);
@@ -327,7 +329,7 @@ public class JSONHandler {
 
                 if (divisao != null) {
                     divisao.setEntradaSaida(true);
-                    divisao.addEntradaSaida(divisao);
+                    //divisao.addEntradaSaida(divisao);
                 } else {
                     System.err.println("Division not found: " + nomeDivisao);
                 }

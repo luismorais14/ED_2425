@@ -3,14 +3,18 @@ package core;
 import ADT.GraphADT;
 import implementations.Graph;
 
+import java.util.Iterator;
+
 public class Edificio {
     private GraphADT<Divisao> divisoes;
+    private Divisao startVertex;
 
     /**
      * Creates an empty building
      */
     public Edificio() {
         divisoes = new Graph<Divisao>();
+        startVertex = null;
     }
 
     /**
@@ -22,6 +26,14 @@ public class Edificio {
         this.divisoes.addVertex(divisao);
     }
 
+    public void setStartVertex(Divisao startVertex) {
+        this.startVertex = startVertex;
+    }
+
+    public Divisao getStartVertex() {
+        return this.startVertex;
+    }
+
     /**
      * Adds a connection between two divisions
      *
@@ -30,5 +42,9 @@ public class Edificio {
      */
     public void addConnection(Divisao divisao1, Divisao divisao2) {
         this.divisoes.addEdge(divisao1, divisao2);
+    }
+
+    public Iterator getDivisoesIterator() {
+        return this.divisoes.iteratorBFS(startVertex);
     }
 }

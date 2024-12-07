@@ -9,7 +9,7 @@ public class Divisao {
     private Alvo alvo;
     private Item item;
     private boolean isEntradaSaida;
-    private UnorderedListADT<Divisao> entradasSaidas = new ArrayUnorderedList<>();
+    //private UnorderedListADT<Divisao> entradasSaidas = new ArrayUnorderedList<>();
 
 
     /**
@@ -111,11 +111,11 @@ public class Divisao {
         this.isEntradaSaida = isEntradaSaida;
     }
 
-    public UnorderedListADT<Divisao> getEntradasSaidas() {
-        return entradasSaidas;
-    }
+    //public UnorderedListADT<Divisao> getEntradasSaidas() {
+    //    return entradasSaidas;
+    //}
 
-    public void addEntradaSaida(Divisao divisao) {
-        entradasSaidas.addToRear(divisao);
-    }
+    //public void addEntradaSaida(Divisao divisao) {
+    //    entradasSaidas.addToRear(divisao);
+    //}
 }

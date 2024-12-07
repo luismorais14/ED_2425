@@ -2,8 +2,12 @@ import Menus.Menus;
 
 public class Main {
     public static void main(String[] args) {
-        Menus menu = new Menus();
+        try {
+            Menus menu = new Menus();
 
-        menu.mainMenu();
+            menu.mainMenu();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

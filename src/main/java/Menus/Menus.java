@@ -1,5 +1,7 @@
 package Menus;
 
+import Exceptions.JogoException;
+import GameMode.Manual;
 import core.Jogo;
 import io.JSONHandler;
 
@@ -8,13 +10,16 @@ import java.util.Scanner;
 public class Menus {
     private Jogo jogo;
     private JSONHandler handler;
+    private Manual manual;
 
     /**
      * Instantiates the objects required by the program
      */
-    public void menu() {
+    public Menus() throws JogoException {
         this.jogo = new Jogo();
         this.handler = new JSONHandler();
+        this.handler.importData(jogo);
+        this.manual = new Manual(jogo);
     }
 
     public void mainMenu() {
@@ -84,7 +89,7 @@ public class Menus {
             switch (inputNum) {
                 case 1:
                     showMap();
-
+                    manual.startGame();
                     break;
                 case 2:
                     //TODO instanciar jogo, reduzindo o poder de ataque do tocruz para um pouco menos do que o facil
