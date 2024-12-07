@@ -109,4 +109,8 @@ public class Divisao {
     public void setEntradaSaida(boolean isEntradaSaida) {
         this.isEntradaSaida = isEntradaSaida;
     }
+
+    public int getNumCharacters() {
+        return character.size();
+    }
 }

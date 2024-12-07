@@ -47,4 +47,19 @@ public class Edificio {
     public Iterator getDivisoesIterator() {
         return this.divisoes.iteratorBFS(startVertex);
     }
+
+    public Divisao searchDivisao(String div) {
+        Iterator<Divisao> iterator = getDivisoesIterator();
+        int i = 1;
+
+        while (iterator.hasNext()) {
+            Divisao current = iterator.next();
+
+            if (current != null && current.getNome().equals(div)) {
+                return current;
+            }
+        }
+
+        return null;
+    }
 }
