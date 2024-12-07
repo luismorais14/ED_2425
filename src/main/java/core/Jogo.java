@@ -2,7 +2,6 @@ package core;
 
 public class Jogo {
     private Missao missao;
-    private TiposSimulacao tipoSimulacao;
     private Edificio edificio;
 
     /**
@@ -10,7 +9,6 @@ public class Jogo {
      */
     public Jogo() {
         this.missao = new Missao();
-        this.tipoSimulacao = null;
         this.edificio = new Edificio();
     }
 
@@ -18,12 +16,10 @@ public class Jogo {
     /**
      * Creates a new game, specifying the mission, the simulation type and the building
      * @param missao the game mission
-     * @param tipoSimulacao the game type of simulation
      * @param edificio the game building
      */
-    public Jogo(Missao missao, TiposSimulacao tipoSimulacao, Edificio edificio) {
+    public Jogo(Missao missao, Edificio edificio) {
         this.missao = missao;
-        this.tipoSimulacao = tipoSimulacao;
         this.edificio = edificio;
     }
 
@@ -43,21 +39,6 @@ public class Jogo {
         this.missao = missao;
     }
 
-    /**
-     * Getter for game the simulation types
-     * @return the game simulation types
-     */
-    public TiposSimulacao getTipoSimulacao() {
-        return tipoSimulacao;
-    }
-
-    /**
-     * Setter for the game simulation types
-     * @param tipoSimulacao the game simulation types
-     */
-    public void setTipoSimulacao(TiposSimulacao tipoSimulacao) {
-        this.tipoSimulacao = tipoSimulacao;
-    }
 
     /**
      * Getter for the game buiding

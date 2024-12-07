@@ -14,7 +14,6 @@ public class Player extends Character implements Attack{
     public Player() {
         super("Tó Cruz", 0, DEFAULT_VIDA);
         mochila = new LinkedStack<Item>();
-        this.poder = 0;
     }
 
     /**n
@@ -24,7 +23,6 @@ public class Player extends Character implements Attack{
     public Player(int poder) {
         super("Tó Cruz", poder, DEFAULT_VIDA);
         mochila = new LinkedStack<Item>();
-        this.poder = poder;
     }
 
     /**

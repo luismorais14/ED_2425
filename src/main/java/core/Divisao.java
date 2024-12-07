@@ -5,11 +5,10 @@ import implementations.ArrayUnorderedList;
 
 public class Divisao {
     private String nome;
-    private UnorderedListADT<Inimigo> inimigo;
+    private UnorderedListADT<Character> character;
     private Alvo alvo;
     private Item item;
     private boolean isEntradaSaida;
-    //private UnorderedListADT<Divisao> entradasSaidas = new ArrayUnorderedList<>();
 
 
     /**
@@ -17,7 +16,7 @@ public class Divisao {
      */
     public Divisao() {
         this.nome = "";
-        this.inimigo = new ArrayUnorderedList<Inimigo>();
+        this.character = new ArrayUnorderedList<>();
         this.alvo = new Alvo();
         this.item = new Item();
         this.isEntradaSaida = false;
@@ -27,13 +26,13 @@ public class Divisao {
      * Creates a division specifying the name, enemy, target and item
      *
      * @param nome    name of the division
-     * @param inimigo enemy present on the division
+     * @param character enemy present on the division
      * @param alvo    target (if exists) on the division
      * @param item    item (if exists) on the division
      */
-    public Divisao(String nome, UnorderedListADT<Inimigo> inimigo, Alvo alvo, Item item) {
+    public Divisao(String nome, UnorderedListADT<Character> character, Alvo alvo, Item item) {
         this.nome = nome;
-        this.inimigo = inimigo;
+        this.character = character;
         this.alvo = alvo;
         this.item = item;
         this.isEntradaSaida = false;
@@ -58,12 +57,12 @@ public class Divisao {
     }
 
     /**
-     * Setter for the enemy on the division
+     * Adds an enemy on the division
      *
      * @param character the enemy to be added
      */
-    public void setInimigo(Inimigo inimigo) {
-        this.inimigo.addToFront(inimigo);
+    public void addCharacter(Character character) {
+        this.character.addToFront(character);
     }
 
     /**
@@ -110,12 +109,4 @@ public class Divisao {
     public void setEntradaSaida(boolean isEntradaSaida) {
         this.isEntradaSaida = isEntradaSaida;
     }
-
-    //public UnorderedListADT<Divisao> getEntradasSaidas() {
-    //    return entradasSaidas;
-    //}
-
-    //public void addEntradaSaida(Divisao divisao) {
-    //    entradasSaidas.addToRear(divisao);
-    //}
 }

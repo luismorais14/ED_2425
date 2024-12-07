@@ -3,6 +3,7 @@ package io;
 import ADT.UnorderedListADT;
 import Exceptions.JogoException;
 import core.*;
+import core.Character;
 import implementations.ArrayUnorderedList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Random;
 
 public class JSONHandler {
     private UnorderedListADT<Divisao> divisionLists = new ArrayUnorderedList<>();
@@ -118,7 +120,7 @@ public class JSONHandler {
             for (int i = 0; i < ja.size(); i++) {
                 String divisao = (String) ja.get(i);
 
-                UnorderedListADT<Inimigo> inimigos = new ArrayUnorderedList<>();
+                UnorderedListADT<Character> inimigos = new ArrayUnorderedList<>();
                 Alvo alvo = new Alvo();
                 Item item = new Item();
 
@@ -140,6 +142,16 @@ public class JSONHandler {
         }
     }
 
+    //Perguntar ao stor se necessita de referencia
+    private int randomHP() {
+        Random rand = new Random();
+        int min = 30;
+        int max = 70;
+        int result = rand.nextInt(max-min) + min;
+
+        return result;
+    }
+
     /**
      * Reads the enemies from the .json file
      *
@@ -151,6 +163,7 @@ public class JSONHandler {
         String nomeInimigo = "";
         String divisaoInimigo = "";
         int poder = 0;
+        int hp = 0;
 
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(readJsonFile());
@@ -161,10 +174,11 @@ public class JSONHandler {
                 nomeInimigo = (String) obj.get("nome");
                 divisaoInimigo = (String) obj.get("divisao");
                 poder = ((Number) obj.get("poder")).intValue();
+                hp = randomHP();
 
                 Divisao div = searchDivisao(divisaoInimigo);
 
-                Inimigo inimigo = new Inimigo(nomeInimigo, poder);
+                Inimigo inimigo = new Inimigo(nomeInimigo, poder , hp);
 
                 if (div != null)
                     div.addCharacter(inimigo);
@@ -246,7 +260,6 @@ public class JSONHandler {
      *
      * @param jogo the game where the data will be saved
      */
-
     private void readAlvo(Jogo jogo) {
         JSONParser parser = new JSONParser();
         String tipo = "";

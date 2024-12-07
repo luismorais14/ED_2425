@@ -9,4 +9,12 @@ public class Inimigo extends Character implements Attack {
         super(nome, poder, vida);
     }
 
+    /**
+     * Performs an attack
+     */
+    @Override
+    public void attack(Character alvo) {
+        alvo.receberDano(getPoder());
+    }
+
 }

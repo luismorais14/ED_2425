@@ -14,7 +14,7 @@ public class TestJSONHandlerClass {
     void testImportData() throws JogoException {
         Missao missao = new Missao();
         Edificio edificio = new Edificio();
-        Jogo jogo = new Jogo(missao, null, edificio);
+        Jogo jogo = new Jogo(missao, edificio);
         JSONHandler jsonHandler = new JSONHandler();
         jsonHandler.importData(jogo);
         String expectedCod = "pata de coelho";

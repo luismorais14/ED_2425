@@ -18,14 +18,16 @@ public class Manual {
     }
 
     private void listEntradaSaida() {
-        while (this.jogo.getEdificio().getDivisoesIterator().hasNext()) {
-            Divisao current = null;
-            if (this.jogo.getEdificio().getDivisoesIterator().next() instanceof Divisao) {
-                current = (Divisao) this.jogo.getEdificio().getDivisoesIterator().next();
-            }
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
+        int i = 1;
 
-            if (current != null)
-                System.out.println(current.getNome());
+        while (iterator.hasNext()) {
+            Divisao current = iterator.next();
+
+            if (current != null && current.isEntradaSaida()) {
+                System.out.println(i + ". " + current.getNome());
+                i++;
+            }
         }
     }
 
@@ -46,7 +48,18 @@ public class Manual {
                 System.out.println("Invalid Option");
                 lixo = input.nextLine(); //limpar o buffer
             }
-        }
 
+            switch (inputNum) {
+                case 1:
+                    System.out.println("Entered \"Heliport\"");
+
+                    break;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Invalid Option");
+                    break;
+            }
+        }
     }
 }
