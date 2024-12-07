@@ -167,7 +167,7 @@ public class JSONHandler {
                 Inimigo inimigo = new Inimigo(nomeInimigo, poder);
 
                 if (div != null)
-                    div.setInimigo(inimigo);
+                    div.addCharacter(inimigo);
             }
 
         } catch (IOException e) {

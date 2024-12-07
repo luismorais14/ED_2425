@@ -181,33 +181,50 @@ public class Graph<T> implements GraphADT<T> {
      */
     @Override
     public Iterator iteratorBFS(T startVertex) {
+        // Declare variables
         Integer x;
         LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
 
-        if (!indexIsValid(findVertex(startVertex)))
+        // Find the index of the start vertex
+        int startIndex = findVertex(startVertex); // Assuming this method exists
+
+        // If start vertex is invalid, return an empty iterator
+        if (!indexIsValid(startIndex))
             return resultList.iterator();
 
+        // Create a visited array to track explored vertices
         boolean[] visited = new boolean[numVertices];
         for (int i = 0; i < numVertices; i++)
             visited[i] = false;
 
-        traversalQueue.enqueue(new Integer(findVertex(startVertex)));
-        visited[findVertex(startVertex)] = true;
+        // Enqueue the start vertex index and mark it as visited
+        traversalQueue.enqueue(new Integer(startIndex));
+        visited[startIndex] = true;
 
-        while (!traversalQueue.isEmpty()) {
+        // BFS traversal
+        while (!traversalQueue.isEmpty())
+        {
+            // Dequeue a vertex
             x = traversalQueue.dequeue();
+
+            // Add the current vertex to the result list
             resultList.addToRear(vertex[x.intValue()]);
 
-            /** Find all vertex adjacent to x that have not been visited
-             and queue them up */
-            for (int i = 0; i < numVertices; i++) {
-                if (adjMatrix[x.intValue()][i] && !visited[i]) {
+            // Explore all adjacent vertices
+            for (int i = 0; i < numVertices; i++)
+            {
+                // If there's an edge and the vertex hasn't been visited
+                if (adjMatrix[x.intValue()][i] && !visited[i])
+                {
+                    // Enqueue the adjacent vertex and mark as visited
                     traversalQueue.enqueue(new Integer(i));
                     visited[i] = true;
                 }
             }
         }
+
+        // Return an iterator of the traversal result
         return resultList.iterator();
     }
 

@@ -60,7 +60,7 @@ public class Divisao {
     /**
      * Setter for the enemy on the division
      *
-     * @param inimigo the enemy on the devision
+     * @param character the enemy to be added
      */
     public void setInimigo(Inimigo inimigo) {
         this.inimigo.addToFront(inimigo);

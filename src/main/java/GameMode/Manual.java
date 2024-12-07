@@ -3,6 +3,7 @@ package GameMode;
 import core.Divisao;
 import core.Jogo;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Manual {

@@ -8,85 +8,106 @@ public class Divisao {
     private UnorderedListADT&lt;Inimigo&gt; inimigo;
     private Alvo alvo;
     private Item item;
+    private boolean isEntradaSaida;
+
 
     /**
      * Creates an empty division
      */
-<span class="nc" id="L15">    public Divisao() {</span>
-<span class="nc" id="L16">        this.nome = &quot;&quot;;</span>
-<span class="nc" id="L17">        this.inimigo = new ArrayUnorderedList&lt;Inimigo&gt;();</span>
-<span class="nc" id="L18">        this.alvo = new Alvo();</span>
-<span class="nc" id="L19">        this.item = new Item();</span>
-<span class="nc" id="L20">    }</span>
+<span class="nc" id="L17">    public Divisao() {</span>
+<span class="nc" id="L18">        this.nome = &quot;&quot;;</span>
+<span class="nc" id="L19">        this.inimigo = new ArrayUnorderedList&lt;Inimigo&gt;();</span>
+<span class="nc" id="L20">        this.alvo = new Alvo();</span>
+<span class="nc" id="L21">        this.item = new Item();</span>
+<span class="nc" id="L22">        this.isEntradaSaida = false;</span>
+<span class="nc" id="L23">    }</span>
 
     /**
      * Creates a division specifying the name, enemy, target and item
-     * @param nome name of the division
+     *
+     * @param nome    name of the division
      * @param inimigo enemy present on the division
-     * @param alvo target (if exists) on the division
-     * @param item item (if exists) on the division
+     * @param alvo    target (if exists) on the division
+     * @param item    item (if exists) on the division
      */
-<span class="fc" id="L29">    public Divisao(String nome, UnorderedListADT&lt;Inimigo&gt; inimigo, Alvo alvo, Item item) {</span>
-<span class="fc" id="L30">        this.nome = nome;</span>
-<span class="fc" id="L31">        this.inimigo = inimigo;</span>
-<span class="fc" id="L32">        this.alvo = alvo;</span>
-<span class="fc" id="L33">        this.item = item;</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L33">    public Divisao(String nome, UnorderedListADT&lt;Inimigo&gt; inimigo, Alvo alvo, Item item) {</span>
+<span class="fc" id="L34">        this.nome = nome;</span>
+<span class="fc" id="L35">        this.inimigo = inimigo;</span>
+<span class="fc" id="L36">        this.alvo = alvo;</span>
+<span class="fc" id="L37">        this.item = item;</span>
+<span class="fc" id="L38">        this.isEntradaSaida = false;</span>
+<span class="fc" id="L39">    }</span>
 
     /**
      * Getter for the division name
+     *
      * @return the divisio name
      */
     public String getNome() {
-<span class="fc" id="L41">        return nome;</span>
+<span class="fc" id="L47">        return nome;</span>
     }
 
     /**
      * Setter for the division name
+     *
      * @param nome the division name
      */
     public void setNome(String nome) {
-<span class="nc" id="L49">        this.nome = nome;</span>
-<span class="nc" id="L50">    }</span>
+<span class="nc" id="L56">        this.nome = nome;</span>
+<span class="nc" id="L57">    }</span>
 
     /**
      * Setter for the enemy on the division
+     *
      * @param inimigo the enemy on the devision
      */
     public void setInimigo(Inimigo inimigo) {
-<span class="fc" id="L57">        this.inimigo.addToFront(inimigo);</span>
-<span class="fc" id="L58">    }</span>
+<span class="fc" id="L65">        this.inimigo.addToFront(inimigo);</span>
+<span class="fc" id="L66">    }</span>
 
     /**
      * Getter for the target on the division
+     *
      * @return the target on the division
      */
     public Alvo getAlvo() {
-<span class="nc" id="L65">        return alvo;</span>
+<span class="nc" id="L74">        return alvo;</span>
     }
 
     /**
      * Setter for the target on the division
+     *
      * @param alvo the target on the division
      */
     public void setAlvo(Alvo alvo) {
-<span class="fc" id="L73">        this.alvo = alvo;</span>
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L83">        this.alvo = alvo;</span>
+<span class="fc" id="L84">    }</span>
 
     /**
      * Getter for the item on the division
+     *
      * @return the item on the division
      */
     public Item getItem() {
-<span class="nc" id="L81">        return item;</span>
+<span class="nc" id="L92">        return item;</span>
     }
 
     /**
      * Setter for the item on the division
+     *
      * @param item the item on the division
      */
     public void setItem(Item item) {
-<span class="fc" id="L89">        this.item = item;</span>
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L101">        this.item = item;</span>
+<span class="fc" id="L102">    }</span>
+
+
+    public boolean isEntradaSaida() {
+<span class="nc" id="L106">        return isEntradaSaida;</span>
+    }
+
+    public void setEntradaSaida(boolean isEntradaSaida) {
+<span class="fc" id="L110">        this.isEntradaSaida = isEntradaSaida;</span>
+<span class="fc" id="L111">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
