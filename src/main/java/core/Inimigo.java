@@ -11,6 +11,7 @@ public class Inimigo extends Character implements Attack {
 
     /**
      * Performs an attack
+     * @param alvo the attack target
      */
     @Override
     public void attack(Character alvo) {

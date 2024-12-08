@@ -1,8 +1,5 @@
 import Exceptions.JogoException;
-import core.Divisao;
-import core.Edificio;
-import core.Jogo;
-import core.Missao;
+import core.*;
 import io.JSONHandler;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +11,8 @@ public class TestJSONHandlerClass {
     void testImportData() throws JogoException {
         Missao missao = new Missao();
         Edificio edificio = new Edificio();
-        Jogo jogo = new Jogo(missao, edificio);
+        Player p1 = new Player();
+        Jogo jogo = new Jogo(missao, edificio, p1);
         JSONHandler jsonHandler = new JSONHandler();
         jsonHandler.importData(jogo);
         String expectedCod = "pata de coelho";

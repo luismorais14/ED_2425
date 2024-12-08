@@ -27,9 +27,18 @@ public class Player extends Character implements Attack{
 
     /**
      * Performs an attack
+     * @param alvo the attack target
      */
     @Override
     public void attack(Character alvo) {
         alvo.receberDano(getPoder());
+    }
+
+    /**
+     * Adds an item to his packpack
+     * @param item the item to be added
+     */
+    public void addItemToMochila(Item item) {
+        mochila.push(item);
     }
 }

@@ -6,19 +6,19 @@ import Exceptions.EmptyCollectionException;
 import java.util.Iterator;
 
 public class Graph<T> implements GraphADT<T> {
-    private final static int INITIAL_CAPACITY = 20;
+    private final static int DEFAULT_CAPACITY = 20;
     private final static int RESIZE_FACTOR = 2;
 
-    private boolean[][] adjMatrix;
-    private T[] vertex;
-    private int numVertices;
+    protected boolean[][] adjMatrix;
+    protected T[] vertex;
+    protected int numVertices;
 
     /**
      * Creates and empty graph
      */
     public Graph() {
-        this.vertex = (T[]) (new Object[INITIAL_CAPACITY]);
-        this.adjMatrix = new boolean[INITIAL_CAPACITY][INITIAL_CAPACITY];
+        this.vertex = (T[]) (new Object[DEFAULT_CAPACITY]);
+        this.adjMatrix = new boolean[DEFAULT_CAPACITY][DEFAULT_CAPACITY];
         initializeAdjMatrix();
         this.numVertices = 0;
     }
@@ -62,43 +62,21 @@ public class Graph<T> implements GraphADT<T> {
     }
 
     /**
-     * Getter for the adjacency matrix
-     * @return the adjacency matrix
-     */
-    public boolean[][] getAdjMatrix() {
-        return adjMatrix;
-    }
-
-    /**
-     * Getter for the number of vertex
-     * @return the number of vertex
-     */
-    public int getNumVertex() {
-        return numVertices;
-    }
-
-    /**
-     * Getter for the vertex given a position
-     * @param pos the vertex position
-     * @return the vertex
-     */
-    public T getVertice(int pos) {
-        return this.vertex[pos];
-    }
-
-    /**
      * Adds a vertex to this graph, associating object with vertex.
      *
      * @param vertex the vertex to be added to this graph
      */
     @Override
     public void addVertex(T vertex) {
-        if (this.numVertices == this.vertex.length) {
+        if (numVertices == this.vertex.length)
             expandCapacity();
+        this.vertex[numVertices] = vertex;
+        for (int i = 0; i <= numVertices; i++)
+        {
+            adjMatrix[numVertices][i] = false;
+            adjMatrix[i][numVertices] = false;
         }
-
-        this.vertex[this.numVertices] = vertex;
-        this.numVertices++;
+        numVertices++;
     }
 
     /**
@@ -134,19 +112,27 @@ public class Graph<T> implements GraphADT<T> {
     }
 
     /**
-     * Inserts an edge between two vertex of this graph.
+     * Inserts an edge between two vertices of the graph.
      *
      * @param vertex1 the first vertex
      * @param vertex2 the second vertex
      */
-    @Override
-    public void addEdge(T vertex1, T vertex2) {
-        int index1 = findVertex(vertex1);
-        int index2 = findVertex(vertex2);
+    public void addEdge (T vertex1, T vertex2) {
+        addEdge (findVertex(vertex1), findVertex(vertex2));
+    }
 
-        if (index1 > -1 && index2 > -1) {
-            this.adjMatrix[index1][index2] = true;
-            this.adjMatrix[index2][index1] = true;
+
+    /**
+     * Inserts an edge between two vertices of the graph.
+     *
+     * @param index1 the first index
+     * @param index2 the second index
+     */
+    public void addEdge (int index1, int index2) {
+        if (indexIsValid(index1) && indexIsValid(index2))
+        {
+            adjMatrix[index1][index2] = true;
+            adjMatrix[index2][index1] = true;
         }
     }
 
@@ -181,50 +167,38 @@ public class Graph<T> implements GraphADT<T> {
      */
     @Override
     public Iterator iteratorBFS(T startVertex) {
-        // Declare variables
         Integer x;
         LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
 
-        // Find the index of the start vertex
-        int startIndex = findVertex(startVertex); // Assuming this method exists
+        int startIndex = findVertex(startVertex);
 
-        // If start vertex is invalid, return an empty iterator
         if (!indexIsValid(startIndex))
             return resultList.iterator();
 
-        // Create a visited array to track explored vertices
         boolean[] visited = new boolean[numVertices];
         for (int i = 0; i < numVertices; i++)
             visited[i] = false;
 
-        // Enqueue the start vertex index and mark it as visited
         traversalQueue.enqueue(new Integer(startIndex));
         visited[startIndex] = true;
 
-        // BFS traversal
         while (!traversalQueue.isEmpty())
         {
-            // Dequeue a vertex
             x = traversalQueue.dequeue();
 
-            // Add the current vertex to the result list
             resultList.addToRear(vertex[x.intValue()]);
 
-            // Explore all adjacent vertices
             for (int i = 0; i < numVertices; i++)
             {
-                // If there's an edge and the vertex hasn't been visited
                 if (adjMatrix[x.intValue()][i] && !visited[i])
                 {
-                    // Enqueue the adjacent vertex and mark as visited
                     traversalQueue.enqueue(new Integer(i));
                     visited[i] = true;
                 }
             }
         }
 
-        // Return an iterator of the traversal result
         return resultList.iterator();
     }
 
@@ -284,33 +258,37 @@ public class Graph<T> implements GraphADT<T> {
      */
     @Override
     public Iterator iteratorShortestPath(T startVertex, T targetVertex) {
-        int index = findVertex(startVertex);
+        int startIndex = findVertex(startVertex);
+        int targetIndex = findVertex(targetVertex);
+        int index = startIndex;
         int[] pathLength = new int[numVertices];
         int[] predecessor = new int[numVertices];
         LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
-        ArrayUnorderedList<Integer> resultList =
-                new ArrayUnorderedList<Integer>();
+        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
 
-        if (!indexIsValid(findVertex(startVertex)) || !indexIsValid(findVertex(targetVertex)) ||
-                (findVertex(startVertex) == findVertex(targetVertex)))
+        if (!indexIsValid(startIndex) || !indexIsValid(targetIndex) ||
+                (startIndex == targetIndex))
             return resultList.iterator();
 
         boolean[] visited = new boolean[numVertices];
         for (int i = 0; i < numVertices; i++)
             visited[i] = false;
 
-        traversalQueue.enqueue(new Integer(findVertex(startVertex)));
-        visited[findVertex(startVertex)] = true;
-        pathLength[findVertex(startVertex)] = 0;
-        predecessor[findVertex(startVertex)] = -1;
+        traversalQueue.enqueue(new Integer(startIndex));
+        visited[startIndex] = true;
+        pathLength[startIndex] = 0;
+        predecessor[startIndex] = -1;
 
-        while (!traversalQueue.isEmpty() && (index != findVertex(startVertex))) {
+        while (!traversalQueue.isEmpty() && (index != targetIndex))
+        {
             index = (traversalQueue.dequeue()).intValue();
 
             /** Update the pathLength for each unvisited vertex adjacent
              to the vertex at the current index. */
-            for (int i = 0; i < numVertices; i++) {
-                if (adjMatrix[index][i] && !visited[i]) {
+            for (int i = 0; i < numVertices; i++)
+            {
+                if (adjMatrix[index][i] && !visited[i])
+                {
                     pathLength[i] = pathLength[index] + 1;
                     predecessor[i] = index;
                     traversalQueue.enqueue(new Integer(i));
@@ -318,19 +296,23 @@ public class Graph<T> implements GraphADT<T> {
                 }
             }
         }
-        if (index != findVertex(targetVertex))  // no path must have been found
+        if (index != targetIndex)  // no path must have been found
             return resultList.iterator();
 
         LinkedStack<Integer> stack = new LinkedStack<Integer>();
-        index = findVertex(targetVertex);
+        index = targetIndex;
         stack.push(new Integer(index));
-        do {
+        do
+        {
             index = predecessor[index];
             stack.push(new Integer(index));
-        } while (index != findVertex(startVertex));
+        } while (index != startIndex);
 
         while (!stack.isEmpty())
-            resultList.addToRear(((Integer) stack.pop()));
+        {
+            int vertexIndex = ((Integer)stack.pop());
+            resultList.addToRear(vertex[vertexIndex]);
+        }
 
         return resultList.iterator();
     }

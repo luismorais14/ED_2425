@@ -1,8 +1,11 @@
 package core;
 
 public class Jogo {
+    private final static int PLAYER_PODER = 50;
+
     private Missao missao;
     private Edificio edificio;
+    private Player player;
 
     /**
      * Creates an empty game
@@ -10,6 +13,7 @@ public class Jogo {
     public Jogo() {
         this.missao = new Missao();
         this.edificio = new Edificio();
+        this.player = new Player(PLAYER_PODER);
     }
 
 
@@ -18,9 +22,10 @@ public class Jogo {
      * @param missao the game mission
      * @param edificio the game building
      */
-    public Jogo(Missao missao, Edificio edificio) {
+    public Jogo(Missao missao, Edificio edificio, Player player) {
         this.missao = missao;
         this.edificio = edificio;
+        this.player = player;
     }
 
     /**
@@ -54,5 +59,13 @@ public class Jogo {
      */
     public void setEdificio(Edificio edificio) {
         this.edificio = edificio;
+    }
+
+    /**
+     * Getter for the game player
+     * @return the game player
+     */
+    public Player getPlayer() {
+        return this.player;
     }
 }

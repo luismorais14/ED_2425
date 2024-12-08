@@ -17,6 +17,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class JSONHandler {
+    private UnorderedListADT<Divisao> divisionLists = new ArrayUnorderedList<>();
+
     /**
      * Reads the entire data from the .json file
      *
@@ -129,6 +131,7 @@ public class JSONHandler {
                 }
 
                 jogo.getEdificio().addDivison(div);
+                this.divisionLists.addToFront(div);
             }
         } catch (ParseException e) {
             System.out.println("Parse Exception");
@@ -147,6 +150,29 @@ public class JSONHandler {
         int result = rand.nextInt(max-min) + min;
 
         return result;
+    }
+
+    /**
+     * Search a division by its name.
+     *
+     * @param divisaoNome the name of the division
+     * @return the index of the found division, null if not.
+     */
+    private Divisao searchDivisao(String divisaoNome) {
+        if (this.divisionLists.isEmpty()) {
+            return null;
+        }
+
+        Iterator<Divisao> iterator = this.divisionLists.iterator();
+
+        while (iterator.hasNext()) {
+            Divisao divisao = iterator.next();
+            if (divisao.getNome().equals(divisaoNome)) {
+                return divisao;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -173,7 +199,7 @@ public class JSONHandler {
                 poder = ((Number) obj.get("poder")).intValue();
                 hp = randomHP();
 
-                Divisao div = jogo.getEdificio().searchDivisao(divisaoInimigo);
+                Divisao div = searchDivisao(divisaoInimigo);
 
                 Inimigo inimigo = new Inimigo(nomeInimigo, poder , hp);
 
@@ -193,7 +219,6 @@ public class JSONHandler {
      *
      * @param jogo the game where the data will be saved
      */
-
     private void readLigacoes(Jogo jogo) {
         JSONParser parser = new JSONParser();
         JSONArray ja;
@@ -210,8 +235,8 @@ public class JSONHandler {
                 divisao1 = (String) ligacaoArray.get(0);
                 divisao2 = (String) ligacaoArray.get(1);
 
-                Divisao d1 = jogo.getEdificio().searchDivisao(divisao1);
-                Divisao d2 = jogo.getEdificio().searchDivisao(divisao2);
+                Divisao d1 = searchDivisao(divisao1);
+                Divisao d2 = searchDivisao(divisao2);
 
                 if (d1 == null || d2 == null) {
                     System.err.println("Division does not exist");
@@ -247,11 +272,13 @@ public class JSONHandler {
             tipo = (String) obj.get("tipo");
             divisao = (String) obj.get("divisao");
 
-            Divisao d1 = jogo.getEdificio().searchDivisao(divisao);
+            Divisao d1 = searchDivisao(divisao);
 
-            d1.setAlvo(new Alvo(tipo));
+            Alvo alvo = new Alvo(tipo);
 
+            d1.setAlvo(alvo);
 
+            jogo.getMissao().setAlvo(alvo);
         } catch (IOException e) {
             System.out.println("IO Exception");
         } catch (ParseException e) {
@@ -286,7 +313,7 @@ public class JSONHandler {
                 }
                 divisao = (String) obj.get("divisao");
 
-                Divisao d1 = jogo.getEdificio().searchDivisao(divisao);
+                Divisao d1 = searchDivisao(divisao);
 
                 if (d1 != null)
                     d1.setItem(new Item(tipo, pontos));
@@ -311,7 +338,7 @@ public class JSONHandler {
             for (int i = 0; i < ja.size(); i++) {
                 String nomeDivisao = (String) ja.get(i);
 
-                Divisao divisao = jogo.getEdificio().searchDivisao(nomeDivisao);
+                Divisao divisao = searchDivisao(nomeDivisao);
 
 
                 if (divisao != null) {

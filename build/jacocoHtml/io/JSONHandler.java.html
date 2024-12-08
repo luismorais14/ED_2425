@@ -3,6 +3,7 @@
 import ADT.UnorderedListADT;
 import Exceptions.JogoException;
 import core.*;
+import core.Character;
 import implementations.ArrayUnorderedList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,8 +16,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Random;
 
-<span class="fc" id="L18">public class JSONHandler {</span>
-<span class="fc" id="L19">    private UnorderedListADT&lt;Divisao&gt; divisionLists = new ArrayUnorderedList&lt;&gt;();</span>
+<span class="fc" id="L19">public class JSONHandler {</span>
+<span class="fc" id="L20">    private UnorderedListADT&lt;Divisao&gt; divisionLists = new ArrayUnorderedList&lt;&gt;();</span>
 
     /**
      * Reads the entire data from the .json file
@@ -25,19 +26,19 @@ import java.util.Random;
      * @throws JogoException exception to be thrown if the game object is null
      */
     public void importData(Jogo jogo) throws JogoException {
-<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (jogo == null) {</span>
-<span class="fc" id="L29">            throw new JogoException(&quot;Jogo object is null&quot;);</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (jogo == null) {</span>
+<span class="fc" id="L30">            throw new JogoException(&quot;Jogo object is null&quot;);</span>
         }
 
-<span class="fc" id="L32">        readEdificio(jogo);</span>
-<span class="fc" id="L33">        readLigacoes(jogo);</span>
-<span class="fc" id="L34">        readCodMissao(jogo);</span>
-<span class="fc" id="L35">        readVersao(jogo);</span>
-<span class="fc" id="L36">        readInimigos(jogo);</span>
-<span class="fc" id="L37">        readEntradasSaidas(jogo);</span>
-<span class="fc" id="L38">        readAlvo(jogo);</span>
-<span class="fc" id="L39">        readItems(jogo);</span>
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L33">        readEdificio(jogo);</span>
+<span class="fc" id="L34">        readLigacoes(jogo);</span>
+<span class="fc" id="L35">        readCodMissao(jogo);</span>
+<span class="fc" id="L36">        readVersao(jogo);</span>
+<span class="fc" id="L37">        readInimigos(jogo);</span>
+<span class="fc" id="L38">        readEntradasSaidas(jogo);</span>
+<span class="fc" id="L39">        readAlvo(jogo);</span>
+<span class="fc" id="L40">        readItems(jogo);</span>
+<span class="fc" id="L41">    }</span>
 
     /**
      * Reads the .json file
@@ -46,7 +47,7 @@ import java.util.Random;
      * @throws FileNotFoundException exception to be thrown if the file was not found
      */
     private FileReader readJsonFile() throws FileNotFoundException {
-<span class="fc" id="L49">        return new FileReader(&quot;resources\\anexo.json&quot;);</span>
+<span class="fc" id="L50">        return new FileReader(&quot;resources\\anexo.json&quot;);</span>
     }
 
     /**
@@ -55,25 +56,25 @@ import java.util.Random;
      * @param jogo the game where the data will be saved
      */
     private void readCodMissao(Jogo jogo) {
-<span class="fc" id="L58">        JSONParser parser = new JSONParser();</span>
-<span class="fc" id="L59">        String codMissao = &quot;&quot;;</span>
+<span class="fc" id="L59">        JSONParser parser = new JSONParser();</span>
+<span class="fc" id="L60">        String codMissao = &quot;&quot;;</span>
 
         try {
-<span class="fc" id="L62">            FileReader fr = readJsonFile();</span>
-<span class="fc" id="L63">            Object obj = parser.parse(fr);</span>
-<span class="fc" id="L64">            JSONObject jsonObject = (JSONObject) obj;</span>
+<span class="fc" id="L63">            FileReader fr = readJsonFile();</span>
+<span class="fc" id="L64">            Object obj = parser.parse(fr);</span>
+<span class="fc" id="L65">            JSONObject jsonObject = (JSONObject) obj;</span>
 
-<span class="fc" id="L66">            codMissao = (String) jsonObject.get(&quot;cod-missao&quot;);</span>
+<span class="fc" id="L67">            codMissao = (String) jsonObject.get(&quot;cod-missao&quot;);</span>
 
-<span class="fc" id="L68">            jogo.getMissao().setCodMissao(codMissao);</span>
-<span class="nc" id="L69">        } catch (ParseException e) {</span>
-<span class="nc" id="L70">            System.out.println(&quot;Parse Exception&quot;);</span>
-<span class="nc" id="L71">        } catch (FileNotFoundException e) {</span>
-<span class="nc" id="L72">            System.out.println(&quot;File not found&quot;);</span>
-<span class="nc" id="L73">        } catch (IOException e) {</span>
-<span class="nc" id="L74">            System.out.println(&quot;IO Exception&quot;);</span>
-<span class="pc" id="L75">        }</span>
-<span class="fc" id="L76">    }</span>
+<span class="fc" id="L69">            jogo.getMissao().setCodMissao(codMissao);</span>
+<span class="nc" id="L70">        } catch (ParseException e) {</span>
+<span class="nc" id="L71">            System.out.println(&quot;Parse Exception&quot;);</span>
+<span class="nc" id="L72">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L73">            System.out.println(&quot;File not found&quot;);</span>
+<span class="nc" id="L74">        } catch (IOException e) {</span>
+<span class="nc" id="L75">            System.out.println(&quot;IO Exception&quot;);</span>
+<span class="pc" id="L76">        }</span>
+<span class="fc" id="L77">    }</span>
 
     /**
      * Reads the mission version from the .json file
@@ -81,25 +82,25 @@ import java.util.Random;
      * @param jogo the game where the data will be saved
      */
     private void readVersao(Jogo jogo) {
-<span class="fc" id="L84">        JSONParser parser = new JSONParser();</span>
-<span class="fc" id="L85">        int versao = 0;</span>
+<span class="fc" id="L85">        JSONParser parser = new JSONParser();</span>
+<span class="fc" id="L86">        int versao = 0;</span>
 
         try {
-<span class="fc" id="L88">            FileReader fr = readJsonFile();</span>
-<span class="fc" id="L89">            Object obj = parser.parse(fr);</span>
-<span class="fc" id="L90">            JSONObject jsonObject = (JSONObject) obj;</span>
+<span class="fc" id="L89">            FileReader fr = readJsonFile();</span>
+<span class="fc" id="L90">            Object obj = parser.parse(fr);</span>
+<span class="fc" id="L91">            JSONObject jsonObject = (JSONObject) obj;</span>
 
-<span class="fc" id="L92">            versao = ((Number) jsonObject.get(&quot;versao&quot;)).intValue();</span>
+<span class="fc" id="L93">            versao = ((Number) jsonObject.get(&quot;versao&quot;)).intValue();</span>
 
-<span class="fc" id="L94">            jogo.getMissao().setVersao(versao);</span>
-<span class="nc" id="L95">        } catch (ParseException e) {</span>
-<span class="nc" id="L96">            System.out.println(&quot;Parse Exception&quot;);</span>
-<span class="nc" id="L97">        } catch (FileNotFoundException e) {</span>
-<span class="nc" id="L98">            System.out.println(&quot;File not found&quot;);</span>
-<span class="nc" id="L99">        } catch (IOException e) {</span>
-<span class="nc" id="L100">            System.out.println(&quot;IO Exception&quot;);</span>
-<span class="pc" id="L101">        }</span>
-<span class="fc" id="L102">    }</span>
+<span class="fc" id="L95">            jogo.getMissao().setVersao(versao);</span>
+<span class="nc" id="L96">        } catch (ParseException e) {</span>
+<span class="nc" id="L97">            System.out.println(&quot;Parse Exception&quot;);</span>
+<span class="nc" id="L98">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L99">            System.out.println(&quot;File not found&quot;);</span>
+<span class="nc" id="L100">        } catch (IOException e) {</span>
+<span class="nc" id="L101">            System.out.println(&quot;IO Exception&quot;);</span>
+<span class="pc" id="L102">        }</span>
+<span class="fc" id="L103">    }</span>
 
     /**
      * Reads the game building from the .json file
@@ -107,88 +108,49 @@ import java.util.Random;
      * @param jogo the game where the data will be saved
      */
     private void readEdificio(Jogo jogo) {
-<span class="fc" id="L110">        JSONParser parser = new JSONParser();</span>
+<span class="fc" id="L111">        JSONParser parser = new JSONParser();</span>
 
         try {
-<span class="fc" id="L113">            FileReader fr = readJsonFile();</span>
-<span class="fc" id="L114">            Object obj = parser.parse(fr);</span>
-<span class="fc" id="L115">            JSONObject jsonObject = (JSONObject) obj;</span>
+<span class="fc" id="L114">            FileReader fr = readJsonFile();</span>
+<span class="fc" id="L115">            Object obj = parser.parse(fr);</span>
+<span class="fc" id="L116">            JSONObject jsonObject = (JSONObject) obj;</span>
 
-<span class="fc" id="L117">            JSONArray ja = (JSONArray) jsonObject.get(&quot;edificio&quot;);</span>
+<span class="fc" id="L118">            JSONArray ja = (JSONArray) jsonObject.get(&quot;edificio&quot;);</span>
 
-<span class="fc bfc" id="L119" title="All 2 branches covered.">            for (int i = 0; i &lt; ja.size(); i++) {</span>
-<span class="fc" id="L120">                String divisao = (String) ja.get(i);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">            for (int i = 0; i &lt; ja.size(); i++) {</span>
+<span class="fc" id="L121">                String divisao = (String) ja.get(i);</span>
 
-<span class="fc" id="L122">                UnorderedListADT&lt;Inimigo&gt; inimigos = new ArrayUnorderedList&lt;&gt;();</span>
-<span class="fc" id="L123">                Alvo alvo = new Alvo();</span>
-<span class="fc" id="L124">                Item item = new Item();</span>
+<span class="fc" id="L123">                UnorderedListADT&lt;Character&gt; inimigos = new ArrayUnorderedList&lt;&gt;();</span>
+<span class="fc" id="L124">                Alvo alvo = new Alvo();</span>
+<span class="fc" id="L125">                Item item = new Item();</span>
 
-<span class="fc" id="L126">                Divisao div = new Divisao(divisao, inimigos, alvo, item);</span>
+<span class="fc" id="L127">                Divisao div = new Divisao(divisao, inimigos, alvo, item);</span>
 
-<span class="fc bfc" id="L128" title="All 2 branches covered.">                if (jogo.getEdificio().getStartVertex() == null) {</span>
-<span class="fc" id="L129">                    jogo.getEdificio().setStartVertex(div);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">                if (jogo.getEdificio().getStartVertex() == null) {</span>
+<span class="fc" id="L130">                    jogo.getEdificio().setStartVertex(div);</span>
                 }
 
-<span class="fc" id="L132">                jogo.getEdificio().addDivison(div);</span>
-<span class="fc" id="L133">                this.divisionLists.addToFront(div);</span>
+<span class="fc" id="L133">                jogo.getEdificio().addDivison(div);</span>
+<span class="fc" id="L134">                this.divisionLists.addToFront(div);</span>
             }
-<span class="nc" id="L135">        } catch (ParseException e) {</span>
-<span class="nc" id="L136">            System.out.println(&quot;Parse Exception&quot;);</span>
-<span class="nc" id="L137">        } catch (FileNotFoundException e) {</span>
-<span class="nc" id="L138">            System.out.println(&quot;File not found&quot;);</span>
-<span class="nc" id="L139">        } catch (IOException e) {</span>
-<span class="nc" id="L140">            System.out.println(&quot;IO Exception&quot;);</span>
-<span class="pc" id="L141">        }</span>
-<span class="fc" id="L142">    }</span>
+<span class="nc" id="L136">        } catch (ParseException e) {</span>
+<span class="nc" id="L137">            System.out.println(&quot;Parse Exception&quot;);</span>
+<span class="nc" id="L138">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L139">            System.out.println(&quot;File not found&quot;);</span>
+<span class="nc" id="L140">        } catch (IOException e) {</span>
+<span class="nc" id="L141">            System.out.println(&quot;IO Exception&quot;);</span>
+<span class="pc" id="L142">        }</span>
+<span class="fc" id="L143">    }</span>
 
     //Perguntar ao stor se necessita de referencia
     private int randomHP() {
-<span class="fc" id="L146">        Random rand = new Random();</span>
-<span class="fc" id="L147">        int min = 30;</span>
-<span class="fc" id="L148">        int max = 70;</span>
-<span class="fc" id="L149">        int result = rand.nextInt(max-min) + min;</span>
+<span class="fc" id="L147">        Random rand = new Random();</span>
+<span class="fc" id="L148">        int min = 30;</span>
+<span class="fc" id="L149">        int max = 70;</span>
+<span class="fc" id="L150">        int result = rand.nextInt(max-min) + min;</span>
 
-<span class="fc" id="L151">        return result;</span>
+<span class="fc" id="L152">        return result;</span>
     }
-
-    /**
-     * Reads the enemies from the .json file
-     *
-     * @param jogo the game where the data will be saved
-     */
-    private void readInimigos(Jogo jogo) {
-<span class="fc" id="L160">        JSONParser parser = new JSONParser();</span>
-        JSONArray ja;
-<span class="fc" id="L162">        String nomeInimigo = &quot;&quot;;</span>
-<span class="fc" id="L163">        String divisaoInimigo = &quot;&quot;;</span>
-<span class="fc" id="L164">        int poder = 0;</span>
-<span class="fc" id="L165">        int hp = 0;</span>
-
-        try {
-<span class="fc" id="L168">            JSONObject jsonObject = (JSONObject) parser.parse(readJsonFile());</span>
-<span class="fc" id="L169">            ja = (JSONArray) jsonObject.get(&quot;inimigos&quot;);</span>
-
-<span class="fc bfc" id="L171" title="All 2 branches covered.">            for (int i = 0; i &lt; ja.size(); i++) {</span>
-<span class="fc" id="L172">                JSONObject obj = (JSONObject) ja.get(i);</span>
-<span class="fc" id="L173">                nomeInimigo = (String) obj.get(&quot;nome&quot;);</span>
-<span class="fc" id="L174">                divisaoInimigo = (String) obj.get(&quot;divisao&quot;);</span>
-<span class="fc" id="L175">                poder = ((Number) obj.get(&quot;poder&quot;)).intValue();</span>
-<span class="fc" id="L176">                hp = randomHP();</span>
-
-<span class="fc" id="L178">                Divisao div = searchDivisao(divisaoInimigo);</span>
-
-<span class="fc" id="L180">                Inimigo inimigo = new Inimigo(nomeInimigo, poder , hp);</span>
-
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">                if (div != null)</span>
-<span class="fc" id="L183">                    div.setInimigo(inimigo);</span>
-            }
-
-<span class="nc" id="L186">        } catch (IOException e) {</span>
-<span class="nc" id="L187">            System.out.println(&quot;IO Exception&quot;);</span>
-<span class="nc" id="L188">        } catch (ParseException e) {</span>
-<span class="nc" id="L189">            System.out.println(&quot;Parse Exception&quot;);</span>
-<span class="pc" id="L190">        }</span>
-<span class="fc" id="L191">    }</span>
 
     /**
      * Search a division by its name.
@@ -197,28 +159,66 @@ import java.util.Random;
      * @return the index of the found division, null if not.
      */
     private Divisao searchDivisao(String divisaoNome) {
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        if (this.divisionLists.isEmpty()) {</span>
-<span class="nc" id="L201">            return null;</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if (this.divisionLists.isEmpty()) {</span>
+<span class="nc" id="L163">            return null;</span>
         }
 
-<span class="fc" id="L204">        Iterator&lt;Divisao&gt; iterator = this.divisionLists.iterator();</span>
+<span class="fc" id="L166">        Iterator&lt;Divisao&gt; iterator = this.divisionLists.iterator();</span>
 
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">        while (iterator.hasNext()) {</span>
-<span class="fc" id="L207">            Divisao divisao = iterator.next();</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">            if (divisao.getNome().equals(divisaoNome)) {</span>
-<span class="fc" id="L209">                return divisao;</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        while (iterator.hasNext()) {</span>
+<span class="fc" id="L169">            Divisao divisao = iterator.next();</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            if (divisao.getNome().equals(divisaoNome)) {</span>
+<span class="fc" id="L171">                return divisao;</span>
             }
-<span class="fc" id="L211">        }</span>
+<span class="fc" id="L173">        }</span>
 
-<span class="nc" id="L213">        return null;</span>
+<span class="nc" id="L175">        return null;</span>
     }
+
+    /**
+     * Reads the enemies from the .json file
+     *
+     * @param jogo the game where the data will be saved
+     */
+    private void readInimigos(Jogo jogo) {
+<span class="fc" id="L184">        JSONParser parser = new JSONParser();</span>
+        JSONArray ja;
+<span class="fc" id="L186">        String nomeInimigo = &quot;&quot;;</span>
+<span class="fc" id="L187">        String divisaoInimigo = &quot;&quot;;</span>
+<span class="fc" id="L188">        int poder = 0;</span>
+<span class="fc" id="L189">        int hp = 0;</span>
+
+        try {
+<span class="fc" id="L192">            JSONObject jsonObject = (JSONObject) parser.parse(readJsonFile());</span>
+<span class="fc" id="L193">            ja = (JSONArray) jsonObject.get(&quot;inimigos&quot;);</span>
+
+<span class="fc bfc" id="L195" title="All 2 branches covered.">            for (int i = 0; i &lt; ja.size(); i++) {</span>
+<span class="fc" id="L196">                JSONObject obj = (JSONObject) ja.get(i);</span>
+<span class="fc" id="L197">                nomeInimigo = (String) obj.get(&quot;nome&quot;);</span>
+<span class="fc" id="L198">                divisaoInimigo = (String) obj.get(&quot;divisao&quot;);</span>
+<span class="fc" id="L199">                poder = ((Number) obj.get(&quot;poder&quot;)).intValue();</span>
+<span class="fc" id="L200">                hp = randomHP();</span>
+
+<span class="fc" id="L202">                Divisao div = searchDivisao(divisaoInimigo);</span>
+
+<span class="fc" id="L204">                Inimigo inimigo = new Inimigo(nomeInimigo, poder , hp);</span>
+
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">                if (div != null)</span>
+<span class="fc" id="L207">                    div.addCharacter(inimigo);</span>
+            }
+
+<span class="nc" id="L210">        } catch (IOException e) {</span>
+<span class="nc" id="L211">            System.out.println(&quot;IO Exception&quot;);</span>
+<span class="nc" id="L212">        } catch (ParseException e) {</span>
+<span class="nc" id="L213">            System.out.println(&quot;Parse Exception&quot;);</span>
+<span class="pc" id="L214">        }</span>
+<span class="fc" id="L215">    }</span>
 
     /**
      * Reads the connections between divisions from the .json file
      *
      * @param jogo the game where the data will be saved
      */
-
     private void readLigacoes(Jogo jogo) {
 <span class="fc" id="L223">        JSONParser parser = new JSONParser();</span>
         JSONArray ja;
@@ -341,17 +341,16 @@ import java.util.Random;
 
 <span class="pc bpc" id="L342" title="1 of 2 branches missed.">                if (divisao != null) {</span>
 <span class="fc" id="L343">                    divisao.setEntradaSaida(true);</span>
-                    //divisao.addEntradaSaida(divisao);
                 } else {
-<span class="nc" id="L346">                    System.err.println(&quot;Division not found: &quot; + nomeDivisao);</span>
+<span class="nc" id="L345">                    System.err.println(&quot;Division not found: &quot; + nomeDivisao);</span>
                 }
             }
-<span class="nc" id="L349">        } catch (IOException e) {</span>
-<span class="nc" id="L350">            System.out.println(&quot;IO Exception&quot;);</span>
-<span class="nc" id="L351">        } catch (ParseException e) {</span>
-<span class="nc" id="L352">            System.out.println(&quot;Parse Exception&quot;);</span>
-<span class="pc" id="L353">        }</span>
-<span class="fc" id="L354">    }</span>
+<span class="nc" id="L348">        } catch (IOException e) {</span>
+<span class="nc" id="L349">            System.out.println(&quot;IO Exception&quot;);</span>
+<span class="nc" id="L350">        } catch (ParseException e) {</span>
+<span class="nc" id="L351">            System.out.println(&quot;Parse Exception&quot;);</span>
+<span class="pc" id="L352">        }</span>
+<span class="fc" id="L353">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

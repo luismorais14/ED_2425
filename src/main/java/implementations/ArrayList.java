@@ -15,7 +15,7 @@ public class ArrayList<T> implements ListADT<T> {
 
     protected T[] array;
     protected int counter;
-    protected static int modCount;
+    protected int modCount;
 
     /**
      * Creates an empty list using the default capacity.

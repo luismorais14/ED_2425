@@ -21,7 +21,7 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedList
 
         array[0] = element;
         counter++;
-        modCount++;
+        super.modCount++;
     }
 
     /**
@@ -37,7 +37,7 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedList
 
         array[counter] = element;
         counter++;
-        modCount++;
+        super.modCount++;
     }
 
     /**
@@ -64,6 +64,6 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedList
 
         array[index + 1] = element;
         counter++;
-        modCount++;
+        super.modCount++;
     }
 }

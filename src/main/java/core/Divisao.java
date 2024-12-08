@@ -1,7 +1,12 @@
 package core;
 
+import ADT.ListADT;
 import ADT.UnorderedListADT;
+import Exceptions.ElementNotFoundException;
+import implementations.ArrayList;
 import implementations.ArrayUnorderedList;
+
+import java.util.Iterator;
 
 public class Divisao {
     private String nome;
@@ -62,7 +67,39 @@ public class Divisao {
      * @param character the enemy to be added
      */
     public void addCharacter(Character character) {
-        this.character.addToFront(character);
+        if (!this.character.contains(character)) {
+            this.character.addToFront(character);
+        }
+    }
+
+    public void removeCharacter(Character character) throws ElementNotFoundException {
+        if (this.character.contains(character)) {
+            this.character.remove(character);
+        }
+    }
+
+    /**
+     * Getter for the characters List
+     * @return the characters list
+     */
+    public UnorderedListADT<Character> getCharacters() {
+        return this.character;
+    }
+
+    public UnorderedListADT<Character> getInimigos() {
+        UnorderedListADT<Character> inimigos = new ArrayUnorderedList<>();
+
+        Iterator<Character> iterator = this.character.iterator();
+
+        while (iterator.hasNext()) {
+            Character current = iterator.next();
+
+            if (current instanceof Inimigo) {
+                inimigos.addToRear(current);
+            }
+        }
+
+        return inimigos;
     }
 
     /**

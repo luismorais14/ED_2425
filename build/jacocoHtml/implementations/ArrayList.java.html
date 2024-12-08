@@ -15,7 +15,7 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
 
     protected T[] array;
     protected int counter;
-    protected static int modCount;
+    protected int modCount;
 
     /**
      * Creates an empty list using the default capacity.
@@ -75,12 +75,12 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
      * @return the index of the element in the list, -1 if the element was not found
      */
     protected int find(T element) {
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        for (int i = 0; i &lt; counter; i++) {</span>
-<span class="nc bnc" id="L79" title="All 4 branches missed.">            if (array[i] != null &amp;&amp; array[i].equals(element)) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (int i = 0; i &lt; counter; i++) {</span>
+<span class="pc bpc" id="L79" title="2 of 4 branches missed.">            if (array[i] != null &amp;&amp; array[i].equals(element)) {</span>
 <span class="nc" id="L80">                return i;</span>
             }
         }
-<span class="nc" id="L83">        return -1;</span>
+<span class="fc" id="L83">        return -1;</span>
     }
 
     /**
@@ -149,7 +149,7 @@ public class ArrayList&lt;T&gt; implements ListADT&lt;T&gt; {
      */
     @Override
     public boolean contains(T target) {
-<span class="nc bnc" id="L152" title="All 2 branches missed.">        return find(target) != -1;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        return find(target) != -1;</span>
     }
 
     /**
