@@ -157,6 +157,7 @@ public class JSONHandler {
      * @param divisaoNome the name of the division
      * @return the index of the found division, null if not.
      */
+
     private Divisao searchDivisao(String divisaoNome) {
         if (this.divisionLists.isEmpty()) {
             return null;
@@ -179,6 +180,7 @@ public class JSONHandler {
      *
      * @param jogo the game where the data will be saved
      */
+
     private void readInimigos(Jogo jogo) {
         JSONParser parser = new JSONParser();
         JSONArray ja;
@@ -218,6 +220,7 @@ public class JSONHandler {
      *
      * @param jogo the game where the data will be saved
      */
+
     private void readLigacoes(Jogo jogo) {
         JSONParser parser = new JSONParser();
         JSONArray ja;
@@ -258,6 +261,7 @@ public class JSONHandler {
      *
      * @param jogo the game where the data will be saved
      */
+
     private void readAlvo(Jogo jogo) {
         JSONParser parser = new JSONParser();
         String tipo = "";
@@ -325,6 +329,12 @@ public class JSONHandler {
         }
 
     }
+
+    /**
+     * Reads the entrances/exits from the .json file
+     *
+     * @param jogo the game where the data will be saved
+     */
 
     private void readEntradasSaidas(Jogo jogo) {
         JSONParser parser = new JSONParser();

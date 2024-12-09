@@ -29,10 +29,10 @@ public class Divisao {
     /**
      * Creates a division specifying the name, enemy, target and item
      *
-     * @param nome    name of the division
+     * @param nome      name of the division
      * @param character enemy present on the division
-     * @param alvo    target (if exists) on the division
-     * @param item    item (if exists) on the division
+     * @param alvo      target (if exists) on the division
+     * @param item      item (if exists) on the division
      */
     public Divisao(String nome, UnorderedListADT<Character> character, Alvo alvo, Item item) {
         this.nome = nome;
@@ -79,6 +79,7 @@ public class Divisao {
 
     /**
      * Getter for the characters List
+     *
      * @return the characters list
      */
     public UnorderedListADT<Character> getCharacters() {
@@ -137,18 +138,36 @@ public class Divisao {
         this.item = item;
     }
 
+    /**
+     * Checks if the division is marked as an entrance/exit.
+     *
+     * @return true if the division is an entrance/exit, false otherwise.
+     */
     public boolean isEntradaSaida() {
         return isEntradaSaida;
     }
 
+    /**
+     * Sets whether the division is an entrance/exit.
+     *
+     * @param isEntradaSaida true to mark the division as an entrance/exit, false otherwise.
+     */
     public void setEntradaSaida(boolean isEntradaSaida) {
         this.isEntradaSaida = isEntradaSaida;
     }
 
+    /**
+     * Retrieves the number of characters currently in the division.
+     *
+     * @return The number of characters in the division.
+     */
     public int getNumCharacters() {
         return character.size();
     }
 
+    /**
+     * Removes the item from the division, setting it to null.
+     */
     public void removeItem() {
         this.item = null;
     }

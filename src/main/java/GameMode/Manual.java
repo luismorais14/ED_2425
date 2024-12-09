@@ -22,6 +22,10 @@ public class Manual {
         this.jogo = jogo;
     }
 
+    /**
+     * Lists all divisions in the building that are marked as entrances/exits
+     */
+
     private void listEntradaSaida() {
         Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
         int i = 1;
@@ -35,6 +39,13 @@ public class Manual {
             }
         }
     }
+
+    /**
+     * Retrieves the division by its index among the entraces/exits
+     *
+     * @param index the index of the disered division
+     * @return the division corresponding to the index, or null if not found
+     */
 
     private Divisao getDivisaoByIndex(int index) {
         Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
@@ -51,6 +62,12 @@ public class Manual {
         }
         return null;
     }
+
+    /**
+     * Prints the possible moves from the current division
+     *
+     * @param currentDivisao the current division
+     */
 
     private void printPossibleMoves(Divisao currentDivisao) {
         Divisao current = currentDivisao;
@@ -70,6 +87,10 @@ public class Manual {
             System.out.println("0. Exit the building");
         }
     }
+
+    /**
+     * Starts the manual game mode
+     */
 
     public void startGame() {
         Scanner input = new Scanner(System.in);
@@ -101,6 +122,12 @@ public class Manual {
             game(chooseDivisao);
         }
     }
+
+    /**
+     * Executes the game starting from a given divison
+     *
+     * @param currentDivisao the starting division of the game
+     */
 
     private void game(Divisao currentDivisao) {
         Scanner input = new Scanner(System.in);
@@ -216,6 +243,10 @@ public class Manual {
         }
     }
 
+    /**
+     * Handles the movement logic of the enemies in the building
+     */
+
     private void enemyMovement() {
         Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
 
@@ -258,6 +289,12 @@ public class Manual {
         }
     }
 
+    /**
+     * Handles interactions between the player and the enemies in the current division
+     *
+     * @param divisao the division where the interaction takes place
+     */
+
     private void handleEnemies(Divisao divisao) {
         Iterator<Character> iterator = divisao.getInimigos().iterator();
         int initialDivisionEnemies = divisao.getInimigos().size();
@@ -287,6 +324,13 @@ public class Manual {
         System.out.println("You defeated " + (initialDivisionEnemies - divisao.getInimigos().size()) + " enemies in this division!");
 
     }
+
+
+    /**
+     * Shows the shortest path to the target from the starting division
+     *
+     * @param startDivision the starting division
+     */
 
     private void showShortestPathToTarget(Divisao startDivision) {
         Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
@@ -324,6 +368,12 @@ public class Manual {
         }
     }
 
+    /**
+     * Shows the shortest path to a medkit from the starting division
+     *
+     * @param startDivision the starting division
+     */
+
     private void showShortestPathToMedkit(Divisao startDivision) {
         Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(startDivision);
         Divisao alvoDivision = null;
@@ -359,6 +409,14 @@ public class Manual {
             System.out.println("END");
         }
     }
+
+    /**
+     * Gets a division by its index among the adjacent division of the current division
+     *
+     * @param currentDivisao the current division
+     * @param index          the index of the desired adjacent division
+     * @return the division corresponding to the index, or null if not found
+     */
 
     private Divisao getDivisionByIndex(Divisao currentDivisao, int index) {
         UnorderedListADT<Divisao> adjacentDivisions = this.jogo.getEdificio().getAdjacentDivisions(currentDivisao);

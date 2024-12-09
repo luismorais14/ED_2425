@@ -81,6 +81,12 @@ public class Character {
         this.poder = poder;
     }
 
+    /**
+     * Reduces the player's health by the specified damage value.
+     * If the resulting health is less than or equal to zero, it is set to zero.
+     *
+     * @param dano The amount of damage to be subtracted from the player's health.
+     */
     public void receberDano(int dano) {
         this.vida -= dano;
 
