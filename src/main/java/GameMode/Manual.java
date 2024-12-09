@@ -104,10 +104,6 @@ public class Manual {
 
                 handleEnemies(currentDivisao);
 
-                if (!currentDivisao.getInimigos().isEmpty()) {
-                    enemyMovement();
-                }
-
             }
 
             if (!currentDivisao.getAlvo().getTipo().isEmpty()) {
@@ -120,6 +116,8 @@ public class Manual {
 
             System.out.println("\nShortest Path to nearest Medkit: \n");
             showShortestPathToMedkit(currentDivisao);
+
+            enemyMovement();
 
             System.out.println("\nChoose your next move: ");
 
