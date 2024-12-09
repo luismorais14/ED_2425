@@ -92,7 +92,8 @@ public class Menus {
                     manual.startGame();
                     break;
                 case 2:
-                    //TODO instanciar jogo, reduzindo o poder de ataque do tocruz para um pouco menos do que o facil
+                    showMap();
+                    //TODO implementar modo automatico do jogo
                     break;
                 case 3:
                     return;
