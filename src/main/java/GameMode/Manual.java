@@ -52,6 +52,25 @@ public class Manual {
         return null;
     }
 
+    private void printPossibleMoves(Divisao currentDivisao) {
+        Divisao current = currentDivisao;
+        int i = 1;
+        UnorderedListADT<Divisao> adjacentDivisions = this.jogo.getEdificio().getAdjacentDivisions(current);
+
+        if (adjacentDivisions != null && !adjacentDivisions.isEmpty()) {
+            System.out.println("Divisions accessible in a movement from the current division:");
+
+            Iterator<Divisao> adjIterator = adjacentDivisions.iterator();
+            while (adjIterator.hasNext()) {
+                Divisao adjacentDivision = adjIterator.next();
+                System.out.println(i + "." + adjacentDivision.getNome());
+                i++;
+            }
+        } else {
+            System.out.println("0. Exit the building");
+        }
+    }
+
     public void startGame() {
         Scanner input = new Scanner(System.in);
         boolean aux = false;
@@ -86,26 +105,56 @@ public class Manual {
     private void game(Divisao currentDivisao) {
         Scanner input = new Scanner(System.in);
         boolean itemOnRoom = false;
+        boolean useItem = false;
 
         while (true) {
             System.out.println("\nCurrent Division: " + currentDivisao.getNome());
+            System.out.println("\nPLAYER FASE: \n");
 
-
-            if (currentDivisao.getInimigos() != null && !currentDivisao.getInimigos().isEmpty()) {
-                System.out.println("You encounter " + currentDivisao.getInimigos().size() + " enemies in this division!");
-                if (currentDivisao.getItem() != null && !currentDivisao.getItem().getTipo().isEmpty()) {
-                    System.out.println("On this division you have a " + currentDivisao.getItem().getTipo());
-                    itemOnRoom = true;
+            if (currentDivisao.isEntradaSaida()) {
+                System.out.println("Do you want to exit the building? (Y/N)");
+                String answer = input.next();
+                if (answer.equalsIgnoreCase("Y")) {
+                    System.out.println("Exiting the building...");
+                    return;
                 }
+            }
 
-                if (itemOnRoom) {
+            itemOnRoom = false;
+
+            if (this.jogo.getPlayer().getVida() < 0) {
+                if (this.jogo.getPlayer().getNumberOfItems() > 0) {
+                    System.out.println("You have " + this.jogo.getPlayer().getNumberOfItems() + " items in your backpack.");
+                    System.out.println("Do you want to use any of them? (Y/N)");
+                    String answer = input.next();
+
+                    if (answer.equalsIgnoreCase("Y")) {
+                        this.jogo.getPlayer().useItem();
+                        useItem = true;
+                    }
+                }
+            }
+
+            if (currentDivisao.getItem() != null && !currentDivisao.getItem().getTipo().isEmpty()) {
+                System.out.println("On this division you have a " + currentDivisao.getItem().getTipo());
+                itemOnRoom = true;
+            }
+
+            if (itemOnRoom) {
+                if (currentDivisao.getItem().getTipo().equals("colete")) {
+                    this.jogo.getPlayer().setVida(this.jogo.getPlayer().getVida() + currentDivisao.getItem().getPontos());
+                } else {
                     this.jogo.getPlayer().addItemToMochila(currentDivisao.getItem());
                 }
 
-                handleEnemies(currentDivisao);
+                currentDivisao.removeItem();
+            }
 
-                if (!currentDivisao.getInimigos().isEmpty()) {
-                    enemyMovement();
+            if (currentDivisao.getInimigos() != null && !currentDivisao.getInimigos().isEmpty()) {
+                System.out.println("You encounter " + currentDivisao.getInimigos().size() + " enemies in this division!");
+
+                if (!useItem) {
+                    handleEnemies(currentDivisao);
                 }
 
             }
@@ -115,27 +164,55 @@ public class Manual {
                 return;
             }
 
-            System.out.println("\nShortest Path to target: \n");
-            showShortestPathToTarget(currentDivisao);
+            if (currentDivisao.getInimigos().isEmpty()) {
+                enemyMovement();
 
-            System.out.println("\nShortest Path to nearest Medkit: \n");
-            showShortestPathToMedkit(currentDivisao);
+                System.out.println("\nShortest Path to target: \n");
+                showShortestPathToTarget(currentDivisao);
 
-            System.out.println("\nChoose your next move: ");
+                System.out.println("\nShortest Path to nearest Medkit: \n");
+                showShortestPathToMedkit(currentDivisao);
 
-            try {
-                int moveChoice = input.nextInt();
-                Divisao nextDivisao = getDivisionByIndex(currentDivisao, moveChoice);
+                System.out.println("\nChoose your next move: ");
+                printPossibleMoves(currentDivisao);
 
-                if (nextDivisao != null) {
-                    currentDivisao = nextDivisao;
-                } else {
-                    System.out.println("Invalid move. Try again.");
+                try {
+                    int moveChoice = input.nextInt();
+
+                    if (moveChoice == 0) {
+                        System.out.println("Exiting the building...");
+                        return;
+                    }
+
+                    System.out.println("PLAYER FASE: \n");
+
+                    Divisao nextDivisao = getDivisionByIndex(currentDivisao, moveChoice);
+
+                    if (nextDivisao != null) {
+                        currentDivisao = nextDivisao;
+                    } else {
+                        System.out.println("Invalid move. Try again.");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Please enter a valid number.");
+                    input.nextLine();
                 }
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-                input.nextLine();
+            } else {
+                System.out.println("ENEMY FASE: \n");
+                System.out.println("*Enemies moved out!*");
+
+                Iterator<Character> characterIterator = currentDivisao.getInimigos().iterator();
+                while (characterIterator.hasNext()) {
+                    Character currentCharacter = characterIterator.next();
+                    this.jogo.getPlayer().receberDano(currentCharacter.getPoder());
+                }
+
+                if (this.jogo.getPlayer().getVida() <= 0) {
+                    System.out.println("You have been defeated!");
+                    return;
+                }
             }
+
         }
     }
 
@@ -179,7 +256,6 @@ public class Manual {
                 }
             }
         }
-
     }
 
     private void handleEnemies(Divisao divisao) {
@@ -242,19 +318,19 @@ public class Manual {
         }
 
         if (!hasPath) {
-            System.out.println("No path available.");
+            System.out.println("You have an item in this room.");
         } else {
             System.out.println("END");
         }
     }
 
     private void showShortestPathToMedkit(Divisao startDivision) {
-        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(startDivision);
         Divisao alvoDivision = null;
 
         while (iterator.hasNext()) {
             Divisao current = iterator.next();
-            if (current.getItem().getTipo().equals("kit de vida")) {
+            if (current.getItem() != null && current.getItem().getTipo().equals("kit de vida")) {
                 alvoDivision = current;
                 break;
             }
@@ -285,7 +361,23 @@ public class Manual {
     }
 
     private Divisao getDivisionByIndex(Divisao currentDivisao, int index) {
-        // Implement logic to fetch a division by its index
+        UnorderedListADT<Divisao> adjacentDivisions = this.jogo.getEdificio().getAdjacentDivisions(currentDivisao);
+
+        if (index < 1 || index > adjacentDivisions.size()) {
+            return null;
+        }
+
+        int i = 1;
+        while (adjacentDivisions != null && !adjacentDivisions.isEmpty()) {
+            Iterator<Divisao> adjIterator = adjacentDivisions.iterator();
+            while (adjIterator.hasNext()) {
+                Divisao adjacentDivision = adjIterator.next();
+                if (i == index) {
+                    return adjacentDivision;
+                }
+                i++;
+            }
+        }
         return null;
     }
 }

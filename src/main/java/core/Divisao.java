@@ -15,7 +15,6 @@ public class Divisao {
     private Item item;
     private boolean isEntradaSaida;
 
-
     /**
      * Creates an empty division
      */
@@ -138,7 +137,6 @@ public class Divisao {
         this.item = item;
     }
 
-
     public boolean isEntradaSaida() {
         return isEntradaSaida;
     }
@@ -150,4 +148,9 @@ public class Divisao {
     public int getNumCharacters() {
         return character.size();
     }
+
+    public void removeItem() {
+        this.item = null;
+    }
+
 }

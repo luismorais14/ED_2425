@@ -84,7 +84,7 @@ public class Graph&lt;T&gt; implements GraphADT&lt;T&gt; {
      * @param vertex The vertex to look for
      * @return -1 if the vertex does not exist, his position otherwise
      */
-    protected int findVertex(T vertex) {
+    private int findVertex(T vertex) {
 <span class="pc bpc" id="L88" title="1 of 2 branches missed.">        for (int i = 0; i &lt; this.numVertices; i++) {</span>
 <span class="fc bfc" id="L89" title="All 2 branches covered.">            if (this.vertex[i].equals(vertex)) {</span>
 <span class="fc" id="L90">                return i;</span>

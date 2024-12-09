@@ -141,8 +141,7 @@ public class JSONHandler {
             System.out.println("IO Exception");
         }
     }
-
-    //Perguntar ao stor se necessita de referencia
+    
     private int randomHP() {
         Random rand = new Random();
         int min = 30;

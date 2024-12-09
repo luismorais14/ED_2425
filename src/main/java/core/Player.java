@@ -41,4 +41,32 @@ public class Player extends Character implements Attack{
     public void addItemToMochila(Item item) {
         mochila.push(item);
     }
+
+    public int getNumberOfItems() {
+        return mochila.size();
+    }
+
+    public void showItems() {
+        System.out.println("Items on the backpack: ");
+
+        while (!mochila.isEmpty()) {
+            System.out.println(mochila.pop().toString());
+        }
+    }
+
+    public void useItem() {
+        if (!mochila.isEmpty()) {
+            Item item = mochila.pop();
+
+            this.setVida(this.getVida() + item.getPontos());
+
+            if (this.getVida() >= 100) {
+                this.setVida(100);
+            }
+
+            System.out.println("Using item: " + item.toString());
+        } else {
+            System.out.println("No items on the backpack");
+        }
+    }
 }

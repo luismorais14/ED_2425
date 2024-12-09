@@ -1,11 +1,9 @@
 package core;
 
 import ADT.GraphADT;
-import ADT.ListADT;
 import ADT.UnorderedListADT;
-import implementations.ArrayList;
 import implementations.ArrayUnorderedList;
-import implementations.Graph;
+import implementations.GraphImpl;
 
 import java.util.Iterator;
 
@@ -17,7 +15,7 @@ public class Edificio {
      * Creates an empty building
      */
     public Edificio() {
-        divisoes = new Graph<Divisao>();
+        divisoes = new GraphImpl<Divisao>();
         startVertex = null;
     }
 
@@ -52,6 +50,10 @@ public class Edificio {
         return this.divisoes.iteratorBFS(startVertex);
     }
 
+    public Iterator getDivisoesIterator(Divisao startVertex) {
+        return this.divisoes.iteratorBFS(startVertex);
+    }
+
     public GraphADT<Divisao> getDivisoes() {
         return divisoes;
     }
@@ -64,14 +66,12 @@ public class Edificio {
      * @return true if there is an edge between the two divisions, false otherwise
      */
     private boolean hasEdge(Divisao divisao1, Divisao divisao2) {
-        try {
-            divisoes.removeEdge(divisao1, divisao2);
-            return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-            divisoes.addEdge(divisao1, divisao2);
+        boolean aux = false;
+
+        if (this.divisoes instanceof GraphImpl) {
+            aux = ((GraphImpl<Divisao>) this.divisoes).hasEdge(divisao1, divisao2);
         }
+        return aux;
     }
 
     /**
