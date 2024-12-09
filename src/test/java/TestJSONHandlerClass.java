@@ -11,7 +11,7 @@ public class TestJSONHandlerClass {
     void testImportData() throws JogoException {
         Missao missao = new Missao();
         Edificio edificio = new Edificio();
-        Player p1 = new Player();
+        Player p1 = new     Player();
         Jogo jogo = new Jogo(missao, edificio, p1);
         JSONHandler jsonHandler = new JSONHandler();
         jsonHandler.importData(jogo);
