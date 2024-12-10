@@ -135,6 +135,7 @@ public class Manual {
         Scanner input = new Scanner(System.in);
         boolean itemOnRoom = false;
         boolean useItem = false;
+        boolean targetFound = false;
 
         while (true) {
             System.out.println("\nCurrent Division: " + currentDivisao.getNome());
@@ -145,6 +146,12 @@ public class Manual {
                 String answer = input.next();
                 if (answer.equalsIgnoreCase("Y")) {
                     System.out.println("Exiting the building...");
+
+                    if (targetFound) {
+                        System.out.println("Mission accomplished!");
+                    } else {
+                        System.out.println("Mission failed!");
+                    }
                     return;
                 }
             }
@@ -191,7 +198,8 @@ public class Manual {
             if (currentDivisao.getInimigos().isEmpty()) {
                 if (!currentDivisao.getAlvo().getTipo().isEmpty()) {
                     System.out.println("You found the target!");
-                    this.jogo.getPlayer().addItemToMochila(currentDivisao.getAlvo());
+                    currentDivisao.removeTarget();
+                    targetFound = true;
                 }
 
                 enemyMovement();
@@ -335,19 +343,19 @@ public class Manual {
      */
 
     private void showShortestPathToTarget(Divisao startDivision) {
-        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(startDivision);
         Divisao alvoDivision = null;
 
         while (iterator.hasNext()) {
             Divisao current = iterator.next();
-            if (!current.getAlvo().getTipo().isEmpty()) {
+            if (current.getAlvo() != null && current.getAlvo().getTipo().equals("quimico")) {
                 alvoDivision = current;
                 break;
             }
         }
 
         if (alvoDivision == null) {
-            System.out.println("No target found.");
+            System.out.println("No target found or already picked up.");
             return;
         }
 
@@ -389,7 +397,7 @@ public class Manual {
         }
 
         if (alvoDivision == null) {
-            System.out.println("No target found.");
+            System.out.println("No medkit found or already picked up.");
             return;
         }
 

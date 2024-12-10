@@ -170,4 +170,11 @@ public class Divisao {
         this.item = null;
     }
 
+    /**
+     * Removes the target from the division, setting it to null.
+     */
+    public void removeTarget() {
+        this.alvo = null;
+    }
+
 }
