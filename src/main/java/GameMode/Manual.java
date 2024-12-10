@@ -193,6 +193,28 @@ public class Manual {
                     handleEnemies(currentDivisao);
                 }
 
+                if (!currentDivisao.getInimigos().isEmpty()) {
+                    System.out.println("ENEMY FASE: \n");
+                    System.out.println("*Enemies moved out!*");
+
+                    enemyMovement(currentDivisao);
+
+                    Iterator<Character> characterIterator = currentDivisao.getInimigos().iterator();
+                    while (characterIterator.hasNext()) {
+                        Character currentCharacter = characterIterator.next();
+                        this.jogo.getPlayer().receberDano(currentCharacter.getPoder());
+                    }
+
+                    if (this.jogo.getPlayer().getVida() <= 0) {
+                        System.out.println("You have been defeated!");
+                        return;
+                    }
+                } else {
+                    System.out.println("You defeated all enemies in this division!");
+                }
+            } else {
+                System.out.println("ENEMY FASE: \n");
+                enemyMovement(currentDivisao);
             }
 
             if (currentDivisao.getInimigos().isEmpty()) {
@@ -201,8 +223,6 @@ public class Manual {
                     currentDivisao.removeTarget();
                     targetFound = true;
                 }
-
-                enemyMovement();
 
                 System.out.println("\nShortest Path to target: \n");
                 showShortestPathToTarget(currentDivisao);
@@ -234,22 +254,7 @@ public class Manual {
                     System.out.println("Invalid input. Please enter a valid number.");
                     input.nextLine();
                 }
-            } else {
-                System.out.println("ENEMY FASE: \n");
-                System.out.println("*Enemies moved out!*");
-
-                Iterator<Character> characterIterator = currentDivisao.getInimigos().iterator();
-                while (characterIterator.hasNext()) {
-                    Character currentCharacter = characterIterator.next();
-                    this.jogo.getPlayer().receberDano(currentCharacter.getPoder());
-                }
-
-                if (this.jogo.getPlayer().getVida() <= 0) {
-                    System.out.println("You have been defeated!");
-                    return;
-                }
             }
-
         }
     }
 
@@ -257,13 +262,13 @@ public class Manual {
      * Handles the movement logic of the enemies in the building
      */
 
-    private void enemyMovement() {
-        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
+    private void enemyMovement(Divisao currentDivisao) {
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(currentDivisao);
 
         while (iterator.hasNext()) {
             Divisao current = iterator.next();
 
-            if (current != null && ((current.getNumCharacters() - current.getInimigos().size()) == 0)) {
+            if (current != null && !current.equals(currentDivisao)) {
                 Iterator<Character> enemyIterator = current.getInimigos().iterator();
 
                 while (enemyIterator.hasNext()) {
