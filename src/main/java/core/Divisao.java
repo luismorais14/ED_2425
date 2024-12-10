@@ -1,9 +1,7 @@
 package core;
 
-import ADT.ListADT;
 import ADT.UnorderedListADT;
 import Exceptions.ElementNotFoundException;
-import implementations.ArrayList;
 import implementations.ArrayUnorderedList;
 
 import java.util.Iterator;
@@ -170,6 +168,13 @@ public class Divisao {
      */
     public void removeItem() {
         this.item = null;
+    }
+
+    /**
+     * Removes the target from the division, setting it to null.
+     */
+    public void removeTarget() {
+        this.alvo = null;
     }
 
 }

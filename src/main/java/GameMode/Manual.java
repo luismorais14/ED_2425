@@ -99,7 +99,7 @@ public class Manual {
         String lixo = "";
         Divisao chooseDivisao = null;
 
-        while (!aux || inputNum != 3) {
+        while (!aux) {
             inputNum = 0;
             System.out.println("\nChoose the entrance through which you want to enter the building: ");
             listEntradaSaida();
@@ -120,6 +120,8 @@ public class Manual {
             }
 
             game(chooseDivisao);
+
+            System.out.println("Simulation Ended");
         }
     }
 
@@ -133,6 +135,7 @@ public class Manual {
         Scanner input = new Scanner(System.in);
         boolean itemOnRoom = false;
         boolean useItem = false;
+        boolean targetFound = false;
 
         while (true) {
             System.out.println("\nCurrent Division: " + currentDivisao.getNome());
@@ -143,6 +146,12 @@ public class Manual {
                 String answer = input.next();
                 if (answer.equalsIgnoreCase("Y")) {
                     System.out.println("Exiting the building...");
+
+                    if (targetFound) {
+                        System.out.println("Mission accomplished!");
+                    } else {
+                        System.out.println("Mission failed!");
+                    }
                     return;
                 }
             }
@@ -184,15 +193,36 @@ public class Manual {
                     handleEnemies(currentDivisao);
                 }
 
-            }
+                if (!currentDivisao.getInimigos().isEmpty()) {
+                    System.out.println("ENEMY FASE: \n");
+                    System.out.println("*Enemies moved out!*");
 
-            if (!currentDivisao.getAlvo().getTipo().isEmpty()) {
-                System.out.println("You found the target!");
-                return;
+                    enemyMovement(currentDivisao);
+
+                    Iterator<Character> characterIterator = currentDivisao.getInimigos().iterator();
+                    while (characterIterator.hasNext()) {
+                        Character currentCharacter = characterIterator.next();
+                        this.jogo.getPlayer().receberDano(currentCharacter.getPoder());
+                    }
+
+                    if (this.jogo.getPlayer().getVida() <= 0) {
+                        System.out.println("You have been defeated!");
+                        return;
+                    }
+                } else {
+                    System.out.println("You defeated all enemies in this division!");
+                }
+            } else {
+                System.out.println("ENEMY FASE: \n");
+                enemyMovement(currentDivisao);
             }
 
             if (currentDivisao.getInimigos().isEmpty()) {
-                enemyMovement();
+                if (!currentDivisao.getAlvo().getTipo().isEmpty()) {
+                    System.out.println("You found the target!");
+                    currentDivisao.removeTarget();
+                    targetFound = true;
+                }
 
                 System.out.println("\nShortest Path to target: \n");
                 showShortestPathToTarget(currentDivisao);
@@ -224,22 +254,7 @@ public class Manual {
                     System.out.println("Invalid input. Please enter a valid number.");
                     input.nextLine();
                 }
-            } else {
-                System.out.println("ENEMY FASE: \n");
-                System.out.println("*Enemies moved out!*");
-
-                Iterator<Character> characterIterator = currentDivisao.getInimigos().iterator();
-                while (characterIterator.hasNext()) {
-                    Character currentCharacter = characterIterator.next();
-                    this.jogo.getPlayer().receberDano(currentCharacter.getPoder());
-                }
-
-                if (this.jogo.getPlayer().getVida() <= 0) {
-                    System.out.println("You have been defeated!");
-                    return;
-                }
             }
-
         }
     }
 
@@ -247,13 +262,13 @@ public class Manual {
      * Handles the movement logic of the enemies in the building
      */
 
-    private void enemyMovement() {
-        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
+    private void enemyMovement(Divisao currentDivisao) {
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(currentDivisao);
 
         while (iterator.hasNext()) {
             Divisao current = iterator.next();
 
-            if (current != null && ((current.getNumCharacters() - current.getInimigos().size()) == 0)) {
+            if (current != null && !current.equals(currentDivisao)) {
                 Iterator<Character> enemyIterator = current.getInimigos().iterator();
 
                 while (enemyIterator.hasNext()) {
@@ -333,19 +348,19 @@ public class Manual {
      */
 
     private void showShortestPathToTarget(Divisao startDivision) {
-        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(startDivision);
         Divisao alvoDivision = null;
 
         while (iterator.hasNext()) {
             Divisao current = iterator.next();
-            if (!current.getAlvo().getTipo().isEmpty()) {
+            if (current.getAlvo() != null && current.getAlvo().getTipo().equals("quimico")) {
                 alvoDivision = current;
                 break;
             }
         }
 
         if (alvoDivision == null) {
-            System.out.println("No target found.");
+            System.out.println("No target found or already picked up.");
             return;
         }
 
@@ -387,7 +402,7 @@ public class Manual {
         }
 
         if (alvoDivision == null) {
-            System.out.println("No target found.");
+            System.out.println("No medkit found or already picked up.");
             return;
         }
 
