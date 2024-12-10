@@ -1,9 +1,7 @@
 package core;
 
-import ADT.ListADT;
 import ADT.UnorderedListADT;
 import Exceptions.ElementNotFoundException;
-import implementations.ArrayList;
 import implementations.ArrayUnorderedList;
 
 import java.util.Iterator;

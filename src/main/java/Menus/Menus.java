@@ -90,7 +90,7 @@ public class Menus {
                 case 1:
                     showMap();
                     manual.startGame();
-                    break;
+                    return;
                 case 2:
                     showMap();
                     //TODO implementar modo automatico do jogo
