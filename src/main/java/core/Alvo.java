@@ -6,7 +6,7 @@ public class Alvo {
     /**
      * Creates an empty target
      */
-    public Alvo() {
+    public Alvo()  {
         this.tipo = "";
     }
 

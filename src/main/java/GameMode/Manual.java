@@ -99,7 +99,7 @@ public class Manual {
         String lixo = "";
         Divisao chooseDivisao = null;
 
-        while (!aux || inputNum != 3) {
+        while (!aux) {
             inputNum = 0;
             System.out.println("\nChoose the entrance through which you want to enter the building: ");
             listEntradaSaida();
@@ -120,6 +120,8 @@ public class Manual {
             }
 
             game(chooseDivisao);
+
+            System.out.println("Simulation Ended");
         }
     }
 
@@ -186,12 +188,12 @@ public class Manual {
 
             }
 
-            if (!currentDivisao.getAlvo().getTipo().isEmpty()) {
-                System.out.println("You found the target!");
-                return;
-            }
-
             if (currentDivisao.getInimigos().isEmpty()) {
+                if (!currentDivisao.getAlvo().getTipo().isEmpty()) {
+                    System.out.println("You found the target!");
+                    this.jogo.getPlayer().addItemToMochila(currentDivisao.getAlvo());
+                }
+
                 enemyMovement();
 
                 System.out.println("\nShortest Path to target: \n");

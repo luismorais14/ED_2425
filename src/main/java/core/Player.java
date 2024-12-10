@@ -6,14 +6,14 @@ import implementations.LinkedStack;
 public class Player extends Character implements Attack {
     private final static int DEFAULT_VIDA = 100;
 
-    private StackADT<Item> mochila;
+    private StackADT<Object> mochila;
 
     /**
      * Creates an empty player
      */
     public Player() {
         super("Tó Cruz", 0, DEFAULT_VIDA);
-        mochila = new LinkedStack<Item>();
+        mochila = new LinkedStack<Object>();
     }
 
     /**
@@ -24,7 +24,7 @@ public class Player extends Character implements Attack {
      */
     public Player(int poder) {
         super("Tó Cruz", poder, DEFAULT_VIDA);
-        mochila = new LinkedStack<Item>();
+        mochila = new LinkedStack<Object>();
     }
 
     /**
@@ -42,7 +42,7 @@ public class Player extends Character implements Attack {
      *
      * @param item the item to be added
      */
-    public void addItemToMochila(Item item) {
+    public void addItemToMochila(Object item) {
         mochila.push(item);
     }
 
@@ -72,7 +72,12 @@ public class Player extends Character implements Attack {
      */
     public void useItem() {
         if (!mochila.isEmpty()) {
-            Item item = mochila.pop();
+            Object removedItem = mochila.pop();
+            Item item = null;
+
+            if (removedItem instanceof Item) {
+                item = (Item) removedItem;
+            }
 
             this.setVida(this.getVida() + item.getPontos());
 
