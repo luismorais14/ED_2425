@@ -1,6 +1,8 @@
 package Menus;
 
+import Exceptions.ElementNotFoundException;
 import Exceptions.JogoException;
+import GameMode.Automatic;
 import GameMode.Manual;
 import core.Jogo;
 import io.JSONHandler;
@@ -11,6 +13,7 @@ public class Menus {
     private Jogo jogo;
     private JSONHandler handler;
     private Manual manual;
+    private Automatic auto;
 
     /**
      * Instantiates the objects required by the program
@@ -20,9 +23,10 @@ public class Menus {
         this.handler = new JSONHandler();
         this.handler.importData(jogo);
         this.manual = new Manual(jogo);
+        this.auto = new Automatic(jogo);
     }
 
-    public void mainMenu() {
+    public void mainMenu() throws ElementNotFoundException {
         Scanner input = new Scanner(System.in);
         boolean aux = false;
         int inputNum = 0;
@@ -60,7 +64,7 @@ public class Menus {
         }
     }
 
-    private void simulationTypeMenu() {
+    private void simulationTypeMenu() throws ElementNotFoundException {
         Scanner input = new Scanner(System.in);
         boolean aux = false;
         int inputNum = 0;
@@ -93,7 +97,7 @@ public class Menus {
                     return;
                 case 2:
                     showMap();
-                    //TODO implementar modo automatico do jogo
+                    auto.startGame();
                     break;
                 case 3:
                     return;
