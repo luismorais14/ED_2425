@@ -1,7 +1,5 @@
 package GameMode;
 
-package GameMode;
-
 import ADT.UnorderedListADT;
 import core.*;
 import core.Character;
@@ -75,11 +73,15 @@ public class Automatic {
         Divisao currentDivision = start;
         boolean targFound = false;
 
-        while (jogo.getPlayer().getVida() > 0 && !(targFound && currentDivision.isEntradaSaida()) {
+        while (true) {
             System.out.println("\n Current Division:" + currentDivision.getNome());
 
 
         }
+
+    }
+
+    private void dijkstraAlgorithm() {
 
     }
 
@@ -172,7 +174,7 @@ public class Automatic {
 
         //Divisão perde peso/por item(troca se quiseres/ajusta)
         if (div.getItem() != null) {
-            points += div.getItem().getPontos();
+            points -= div.getItem().getPontos();
         }
         return points;
     }
