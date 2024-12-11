@@ -62,7 +62,6 @@ public class Automatic {
             System.out.println("Not valid starting division.");
             return;
         }
-
         System.out.println("Starting automatic simulation: \n");
         System.out.println("Starting division: " + start.getNome());
 
@@ -77,12 +76,25 @@ public class Automatic {
             System.out.println("\n Current Division:" + currentDivision.getNome());
 
 
+
         }
 
     }
 
     private void dijkstraAlgorithm() {
 
+    }
+
+    private void showOptimalPath(Divisao div) {
+        Iterator<Divisao> divIterator = this.jogo.getEdificio().getDivisoesIterator(div);
+        Divisao alvoDivision = null;
+
+        while (divIterator.hasNext()) {
+            Divisao div2 = divIterator.next();
+            if (div2.getAlvo() != null && div2.getAlvo().getTipo().equals("quimico")) {
+                alvoDivision = div2;
+            }
+        }
     }
 
 
@@ -131,15 +143,46 @@ public class Automatic {
 
 
     private void enemiesMovement(Divisao div) {
-        Iterator<Character> inimigosIterator = div.getInimigos().iterator();
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(div);
 
-        while (inimigosIterator.hasNext()) {
-            Inimigo inimigo = (Inimigo) inimigosIterator.next();
+        while (iterator.hasNext()) {
+            Divisao current = iterator.next();
 
-            // acabar
+            if (current != null && !current.equals(div)) {
+                Iterator<Character> enemyIterator = current.getInimigos().iterator();
+
+                while (enemyIterator.hasNext()) {
+                    Character enemy = enemyIterator.next();
+
+                    UnorderedListADT<Divisao> adjacentDivisions = this.jogo.getEdificio().getAdjacentDivisions(current);
+
+                    if (!adjacentDivisions.isEmpty()) {
+                        int size = 0;
+                        Iterator<Divisao> adjIterator = adjacentDivisions.iterator();
+                        while (adjIterator.hasNext()) {
+                            adjIterator.next();
+                            size++;
+                        }
+
+                        int randomIndex = (int) (Math.random() * size);
+
+                        adjIterator = adjacentDivisions.iterator();
+                        Divisao newDivision = null;
+                        for (int i = 0; i <= randomIndex; i++) {
+                            newDivision = adjIterator.next();
+                        }
+
+                        try {
+                            current.removeCharacter(enemy);
+                            newDivision.addCharacter(enemy);
+                        } catch (Exception e) {
+                            System.out.println("Enemy not found.");
+                        }
+                    }
+                }
+            }
         }
     }
-
 
     private Divisao findNextMove(Divisao currentDiv, boolean targFound) {
         UnorderedListADT<Divisao> adjacentDivision = jogo.getEdificio().getAdjacentDivisions(currentDiv);
@@ -166,13 +209,11 @@ public class Automatic {
 
         Iterator<Character> inimigosIterator = div.getInimigos().iterator();
 
-        //Divisão ganha peso/por inimigos(troca se quiseres/ajusta)
         while (inimigosIterator.hasNext()) {
             Inimigo inimigo = (Inimigo) inimigosIterator.next();
             points += inimigo.getPoder();
         }
 
-        //Divisão perde peso/por item(troca se quiseres/ajusta)
         if (div.getItem() != null) {
             points -= div.getItem().getPontos();
         }
