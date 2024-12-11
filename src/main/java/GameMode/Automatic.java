@@ -5,17 +5,23 @@ import core.*;
 import core.Character;
 
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Automatic {
+    private static final int INF = Integer.MAX_VALUE;
+
     private Jogo jogo;
+    private int matrix[][];
 
     public Automatic() {
         jogo = new Jogo();
+        this.matrix = new int[this.jogo.getEdificio().getDivisoes().size()][this.jogo.getEdificio().getDivisoes().size()];
     }
 
     public Automatic(Jogo jogo) {
         this.jogo = jogo;
+        this.matrix = new int[this.jogo.getEdificio().getDivisoes().size()][this.jogo.getEdificio().getDivisoes().size()];
     }
 
     private Divisao startDivision() {
@@ -62,6 +68,7 @@ public class Automatic {
             System.out.println("Not valid starting division.");
             return;
         }
+
         System.out.println("Starting automatic simulation: \n");
         System.out.println("Starting division: " + start.getNome());
 
@@ -70,34 +77,84 @@ public class Automatic {
 
     private void game(Divisao start) {
         Divisao currentDivision = start;
-        boolean targFound = false;
 
-        while (true) {
+        //while (true) {
             System.out.println("\n Current Division:" + currentDivision.getNome());
+            dijkstra(this.matrix, 0);
 
-
-
-        }
-
-    }
-
-    private void dijkstraAlgorithm() {
+        //}
 
     }
 
-    private void showOptimalPath(Divisao div) {
-        Iterator<Divisao> divIterator = this.jogo.getEdificio().getDivisoesIterator(div);
-        Divisao alvoDivision = null;
+    private void populateMatrix(int[][] matrix) {
 
-        while (divIterator.hasNext()) {
-            Divisao div2 = divIterator.next();
-            if (div2.getAlvo() != null && div2.getAlvo().getTipo().equals("quimico")) {
-                alvoDivision = div2;
+    }
+
+    /**
+     * Dijkstra's algorithm to get the path with the minor cost
+     * From: https://medium.com/@kirti07arora/dijkstras-algorithm-in-java-a-journey-through-shortest-paths-cc2fd76104b2 , adapted
+     * @param graph the weight matrix
+     * @param source
+     */
+    public static void dijkstra(int[][] graph, int source) {
+        int n = graph.length;
+        int[] distance = new int[n];
+        boolean[] visited = new boolean[n];
+
+        Arrays.fill(distance, INF);
+        distance[source] = 0;
+
+        for (int count = 0; count < n - 1; count++) {
+            int u = minDistance(distance, visited);
+            visited[u] = true;
+
+            for (int v = 0; v < n; v++) {
+                if (!visited[v] && graph[u][v] != 0 && distance[u] != INF &&
+                        distance[u] + graph[u][v] < distance[v]) {
+                    distance[v] = distance[u] + graph[u][v];
+                }
             }
         }
+
+        printSolution(distance);
+    }
+
+    /**
+     * Calculates the minimum distance
+     * From: https://medium.com/@kirti07arora/dijkstras-algorithm-in-java-a-journey-through-shortest-paths-cc2fd76104b2 , adapted
+     * @param distance wight array of the vertex
+     * @param visited array of visited
+     * @return the minimum index of the vertex visited
+     */
+    private static int minDistance(int[] distance, boolean[] visited) {
+        int min = INF, minIndex = -1;
+        for (int v = 0; v < distance.length; v++) {
+            if (!visited[v] && distance[v] <= min) {
+                min = distance[v];
+                minIndex = v;
+            }
+        }
+        return minIndex;
     }
 
 
+    /**
+     * Prints the distance between two vertex
+     * From: https://medium.com/@kirti07arora/dijkstras-algorithm-in-java-a-journey-through-shortest-paths-cc2fd76104b2 , adapted
+     * @param distance between two vertex
+     */
+    private static void printSolution(int[] distance) {
+        System.out.println("Shortest Distances from Source:");
+        for (int i = 0; i < distance.length; i++) {
+            System.out.println("To " + i + ": " + distance[i]);
+        }
+    }
+
+    /**
+     * Handles the itens in the building
+     *
+     * @param div the current division
+     */
     private void handleItems(Divisao div) {
         if (div.getItem() != null && !div.getItem().getTipo().isEmpty()) {
             System.out.println("Item encontrado: " + div.getItem().getTipo());
@@ -110,6 +167,12 @@ public class Automatic {
         }
     }
 
+    /**
+     * Handles the target in the building
+     *
+     * @param div the current division
+     * @return true if the target is in that division, false if not
+     */
     private boolean handleTarget(Divisao div) {
         if (div.getAlvo() != null && !div.getAlvo().getTipo().isEmpty()) {
             System.out.println("Alvo encontrado nesta divisão, corra!");
@@ -119,6 +182,11 @@ public class Automatic {
         return false;
     }
 
+    /**
+     * Handles interactions between the player and the enemies in the current division
+     *
+     * @param div the division where the interaction takes place
+     */
     private boolean handleEnemies(Divisao div) {
         int totalDmg = 0;
         Iterator<Character> inimigosIterator = div.getInimigos().iterator();
@@ -141,6 +209,12 @@ public class Automatic {
         return true;
     }
 
+
+    /**
+     * Handles interactions between the player and the enemies in the current division
+     *
+     * @param div the division where the interaction takes place
+     */
 
     private void enemiesMovement(Divisao div) {
         Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(div);
@@ -184,7 +258,13 @@ public class Automatic {
         }
     }
 
-    private Divisao findNextMove(Divisao currentDiv, boolean targFound) {
+    /**
+     * Finds the next best move for the player
+     *
+     * @param currentDiv the current division
+     * @return the best move
+     */
+    private Divisao findNextMove(Divisao currentDiv) {
         UnorderedListADT<Divisao> adjacentDivision = jogo.getEdificio().getAdjacentDivisions(currentDiv);
         Iterator<Divisao> neighbours = adjacentDivision.iterator();
         Divisao bestChoice = null;
@@ -203,6 +283,12 @@ public class Automatic {
         return bestChoice;
     }
 
+    /**
+     * Calculates the weight of the edges between divisions
+     *
+     * @param div the division
+     * @return the weight of the edge
+     */
 
     private int calculateDivisionValue(Divisao div) {
         int points = 0;
