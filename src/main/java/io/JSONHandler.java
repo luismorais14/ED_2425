@@ -66,7 +66,10 @@ public class JSONHandler {
 
             codMissao = (String) jsonObject.get("cod-missao");
 
-            jogo.getMissao().setCodMissao(codMissao);
+            Missao missao = new Missao();
+            missao.setCodMissao(codMissao);
+
+            jogo.addMissao(missao);
         } catch (ParseException e) {
             System.out.println("Parse Exception");
         } catch (FileNotFoundException e) {
@@ -92,7 +95,13 @@ public class JSONHandler {
 
             versao = ((Number) jsonObject.get("versao")).intValue();
 
-            jogo.getMissao().setVersao(versao);
+            Iterator<Missao> missaoIterator = jogo.getMissaoIterator();
+
+            while (missaoIterator.hasNext()) {
+                Missao missao = missaoIterator.next();
+                missao.setVersao(versao);
+            }
+
         } catch (ParseException e) {
             System.out.println("Parse Exception");
         } catch (FileNotFoundException e) {
@@ -141,7 +150,7 @@ public class JSONHandler {
             System.out.println("IO Exception");
         }
     }
-    
+
     private int randomHP() {
         Random rand = new Random();
         int min = 30;
@@ -281,7 +290,13 @@ public class JSONHandler {
 
             d1.setAlvo(alvo);
 
-            jogo.getMissao().setAlvo(alvo);
+            Iterator<Missao> missaoIterator = jogo.getMissaoIterator();
+
+            while (missaoIterator.hasNext()) {
+                Missao missao = missaoIterator.next();
+                missao.setAlvo(alvo);
+            }
+
         } catch (IOException e) {
             System.out.println("IO Exception");
         } catch (ParseException e) {

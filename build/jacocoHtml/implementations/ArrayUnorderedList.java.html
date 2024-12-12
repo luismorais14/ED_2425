@@ -5,8 +5,8 @@ import Exceptions.ElementNotFoundException;
 
 public class ArrayUnorderedList&lt;T&gt; extends ArrayList&lt;T&gt; implements UnorderedListADT&lt;T&gt; {
     public ArrayUnorderedList() {
-<span class="fc" id="L8">        super();</span>
-<span class="fc" id="L9">    }</span>
+<span class="nc" id="L8">        super();</span>
+<span class="nc" id="L9">    }</span>
 
     public ArrayUnorderedList(T[] array) {
 <span class="nc" id="L12">        super(array);</span>
@@ -19,18 +19,18 @@ public class ArrayUnorderedList&lt;T&gt; extends ArrayList&lt;T&gt; implements U
      */
     @Override
     public void addToFront(T element) {
-<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (counter == array.length - 1) {</span>
-<span class="fc" id="L23">            expandCapacity();</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        if (counter == array.length - 1) {</span>
+<span class="nc" id="L23">            expandCapacity();</span>
         }
 
-<span class="fc bfc" id="L26" title="All 2 branches covered.">        for (int i = counter; i &gt;= 0; i--) {</span>
-<span class="fc" id="L27">            array[i + 1] = array[i];</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        for (int i = counter; i &gt;= 0; i--) {</span>
+<span class="nc" id="L27">            array[i + 1] = array[i];</span>
         }
 
-<span class="fc" id="L30">        array[0] = element;</span>
-<span class="fc" id="L31">        counter++;</span>
-<span class="fc" id="L32">        super.modCount++;</span>
-<span class="fc" id="L33">    }</span>
+<span class="nc" id="L30">        array[0] = element;</span>
+<span class="nc" id="L31">        counter++;</span>
+<span class="nc" id="L32">        super.modCount++;</span>
+<span class="nc" id="L33">    }</span>
 
     /**
      * Adds the specified element to the counter of this list.
