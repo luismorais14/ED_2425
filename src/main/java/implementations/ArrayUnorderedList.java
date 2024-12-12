@@ -4,6 +4,14 @@ import ADT.UnorderedListADT;
 import Exceptions.ElementNotFoundException;
 
 public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedListADT<T> {
+    public ArrayUnorderedList() {
+        super();
+    }
+
+    public ArrayUnorderedList(T[] array) {
+        super(array);
+    }
+
     /**
      * Adds the specified element to the front of this list.
      *

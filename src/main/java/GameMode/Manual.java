@@ -14,10 +14,17 @@ import java.util.Scanner;
 public class Manual {
     private Jogo jogo;
 
+    /**
+     * Creates a new manual game
+     */
     public Manual() {
         jogo = new Jogo();
     }
 
+    /**
+     * Creates a new manual game
+     * @param jogo
+     */
     public Manual(Jogo jogo) {
         this.jogo = jogo;
     }

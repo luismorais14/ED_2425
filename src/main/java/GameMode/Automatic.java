@@ -1,7 +1,5 @@
 package GameMode;
 
-package GameMode;
-
 import ADT.UnorderedListADT;
 import core.*;
 import core.Character;
