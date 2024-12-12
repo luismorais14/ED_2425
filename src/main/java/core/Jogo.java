@@ -1,11 +1,15 @@
 package core;
 
+import ADT.QueueADT;
+import implementations.LinkedQueue;
+
 public class Jogo {
     private final static int PLAYER_PODER = 50;
 
     private Missao missao;
     private Edificio edificio;
     private Player player;
+    private QueueADT<Divisao> paths;
 
     /**
      * Creates an empty game
@@ -14,6 +18,7 @@ public class Jogo {
         this.missao = new Missao();
         this.edificio = new Edificio();
         this.player = new Player(PLAYER_PODER);
+        this.paths = new LinkedQueue<Divisao>();
     }
 
 
@@ -26,6 +31,7 @@ public class Jogo {
         this.missao = missao;
         this.edificio = edificio;
         this.player = player;
+        this.paths = new LinkedQueue<Divisao>();
     }
 
     /**
@@ -67,5 +73,13 @@ public class Jogo {
      */
     public Player getPlayer() {
         return this.player;
+    }
+
+    public void addPath(Divisao divisao) {
+        this.paths.enqueue(divisao);
+    }
+
+    public QueueADT<Divisao> getPaths() {
+        return this.paths;
     }
 }

@@ -1,11 +1,13 @@
 package GameMode;
 
 import ADT.ListADT;
+import ADT.QueueADT;
 import ADT.UnorderedListADT;
 import Exceptions.ElementNotFoundException;
 import core.*;
 import core.Character;
 import implementations.ArrayUnorderedList;
+import implementations.LinkedQueue;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -19,11 +21,12 @@ public class Manual {
      */
     public Manual() {
         jogo = new Jogo();
+
     }
 
     /**
      * Creates a new manual game
-     * @param jogo
+     * @param jogo the game to be played
      */
     public Manual(Jogo jogo) {
         this.jogo = jogo;
@@ -32,7 +35,6 @@ public class Manual {
     /**
      * Lists all divisions in the building that are marked as entrances/exits
      */
-
     private void listEntradaSaida() {
         Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
         int i = 1;
@@ -53,7 +55,6 @@ public class Manual {
      * @param index the index of the disered division
      * @return the division corresponding to the index, or null if not found
      */
-
     private Divisao getDivisaoByIndex(int index) {
         Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
         int i = 1;
@@ -146,6 +147,7 @@ public class Manual {
 
         while (true) {
             System.out.println("\nCurrent Division: " + currentDivisao.getNome());
+            this.jogo.addPath(currentDivisao);
             System.out.println("\nPLAYER FASE: \n");
 
             if (currentDivisao.isEntradaSaida()) {

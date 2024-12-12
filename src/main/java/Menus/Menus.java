@@ -5,6 +5,7 @@ import Exceptions.JogoException;
 import GameMode.Automatic;
 import GameMode.Manual;
 import core.Jogo;
+import core.Reports;
 import io.JSONHandler;
 
 import java.util.Scanner;
@@ -14,6 +15,7 @@ public class Menus {
     private JSONHandler handler;
     private Manual manual;
     private Automatic auto;
+    private Reports reports;
 
     /**
      * Instantiates the objects required by the program
@@ -24,6 +26,7 @@ public class Menus {
         this.handler.importData(jogo);
         this.manual = new Manual(jogo);
         this.auto = new Automatic(jogo);
+        this.reports = new Reports(jogo);
     }
 
     public void mainMenu() throws ElementNotFoundException {
@@ -56,6 +59,7 @@ public class Menus {
                     simulationTypeMenu();
                     break;
                 case 2:
+                    reports.exportToJson();
                     return;
                 default:
                     System.out.println("Invalid Option");
