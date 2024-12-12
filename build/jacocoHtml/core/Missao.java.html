@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Missao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ED_2425</a> &gt; <a href="index.source.html" class="el_package">core</a> &gt; <span class="el_source">Missao.java</span></div><h1>Missao.java</h1><pre class="source lang-java linenums">package core;
 
+import ADT.OrderedListADT;
+import implementations.ArrayOrderedList;
+
+import java.util.Iterator;
+
 public class Missao {
     private String codMissao;
     private Alvo alvo;
     private int versao;
+    private OrderedListADT&lt;MissionResult&gt; result;
 
     /**
      * Creates an empty mission
      */
-<span class="fc" id="L11">    public Missao() {</span>
-<span class="fc" id="L12">        codMissao = &quot;&quot;;</span>
-<span class="fc" id="L13">        alvo = new Alvo();</span>
-<span class="fc" id="L14">        versao = 0;</span>
-<span class="fc" id="L15">    }</span>
+<span class="fc" id="L17">    public Missao() {</span>
+<span class="fc" id="L18">        codMissao = &quot;&quot;;</span>
+<span class="fc" id="L19">        alvo = new Alvo();</span>
+<span class="fc" id="L20">        versao = 0;</span>
+<span class="fc" id="L21">        result = new ArrayOrderedList&lt;MissionResult&gt;();</span>
+<span class="fc" id="L22">    }</span>
 
     /**
      * Creates a mission specifying the mission code, the target, version and mission key
@@ -20,18 +27,19 @@ public class Missao {
      * @param alvo the mission target
      * @param versao the mission version
      */
-<span class="nc" id="L23">    public Missao(String codMissao, Alvo alvo,String versao) {</span>
-<span class="nc" id="L24">        this.codMissao = codMissao;</span>
-<span class="nc" id="L25">        this.alvo = alvo;</span>
-<span class="nc" id="L26">        this.versao = Integer.parseInt(versao);</span>
-<span class="nc" id="L27">    }</span>
+<span class="nc" id="L30">    public Missao(String codMissao, Alvo alvo,String versao) {</span>
+<span class="nc" id="L31">        this.codMissao = codMissao;</span>
+<span class="nc" id="L32">        this.alvo = alvo;</span>
+<span class="nc" id="L33">        this.versao = Integer.parseInt(versao);</span>
+<span class="nc" id="L34">        result = new ArrayOrderedList&lt;MissionResult&gt;();</span>
+<span class="nc" id="L35">    }</span>
 
     /**
      * Getter for the mission code
      * @return the mission code
      */
     public String getCodMissao() {
-<span class="fc" id="L34">        return codMissao;</span>
+<span class="fc" id="L42">        return codMissao;</span>
     }
 
     /**
@@ -39,15 +47,15 @@ public class Missao {
      * @param codMissao the mission code
      */
     public void setCodMissao(String codMissao) {
-<span class="fc" id="L42">        this.codMissao = codMissao;</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L50">        this.codMissao = codMissao;</span>
+<span class="fc" id="L51">    }</span>
 
     /**
      * Getter for the mission target
      * @return the mission target
      */
     public Alvo getAlvo() {
-<span class="nc" id="L50">        return alvo;</span>
+<span class="nc" id="L58">        return alvo;</span>
     }
 
     /**
@@ -55,15 +63,15 @@ public class Missao {
      * @param alvo the mission target
      */
     public void setAlvo(Alvo alvo) {
-<span class="fc" id="L58">        this.alvo = alvo;</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L66">        this.alvo = alvo;</span>
+<span class="fc" id="L67">    }</span>
 
     /**
      * Getter for the mission version
      * @return the mission version
      */
     public int getVersao() {
-<span class="fc" id="L66">        return versao;</span>
+<span class="fc" id="L74">        return versao;</span>
     }
 
     /**
@@ -71,7 +79,21 @@ public class Missao {
      * @param versao the mission version
      */
     public void setVersao(int versao) {
-<span class="fc" id="L74">        this.versao = versao;</span>
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L82">        this.versao = versao;</span>
+<span class="fc" id="L83">    }</span>
+
+    public OrderedListADT&lt;MissionResult&gt; getResult() {
+<span class="nc" id="L86">        return this.result;</span>
+    }
+
+    public Iterator&lt;MissionResult&gt; getResultsIterator() {
+<span class="nc" id="L90">        return this.result.iterator();</span>
+    }
+
+    public void setResult(MissionResultEnum result, int vidaRestante) {
+<span class="nc" id="L94">        MissionResult missionResult = new MissionResult(this.versao, result, vidaRestante);</span>
+
+<span class="nc" id="L96">        this.result.add(missionResult);</span>
+<span class="nc" id="L97">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

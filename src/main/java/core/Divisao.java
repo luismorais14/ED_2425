@@ -3,6 +3,7 @@ package core;
 import ADT.UnorderedListADT;
 import Exceptions.ElementNotFoundException;
 import implementations.ArrayUnorderedList;
+import org.json.simple.JSONObject;
 
 import java.util.Iterator;
 
@@ -175,6 +176,13 @@ public class Divisao {
      */
     public void removeTarget() {
         this.alvo = null;
+    }
+
+    public JSONObject toJSONObject() {
+        JSONObject jsonDivisao = new JSONObject();
+        jsonDivisao.put("nome", nome);
+
+        return jsonDivisao;
     }
 
 }

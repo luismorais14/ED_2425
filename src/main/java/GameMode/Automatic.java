@@ -1,11 +1,13 @@
 package GameMode;
 
+import ADT.StackADT;
 import ADT.UnorderedListADT;
 import core.*;
 import core.Character;
+import implementations.LinkedStack;
+import GameMode.Manual;
 
 
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class Automatic {
@@ -62,68 +64,131 @@ public class Automatic {
     }
 
     public void startGame() {
+        populateMatrix();
+
         Divisao start = startDivision();
+        int startIndex = getDivisionIndex(start);
+        Divisao target = findTargetDivision();
+        int targetIndex = getDivisionIndex(target);
+
+        calculateOptimalPath(startIndex, targetIndex);
 
         if (start == null) {
-            System.out.println("Not valid starting division.");
+            System.out.println("No valid starting division found.");
             return;
         }
 
-        System.out.println("Starting automatic simulation: \n");
-        System.out.println("Starting division: " + start.getNome());
+        System.out.println("Starting from: " + start.getNome());
+        Divisao current = start;
+        boolean success = false;
 
-        game(start);
+        while (!success && jogo.getPlayer().getVida() > 0) {
+            Divisao nextMove = findNextMove(current);
+
+            System.out.println("Moving to: " + nextMove.getNome());
+            success = handleTarget(nextMove);
+            handleItems(nextMove);
+            boolean survived = handleEnemies(nextMove);
+
+            if (!survived) {
+                System.out.println("Tó Cruz has been defeated.");
+                break;
+            }
+
+            enemiesMovement(current);
+            current = nextMove;
+        }
+
+        if (success) {
+            System.out.println("Mission successful!");
+        } else {
+            System.out.println("Mission failed.");
+        }
     }
 
-    private void game(Divisao start) {
-        Divisao currentDivision = start;
+    private void populateMatrix() {
+        int numDivisions = jogo.getEdificio().getDivisoes().size();
 
-        //while (true) {
-            System.out.println("\n Current Division:" + currentDivision.getNome());
-            dijkstra(this.matrix, 0);
+        for (int i = 0; i < numDivisions; i++) {
+            for (int j = 0; j < numDivisions; j++) {
+                matrix[i][j] = INF;
+            }
+        }
 
-        //}
+        Iterator<Divisao> divisions = jogo.getEdificio().getDivisoes().iteratorBFS(jogo.getEdificio().getStartVertex());
+        while (divisions.hasNext()) {
+            Divisao current = divisions.next();
+            int currentIndex = getDivisionIndex(current);
 
+            Iterator<Divisao> adjIterator =  this.jogo.getEdificio().getAdjacentDivisions(current).iterator();
+
+            while (adjIterator.hasNext()) {
+                Divisao adjacent = adjIterator.next();
+                int adjacentIndex = getDivisionIndex(adjacent);
+                int edgeWeight = calculateDivisionValue(current);
+
+                matrix[currentIndex][adjacentIndex] = edgeWeight;
+                matrix[adjacentIndex][currentIndex] = edgeWeight;
+            }
+        }
     }
 
-    private void populateMatrix(int[][] matrix) {
-
+    private int getDivisionIndex(Divisao div) {
+        Iterator<Divisao> divisions = jogo.getEdificio().getDivisoes().iteratorBFS(jogo.getEdificio().getStartVertex());
+        int index = 0;
+        while (divisions.hasNext()) {
+            Divisao current = divisions.next();
+            if (current.equals(div)) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
     }
 
     /**
      * Dijkstra's algorithm to get the path with the minor cost
-     * From: https://medium.com/@kirti07arora/dijkstras-algorithm-in-java-a-journey-through-shortest-paths-cc2fd76104b2 , adapted
-     * @param graph the weight matrix
-     * @param source
+     * From: https://medium.com/@kirti07arora/dijkstras-algorithm-in-java-a-journey-through-shortest-paths-cc2fd76104b2,
+     * adapted
+     *
+     * @param sourceIndex the source index
+     * @param targetIndex the target index
      */
-    public static void dijkstra(int[][] graph, int source) {
-        int n = graph.length;
+    private void calculateOptimalPath(int sourceIndex, int targetIndex) {
+        int n = matrix.length;
         int[] distance = new int[n];
+        int[] previous = new int[n];
         boolean[] visited = new boolean[n];
 
-        Arrays.fill(distance, INF);
-        distance[source] = 0;
+        for (int i = 0; i < n; i++) {
+            distance[i] = INF;
+            previous[i] = -1;
+            visited[i] = false;
+        }
+        distance[sourceIndex] = 0;
 
-        for (int count = 0; count < n - 1; count++) {
+        for (int i = 0; i < n - 1; i++) {
             int u = minDistance(distance, visited);
             visited[u] = true;
 
             for (int v = 0; v < n; v++) {
-                if (!visited[v] && graph[u][v] != 0 && distance[u] != INF &&
-                        distance[u] + graph[u][v] < distance[v]) {
-                    distance[v] = distance[u] + graph[u][v];
+                if (!visited[v] && matrix[u][v] != INF &&
+                        distance[u] + matrix[u][v] < distance[v]) {
+                    distance[v] = distance[u] + matrix[u][v];
+                    previous[v] = u;
                 }
             }
         }
 
-        printSolution(distance);
+        printPath(previous, targetIndex);
     }
 
     /**
      * Calculates the minimum distance
      * From: https://medium.com/@kirti07arora/dijkstras-algorithm-in-java-a-journey-through-shortest-paths-cc2fd76104b2 , adapted
+     *
      * @param distance wight array of the vertex
-     * @param visited array of visited
+     * @param visited  array of visited
      * @return the minimum index of the vertex visited
      */
     private static int minDistance(int[] distance, boolean[] visited) {
@@ -137,17 +202,49 @@ public class Automatic {
         return minIndex;
     }
 
+    private void printPath(int[] previous, int targetIndex) {
+        if (previous[targetIndex] == -1) {
+            System.out.println("No path to target.");
+            return;
+        }
+
+        StackADT<Integer> pathStack = new LinkedStack<Integer>();
+
+        for (int at = targetIndex; at != -1; at = previous[at]) {
+            pathStack.push(at);
+        }
+
+        System.out.println("Optimal Path:");
+        while (!pathStack.isEmpty()) {
+            int index = pathStack.pop();
+            System.out.print(getDivisaoByIndex(index).getNome());
+            if (!pathStack.isEmpty()) {
+                System.out.print(" -> ");
+            }
+        }
+        System.out.println();
+    }
 
     /**
-     * Prints the distance between two vertex
-     * From: https://medium.com/@kirti07arora/dijkstras-algorithm-in-java-a-journey-through-shortest-paths-cc2fd76104b2 , adapted
-     * @param distance between two vertex
+     * Retrieves the division by its index among the entraces/exits
+     *
+     * @param index the index of the disered division
+     * @return the division corresponding to the index, or null if not found
      */
-    private static void printSolution(int[] distance) {
-        System.out.println("Shortest Distances from Source:");
-        for (int i = 0; i < distance.length; i++) {
-            System.out.println("To " + i + ": " + distance[i]);
+    private Divisao getDivisaoByIndex(int index) {
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
+        int i = 1;
+
+        while (iterator.hasNext()) {
+            Divisao current = iterator.next();
+            if (current != null && current.isEntradaSaida()) {
+                if (i == index) {
+                    return current;
+                }
+                i++;
+            }
         }
+        return null;
     }
 
     /**
@@ -207,6 +304,21 @@ public class Automatic {
         }
 
         return true;
+    }
+
+    private Divisao findTargetDivision() {
+        Iterator<Divisao> it = jogo.getEdificio().getDivisoes().iteratorBFS(jogo.getEdificio().getStartVertex());
+        Divisao target = null;
+
+        while (it.hasNext()) {
+            Divisao div = it.next();
+            if (div.getAlvo() != null && !div.getAlvo().getTipo().equals("quimico")) {
+                target = div;
+                break;
+            }
+        }
+
+        return target;
     }
 
 
@@ -294,7 +406,6 @@ public class Automatic {
         int points = 0;
 
         Iterator<Character> inimigosIterator = div.getInimigos().iterator();
-
         while (inimigosIterator.hasNext()) {
             Inimigo inimigo = (Inimigo) inimigosIterator.next();
             points += inimigo.getPoder();
@@ -303,7 +414,8 @@ public class Automatic {
         if (div.getItem() != null) {
             points -= div.getItem().getPontos();
         }
-        return points;
+
+        return Math.max(0, points);
     }
 
 
