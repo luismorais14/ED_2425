@@ -1,9 +1,15 @@
 package core;
 
+import ADT.OrderedListADT;
+import implementations.ArrayOrderedList;
+
+import java.util.Iterator;
+
 public class Missao {
     private String codMissao;
     private Alvo alvo;
     private int versao;
+    private OrderedListADT<MissionResult> result;
 
     /**
      * Creates an empty mission
@@ -12,6 +18,7 @@ public class Missao {
         codMissao = "";
         alvo = new Alvo();
         versao = 0;
+        result = new ArrayOrderedList<MissionResult>();
     }
 
     /**
@@ -24,6 +31,7 @@ public class Missao {
         this.codMissao = codMissao;
         this.alvo = alvo;
         this.versao = Integer.parseInt(versao);
+        result = new ArrayOrderedList<MissionResult>();
     }
 
     /**
@@ -72,5 +80,19 @@ public class Missao {
      */
     public void setVersao(int versao) {
         this.versao = versao;
+    }
+
+    public OrderedListADT<MissionResult> getResult() {
+        return this.result;
+    }
+
+    public Iterator<MissionResult> getResultsIterator() {
+        return this.result.iterator();
+    }
+
+    public void setResult(MissionResultEnum result, int vidaRestante) {
+        MissionResult missionResult = new MissionResult(this.versao, result, vidaRestante);
+
+        this.result.add(missionResult);
     }
 }

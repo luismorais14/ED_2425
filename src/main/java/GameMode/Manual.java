@@ -1,16 +1,13 @@
 package GameMode;
 
-import ADT.ListADT;
-import ADT.QueueADT;
+import ADT.OrderedListADT;
 import ADT.UnorderedListADT;
 import Exceptions.ElementNotFoundException;
 import core.*;
 import core.Character;
-import implementations.ArrayUnorderedList;
-import implementations.LinkedQueue;
+import implementations.ArrayOrderedList;
 
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Manual {
@@ -21,7 +18,7 @@ public class Manual {
      */
     public Manual() {
         jogo = new Jogo();
-
+        this.jogo.clearPaths();
     }
 
     /**
@@ -30,6 +27,7 @@ public class Manual {
      */
     public Manual(Jogo jogo) {
         this.jogo = jogo;
+        this.jogo.clearPaths();
     }
 
     /**
@@ -158,8 +156,24 @@ public class Manual {
 
                     if (targetFound) {
                         System.out.println("Mission accomplished!");
+                        Iterator<Missao> missaoIterator = this.jogo.getMissaoIterator();
+                        if (missaoIterator.hasNext()) {
+                            Missao missao = missaoIterator.next();
+                            int vidaRestante = this.jogo.getPlayer().getVida();
+                            int versao = missao.getVersao();
+                            this.jogo.addResult(new MissionResult(versao, MissionResultEnum.SUCCESS, vidaRestante));
+                        }
                     } else {
                         System.out.println("Mission failed!");
+
+                        Iterator<Missao> missaoIterator = this.jogo.getMissaoIterator();
+                        if (missaoIterator.hasNext()) {
+                            Missao missao = missaoIterator.next();
+                            int vidaRestante = this.jogo.getPlayer().getVida();
+                            int versao = missao.getVersao();
+                            this.jogo.addResult(new MissionResult(versao, MissionResultEnum.FAILURE, vidaRestante));
+                        }
+
                     }
                     return;
                 }

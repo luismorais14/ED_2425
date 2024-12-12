@@ -29,7 +29,7 @@ public class Menus {
         this.reports = new Reports(jogo);
     }
 
-    public void mainMenu() throws ElementNotFoundException {
+    public void mainMenu() throws ElementNotFoundException, JogoException {
         Scanner input = new Scanner(System.in);
         boolean aux = false;
         int inputNum = 0;
@@ -99,7 +99,7 @@ public class Menus {
 
             switch (inputNum) {
                 case 1:
-                    reports.showSimulationResults();
+                    jogo.displaySortedResults();
                     break;
                 case 2:
                     reports.exportToJson();

@@ -25,15 +25,15 @@ public class Edificio {
      * @param divisao the new division
      */
     public void addDivison(Divisao divisao) {
-<span class="nc" id="L28">        this.divisoes.addVertex(divisao);</span>
-<span class="nc" id="L29">    }</span>
+<span class="fc" id="L28">        this.divisoes.addVertex(divisao);</span>
+<span class="fc" id="L29">    }</span>
 
     public void setStartVertex(Divisao startVertex) {
-<span class="nc" id="L32">        this.startVertex = startVertex;</span>
-<span class="nc" id="L33">    }</span>
+<span class="fc" id="L32">        this.startVertex = startVertex;</span>
+<span class="fc" id="L33">    }</span>
 
     public Divisao getStartVertex() {
-<span class="nc" id="L36">        return this.startVertex;</span>
+<span class="fc" id="L36">        return this.startVertex;</span>
     }
 
     /**
@@ -43,8 +43,8 @@ public class Edificio {
      * @param divisao2 the second division
      */
     public void addConnection(Divisao divisao1, Divisao divisao2) {
-<span class="nc" id="L46">        this.divisoes.addEdge(divisao1, divisao2);</span>
-<span class="nc" id="L47">    }</span>
+<span class="fc" id="L46">        this.divisoes.addEdge(divisao1, divisao2);</span>
+<span class="fc" id="L47">    }</span>
 
     public Iterator getDivisoesIterator() {
 <span class="nc" id="L50">        return this.divisoes.iteratorBFS(startVertex);</span>

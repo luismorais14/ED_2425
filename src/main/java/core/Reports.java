@@ -1,6 +1,8 @@
 package core;
 
+import ADT.OrderedListADT;
 import ADT.QueueADT;
+import implementations.ArrayOrderedList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class Reports {
     private Jogo jogo;
@@ -64,7 +67,9 @@ public class Reports {
                 QueueADT<Divisao> paths = jogo.getPaths();
                 while (!paths.isEmpty()) {
                     Divisao divisao = paths.dequeue();
-                    pathsArray.add(divisao.toJSONObject());
+                    JSONObject pathObject = new JSONObject();
+                    pathObject.put("Divisao: ", divisao.getNome());
+                    pathsArray.add(pathObject);
                 }
                 missionObject.put("paths", pathsArray);
 
@@ -80,14 +85,9 @@ public class Reports {
             System.err.println("Error while appending to JSON file: " + ex.getMessage());
         }
     }
-
-
-    public void showSimulationResults() {
-        System.out.println("Select the mission you want to see the results for: ");
-
-
-    }
 }
+
+
 
 
 

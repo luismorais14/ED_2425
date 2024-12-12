@@ -32,18 +32,19 @@ public class Jogo {
      * @param edificio the game building
      */
 <span class="fc" id="L34">    public Jogo(Missao missao, Edificio edificio, Player player) {</span>
-<span class="nc" id="L35">        this.missao.addToFront(missao);</span>
-<span class="nc" id="L36">        this.edificio = edificio;</span>
-<span class="nc" id="L37">        this.player = player;</span>
-<span class="nc" id="L38">        this.paths = new LinkedQueue&lt;Divisao&gt;();</span>
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L35">        this.missao = new ArrayUnorderedList&lt;&gt;();</span>
+<span class="fc" id="L36">        this.missao.addToFront(missao);</span>
+<span class="fc" id="L37">        this.edificio = edificio;</span>
+<span class="fc" id="L38">        this.player = player;</span>
+<span class="fc" id="L39">        this.paths = new LinkedQueue&lt;Divisao&gt;();</span>
+<span class="fc" id="L40">    }</span>
 
     /**
      * Getter for the game mission
      * @return the game mission
      */
     public Iterator getMissaoIterator() {
-<span class="nc" id="L46">        return this.missao.iterator();</span>
+<span class="fc" id="L47">        return this.missao.iterator();</span>
     }
 
     /**
@@ -51,8 +52,8 @@ public class Jogo {
      * @param missao the game mission
      */
     public void addMissao(Missao missao) {
-<span class="nc" id="L54">        this.missao.addToFront(missao);</span>
-<span class="nc" id="L55">    }</span>
+<span class="fc" id="L55">        this.missao.addToFront(missao);</span>
+<span class="fc" id="L56">    }</span>
 
 
     /**
@@ -60,7 +61,7 @@ public class Jogo {
      * @return the game bulding
      */
     public Edificio getEdificio() {
-<span class="nc" id="L63">        return edificio;</span>
+<span class="fc" id="L64">        return edificio;</span>
     }
 
     /**
@@ -68,23 +69,27 @@ public class Jogo {
      * @param edificio the game building
      */
     public void setEdificio(Edificio edificio) {
-<span class="nc" id="L71">        this.edificio = edificio;</span>
-<span class="nc" id="L72">    }</span>
+<span class="nc" id="L72">        this.edificio = edificio;</span>
+<span class="nc" id="L73">    }</span>
 
     /**
      * Getter for the game player
      * @return the game player
      */
     public Player getPlayer() {
-<span class="nc" id="L79">        return this.player;</span>
+<span class="nc" id="L80">        return this.player;</span>
     }
 
     public void addPath(Divisao divisao) {
-<span class="nc" id="L83">        this.paths.enqueue(divisao);</span>
-<span class="nc" id="L84">    }</span>
+<span class="nc" id="L84">        this.paths.enqueue(divisao);</span>
+<span class="nc" id="L85">    }</span>
 
     public QueueADT&lt;Divisao&gt; getPaths() {
-<span class="nc" id="L87">        return this.paths;</span>
+<span class="nc" id="L88">        return this.paths;</span>
     }
+
+    public void clearPaths() {
+<span class="nc" id="L92">        this.paths = new LinkedQueue&lt;Divisao&gt;();</span>
+<span class="nc" id="L93">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

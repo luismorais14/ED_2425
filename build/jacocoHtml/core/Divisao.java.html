@@ -33,13 +33,13 @@ public class Divisao {
      * @param alvo      target (if exists) on the division
      * @param item      item (if exists) on the division
      */
-<span class="nc" id="L36">    public Divisao(String nome, UnorderedListADT&lt;Character&gt; character, Alvo alvo, Item item) {</span>
-<span class="nc" id="L37">        this.nome = nome;</span>
-<span class="nc" id="L38">        this.character = character;</span>
-<span class="nc" id="L39">        this.alvo = alvo;</span>
-<span class="nc" id="L40">        this.item = item;</span>
-<span class="nc" id="L41">        this.isEntradaSaida = false;</span>
-<span class="nc" id="L42">    }</span>
+<span class="fc" id="L36">    public Divisao(String nome, UnorderedListADT&lt;Character&gt; character, Alvo alvo, Item item) {</span>
+<span class="fc" id="L37">        this.nome = nome;</span>
+<span class="fc" id="L38">        this.character = character;</span>
+<span class="fc" id="L39">        this.alvo = alvo;</span>
+<span class="fc" id="L40">        this.item = item;</span>
+<span class="fc" id="L41">        this.isEntradaSaida = false;</span>
+<span class="fc" id="L42">    }</span>
 
     /**
      * Getter for the division name
@@ -47,7 +47,7 @@ public class Divisao {
      * @return the divisio name
      */
     public String getNome() {
-<span class="nc" id="L50">        return nome;</span>
+<span class="fc" id="L50">        return nome;</span>
     }
 
     /**
@@ -65,10 +65,10 @@ public class Divisao {
      * @param character the enemy to be added
      */
     public void addCharacter(Character character) {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (!this.character.contains(character)) {</span>
-<span class="nc" id="L69">            this.character.addToFront(character);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (!this.character.contains(character)) {</span>
+<span class="fc" id="L69">            this.character.addToFront(character);</span>
         }
-<span class="nc" id="L71">    }</span>
+<span class="fc" id="L71">    }</span>
 
     public void removeCharacter(Character character) throws ElementNotFoundException {
 <span class="nc bnc" id="L74" title="All 2 branches missed.">        if (this.character.contains(character)) {</span>
@@ -116,8 +116,8 @@ public class Divisao {
      * @param alvo the target on the division
      */
     public void setAlvo(Alvo alvo) {
-<span class="nc" id="L119">        this.alvo = alvo;</span>
-<span class="nc" id="L120">    }</span>
+<span class="fc" id="L119">        this.alvo = alvo;</span>
+<span class="fc" id="L120">    }</span>
 
     /**
      * Getter for the item on the division
@@ -134,8 +134,8 @@ public class Divisao {
      * @param item the item on the division
      */
     public void setItem(Item item) {
-<span class="nc" id="L137">        this.item = item;</span>
-<span class="nc" id="L138">    }</span>
+<span class="fc" id="L137">        this.item = item;</span>
+<span class="fc" id="L138">    }</span>
 
     /**
      * Checks if the division is marked as an entrance/exit.
@@ -152,8 +152,8 @@ public class Divisao {
      * @param isEntradaSaida true to mark the division as an entrance/exit, false otherwise.
      */
     public void setEntradaSaida(boolean isEntradaSaida) {
-<span class="nc" id="L155">        this.isEntradaSaida = isEntradaSaida;</span>
-<span class="nc" id="L156">    }</span>
+<span class="fc" id="L155">        this.isEntradaSaida = isEntradaSaida;</span>
+<span class="fc" id="L156">    }</span>
 
     /**
      * Retrieves the number of characters currently in the division.
