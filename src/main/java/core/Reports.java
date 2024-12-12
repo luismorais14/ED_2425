@@ -1,5 +1,6 @@
 package core;
 
+import ADT.QueueADT;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 
 public class Reports {
     private Jogo jogo;
@@ -22,6 +24,7 @@ public class Reports {
 
     /**
      * Creates a report specifying the game
+     *
      * @param jogo the game
      */
     public Reports(Jogo jogo) {
@@ -50,17 +53,23 @@ public class Reports {
                 existingMissionsArray = new JSONArray();
             }
 
-            JSONObject missionObject = new JSONObject();
-            missionObject.put("cod-missao", jogo.getMissao().getCodMissao());
+            Iterator<Missao> missaoIterator = jogo.getMissaoIterator();
+            while (missaoIterator.hasNext()) {
+                Missao missao = missaoIterator.next();
 
-            JSONArray pathsArray = new JSONArray();
-            while (!this.jogo.getPaths().isEmpty()) {
-                Divisao divisao = this.jogo.getPaths().dequeue();
-                pathsArray.add(divisao.toJSONObject());
+                JSONObject missionObject = new JSONObject();
+                missionObject.put("cod-missao", missao.getCodMissao());
+
+                JSONArray pathsArray = new JSONArray();
+                QueueADT<Divisao> paths = jogo.getPaths();
+                while (!paths.isEmpty()) {
+                    Divisao divisao = paths.dequeue();
+                    pathsArray.add(divisao.toJSONObject());
+                }
+                missionObject.put("paths", pathsArray);
+
+                existingMissionsArray.add(missionObject);
             }
-            missionObject.put("paths", pathsArray);
-
-            existingMissionsArray.add(missionObject);
 
             try (FileWriter fw = new FileWriter(filePath)) {
                 fw.write(existingMissionsArray.toJSONString());
@@ -70,6 +79,13 @@ public class Reports {
         } catch (IOException ex) {
             System.err.println("Error while appending to JSON file: " + ex.getMessage());
         }
+    }
+
+
+    public void showSimulationResults() {
+        System.out.println("Select the mission you want to see the results for: ");
+
+
     }
 }
 
