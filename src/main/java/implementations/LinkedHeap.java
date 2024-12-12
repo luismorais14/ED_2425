@@ -116,11 +116,12 @@ public class LinkedHeap<T> extends LinkedBinaryTree<T> implements HeapADT<T> {
      * Returns a reference to the element with the lowest value in
      * this heap.
      *
+     * @throws EmptyCollectionException if empty collection
      * @return a reference to the element with the lowest value
      * in this heap
      */
     @Override
-    public T findMin() {
+    public T findMin() throws EmptyCollectionException {
         if (isEmpty()) {
             throw new EmptyCollectionException("Empty Heap");
         }

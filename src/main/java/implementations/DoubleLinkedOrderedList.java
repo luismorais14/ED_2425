@@ -11,7 +11,7 @@ public class DoubleLinkedOrderedList<T> extends DoubleLinkedList<T> implements O
      * @param element the element to be added to this list
      */
     @Override
-    public void add(T element) {
+    public void add(T element)  {
         if (!(element instanceof Comparable)) {
             throw new NoComparableExeption("Element Not Comparable");
         }

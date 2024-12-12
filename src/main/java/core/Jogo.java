@@ -32,7 +32,8 @@ public class Jogo {
 
     /**
      * Creates a new game, specifying the mission, the simulation type and the building
-     * @param missao the game mission
+     *
+     * @param missao   the game mission
      * @param edificio the game building
      */
     public Jogo(Missao missao, Edificio edificio, Player player) {
@@ -46,6 +47,7 @@ public class Jogo {
 
     /**
      * Getter for the game mission
+     *
      * @return the game mission
      */
     public Iterator getMissaoIterator() {
@@ -54,6 +56,7 @@ public class Jogo {
 
     /**
      * Setter for the game mission
+     *
      * @param missao the game mission
      */
     public void addMissao(Missao missao) {
@@ -63,6 +66,7 @@ public class Jogo {
 
     /**
      * Getter for the game buiding
+     *
      * @return the game bulding
      */
     public Edificio getEdificio() {
@@ -71,6 +75,7 @@ public class Jogo {
 
     /**
      * Setter for the game building
+     *
      * @param edificio the game building
      */
     public void setEdificio(Edificio edificio) {
@@ -79,28 +84,52 @@ public class Jogo {
 
     /**
      * Getter for the game player
+     *
      * @return the game player
      */
     public Player getPlayer() {
         return this.player;
     }
 
+    /**
+     * Adds a division (path) to the game player's path.
+     *
+     * @param divisao the division (path) to be added
+     */
     public void addPath(Divisao divisao) {
         this.paths.enqueue(divisao);
     }
 
+    /**
+     * Getter for the game player's paths queue.
+     *
+     * @return the queue of divisions (paths) the player is on
+     */
     public QueueADT<Divisao> getPaths() {
         return this.paths;
     }
 
+    /**
+     * Clears the paths of the player.
+     * This method resets the paths queue to an empty state.
+     */
     public void clearPaths() {
         this.paths = new LinkedQueue<Divisao>();
     }
 
+    /**
+     * Adds a simulation result to the game.
+     *
+     * @param result the result of the simulation to be added
+     */
     public void addResult(MissionResult result) {
         this.results.add(result);
     }
 
+    /**
+     * Displays the sorted simulation results based on remaining life points.
+     * The results are printed in ascending order of life points remaining.
+     */
     public void displaySortedResults() {
         System.out.println("Simulation Results (sorted by remaining life points):");
         Iterator<MissionResult> iterator = this.results.iterator();

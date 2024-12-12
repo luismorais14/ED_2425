@@ -11,12 +11,21 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
     private int count;
     private T[] queue;
 
+    /**
+     * Default constructor that initializes an empty queue.
+     * The queue has an initial capacity and starts with both front and rear pointers at 0.
+     */
     public CircularArrayQueue() {
         count = 0;
         front = rear = 0;
         queue = (T[]) (new Object[INITIAL_CAPACITY]);
     }
 
+    /**
+     * Expands the capacity of the queue when it is full.
+     * The new capacity is double the current capacity.
+     * Elements are re-arranged in the new array starting from the front of the queue.
+     */
     private void expandCapacity() {
         T[] newArray = (T[]) (new Object[queue.length * INCREMENT_FACTOR]);
         int i;
@@ -30,6 +39,12 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
         queue = newArray;
     }
 
+    /**
+     * Adds an element to the rear of the queue.
+     * If the queue is full, the capacity is expanded before adding the new element.
+     *
+     * @param element The element to be added to the queue.
+     */
     @Override
     public void enqueue(T element) {
         if (count == queue.length) {
@@ -41,8 +56,14 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
         count++;
     }
 
+    /**
+     * Removes and returns the element at the front of the queue.
+     *
+     * @return The element at the front of the queue.
+     * @throws EmptyCollectionException If the queue is empty.
+     */
     @Override
-    public T dequeue() {
+    public T dequeue() throws EmptyCollectionException {
         if (isEmpty()) {
             throw new EmptyCollectionException("Empty Queue");
         }
@@ -56,8 +77,14 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
         return element;
     }
 
+    /**
+     * Returns the element at the front of the queue without removing it.
+     *
+     * @return The element at the front of the queue.
+     * @throws EmptyCollectionException If the queue is empty.
+     */
     @Override
-    public T first() {
+    public T first() throws EmptyCollectionException {
         if (isEmpty()) {
             throw new EmptyCollectionException("Empty Queue");
         }
@@ -65,16 +92,32 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
         return queue[front];
     }
 
+    /**
+     * Checks whether the queue is empty.
+     *
+     * @return True if the queue is empty, false otherwise.
+     */
     @Override
     public boolean isEmpty() {
         return count == 0;
     }
 
+    /**
+     * Returns the number of elements in the queue.
+     *
+     * @return The size of the queue.
+     */
     @Override
     public int size() {
         return count;
     }
 
+    /**
+     * Returns a string representation of the elements in the queue.
+     * Each element is followed by a newline.
+     *
+     * @return A string representing the elements in the queue.
+     */
     @Override
     public String toString() {
         String txt = "";

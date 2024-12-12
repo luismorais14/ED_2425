@@ -6,10 +6,20 @@ import Exceptions.EmptyCollectionException;
 public class ArrayHeap<T> extends ArrayBinaryTree<T> implements HeapADT<T> {
     private final static int INCREMENT_VALUE = 2;
 
+    /**
+     * Constructs an empty heap with an initial capacity.
+     * This constructor calls the superclass constructor to initialize the heap's internal tree array.
+     */
     public ArrayHeap() {
         super();
     }
 
+    /**
+     * Expands the capacity of the heap's internal tree array by creating a new array
+     * with a larger size. The size of the new array is determined by multiplying the
+     * current array size by the `INCREMENT_VALUE`. The elements from the current tree
+     * array are then copied to the new array.
+     */
     private void expandCapacity() {
         T[] newTree = (T[]) (new Object[super.tree.length * INCREMENT_VALUE]);
 

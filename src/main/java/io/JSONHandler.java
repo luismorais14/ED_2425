@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class JSONHandler {
-    private UnorderedListADT<Divisao> divisionLists = new ArrayUnorderedList<>();
+    private UnorderedListADT<Divisao> divisionLists = new ArrayUnorderedList<Divisao>();
 
     /**
      * Reads the entire data from the .json file

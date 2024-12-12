@@ -13,10 +13,11 @@ public class ArrayOrderedList<T> extends ArrayList<T> implements OrderedListADT<
      * Adds the specified element to this list at
      * the proper location
      *
+     * @throws NoComparableExeption no comparable exeption
      * @param element the element to be added to this list
      */
     @Override
-    public void add(T element) {
+    public void add(T element) throws NoComparableExeption {
         if (!(element instanceof Comparable)) {
             throw new NoComparableExeption("Element Not Comparable");
         }

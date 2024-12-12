@@ -70,6 +70,12 @@ public class Divisao {
         }
     }
 
+    /**
+     * Removes the character
+     *
+     * @param character the character to remove
+     * @throws ElementNotFoundException element not found
+     */
     public void removeCharacter(Character character) throws ElementNotFoundException {
         if (this.character.contains(character)) {
             this.character.remove(character);
@@ -85,6 +91,12 @@ public class Divisao {
         return this.character;
     }
 
+
+    /**
+     * Getter for the enemies list
+     *
+     * @return the enemies list
+     */
     public UnorderedListADT<Character> getInimigos() {
         UnorderedListADT<Character> inimigos = new ArrayUnorderedList<>();
 
@@ -178,6 +190,15 @@ public class Divisao {
         this.alvo = null;
     }
 
+
+    /**
+     * Converts the current object to a JSON representation.
+     * This method creates a new `JSONObject` and adds the object's properties to it.
+     * In this case, it adds the property "nome" with the value of the `nome` field
+     * of the current object.
+     *
+     * @return a JSONObject representing the current object with its properties.
+     */
     public JSONObject toJSONObject() {
         JSONObject jsonDivisao = new JSONObject();
         jsonDivisao.put("nome", nome);

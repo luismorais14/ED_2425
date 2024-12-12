@@ -58,6 +58,11 @@ public class DoublyLinkedList<T> {
         counter--;
     }
 
+    /**
+     * Removes the last node from the list.
+     *
+     * @throws EmptyCollectionException if the list is empty
+     */
     public void removeLastNode() throws EmptyCollectionException {
         if (isEmpty()) {
             throw new EmptyCollectionException("Empty List");
@@ -71,6 +76,11 @@ public class DoublyLinkedList<T> {
         counter--;
     }
 
+    /**
+     * Checks if the list is empty.
+     *
+     * @return true if the list is empty, false otherwise
+     */
     public boolean isEmpty() {
         if (head == null && tail == null) {
             return true;
@@ -78,6 +88,11 @@ public class DoublyLinkedList<T> {
         return false;
     }
 
+    /**
+     * Returns an array of all elements in the list.
+     *
+     * @return an array containing all elements in the list
+     */
     public T[] elementsArray() {
         SequencialNode<T> current = head;
         ArrayList<T> array = new ArrayList<>(INITIAL_SIZE);
@@ -92,6 +107,12 @@ public class DoublyLinkedList<T> {
         return finalArray;
     }
 
+    /**
+     * Returns an array of elements up to the specified position.
+     *
+     * @param position the position up to which elements are retrieved
+     * @return an array containing elements up to the specified position
+     */
     public T[] elementsUntilPosition(int position) {
         SequencialNode<T> current = head;
         int counter = 0;
@@ -108,6 +129,12 @@ public class DoublyLinkedList<T> {
         return finalArray;
     }
 
+    /**
+     * Returns an array of elements after the specified position.
+     *
+     * @param position the position after which elements are retrieved
+     * @return an array containing elements after the specified position
+     */
     public T[] elementsAfterPosition(int position) {
         int counter = 0;
         SequencialNode<T> current = head;
@@ -126,6 +153,13 @@ public class DoublyLinkedList<T> {
         return finalArray;
     }
 
+    /**
+     * Returns an array of elements between two specified positions.
+     *
+     * @param first  the starting position (exclusive)
+     * @param second the ending position (exclusive)
+     * @return an array containing elements between the specified positions
+     */
     public T[] elementsBetweenPositions(int first, int second) {
         int counter = 0;
         SequencialNode<T> current = head;
@@ -144,6 +178,12 @@ public class DoublyLinkedList<T> {
         return finalArray;
     }
 
+    /**
+     * Recursively prints elements of the list starting from the head.
+     *
+     * @param node the node to start printing from
+     * @return a string representation of the list
+     */
     private String printFromHead(SequencialNode<T> node) {
         String txt = "";
 
@@ -155,6 +195,12 @@ public class DoublyLinkedList<T> {
         return txt;
     }
 
+    /**
+     * Recursively prints elements of the list starting from the tail.
+     *
+     * @param node the node to start printing from
+     * @return a string representation of the list
+     */
     private String printFromTail(SequencialNode<T> node) {
         String txt = "";
 
@@ -166,14 +212,28 @@ public class DoublyLinkedList<T> {
         return txt;
     }
 
+    /**
+     * Prints the list from head to tail.
+     */
     public void printFromHead() {
         System.out.println(printFromHead(head));
     }
 
+    /**
+     * Prints the list from tail to head.
+     */
     public void printFromTail() {
         System.out.println(printFromTail(tail));
     }
 
+    /**
+     * Recursively collects elements in reverse order.
+     *
+     * @param node     the current node
+     * @param elements the array to store elements
+     * @param count    the current index in the array
+     * @return the array with elements in reverse order
+     */
     private T[] returnInvertedElements(SequencialNode<T> node, T[] elements, int count) {
         if (node == null) {
             return elements;
@@ -183,6 +243,9 @@ public class DoublyLinkedList<T> {
         return returnInvertedElements(node.getPrevious(), elements, count + 1);
     }
 
+    /**
+     * Prints the elements of the list in reverse order.
+     */
     public void printInvertedElements() {
         T[] elements = (T[]) new Object[counter];
         elements = returnInvertedElements(tail, elements, 0);
@@ -190,11 +253,20 @@ public class DoublyLinkedList<T> {
         System.out.println(Arrays.toString(elements));
     }
 
-
+    /**
+     * Returns the number of elements in the list.
+     *
+     * @return the number of elements in the list
+     */
     public int getCounter() {
         return this.counter;
     }
 
+    /**
+     * Returns a string representation of the list.
+     *
+     * @return a string containing all elements of the list
+     */
     @Override
     public String toString() {
         String txt = "";

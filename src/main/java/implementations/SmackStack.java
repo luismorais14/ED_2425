@@ -15,6 +15,7 @@ public class SmackStack<T> extends ArrayStack<T> implements SmackADT<T> {
     /**
      * Eliminates and returns the last element of the stack
      *
+     * @throws EmptyCollectionException empty collection error
      * @return The last element of the stack
      */
     @Override

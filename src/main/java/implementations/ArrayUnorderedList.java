@@ -8,6 +8,13 @@ public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedList
         super();
     }
 
+    /**
+     * Constructs an `ArrayUnorderedList` with the specified array of elements.
+     * This constructor initializes the list with the elements from the provided array.
+     * It calls the superclass constructor to set up the underlying array for the list.
+     *
+     * @param array The array of elements to initialize the unordered list with the elements from this array are copied into the list.
+     */
     public ArrayUnorderedList(T[] array) {
         super(array);
     }

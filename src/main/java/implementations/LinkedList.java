@@ -78,6 +78,13 @@ public class LinkedList<T> {
         counter--;
     }
 
+    /**
+     * Recursively constructs a string representation of a linked list starting from the given node.
+     * The method traverses the list and appends the element of each node to the result string.
+     *
+     * @param node The node from which to start printing the list.
+     * @return A string representing the elements of the linked list, each followed by a newline.
+     */
     private String print(LinearNode<T> node) {
         String txt = "";
 

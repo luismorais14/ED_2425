@@ -28,6 +28,12 @@ public class ArrayStack<T> implements SmackStackADT<T> {
         stack = (T[]) (new Object[initialCapacity]);
     }
 
+    /**
+     * Expands the capacity of the stack by creating a new array with a larger size.
+     * The new array is initialized with a size that is a multiple of the current stack size
+     * based on the `CAPACITY_INCREMENT` factor. The elements from the current stack array
+     * are copied to the new array.
+     */
     private void expandCapacity() {
         T[] newArray = (T[]) (new Object[this.stack.length * CAPACITY_INCREMENT]);
         for (int i = 0; i < this.stack.length; i++) {
@@ -112,6 +118,13 @@ public class ArrayStack<T> implements SmackStackADT<T> {
         return this.top;
     }
 
+    /**
+     * Returns a string representation of the stack.
+     * This method iterates through the elements in the stack, appending each element's string
+     * representation to the result string, separated by newline characters.
+     *
+     * @return A string containing all the elements in the stack, each followed by a newline.
+     */
     @Override
     public String toString() {
         String txt = "";

@@ -34,6 +34,13 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         maxIndex = 0;
     }
 
+
+    /**
+     * Expands the capacity of the binary search tree's internal array by creating
+     * a new array with a larger size. The size of the new array is determined by
+     * multiplying the current array size by `INCREMENT_VALUE`. The elements from
+     * the old array are then copied to the new array.
+     */
     private void expandCapacity() {
         T[] newArray = (T[]) (new Object[tree.length * INCREMENT_VALUE]);
 
@@ -56,55 +63,56 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
      * @param element the element to be added to the search tree
      */
     public void addElement(T element) {
-        if (tree.length < maxIndex*2+3)
+        if (tree.length < maxIndex * 2 + 3)
             expandCapacity();
 
-        Comparable<T> tempelement = (Comparable<T>)element;
+        Comparable<T> tempelement = (Comparable<T>) element;
 
         if (isEmpty()) {
             tree[0] = element;
             maxIndex = 0;
-        }
-        else
-        {
+        } else {
             boolean added = false;
             int currentIndex = 0;
 
-            while (!added)
-            {
-                if (tempelement.compareTo((tree[currentIndex]) ) < 0)
-                {
+            while (!added) {
+                if (tempelement.compareTo((tree[currentIndex])) < 0) {
                     // go left
-                    if (tree[currentIndex*2+1] == null)
-                    {
-                        tree[currentIndex*2+1] = element;
+                    if (tree[currentIndex * 2 + 1] == null) {
+                        tree[currentIndex * 2 + 1] = element;
                         added = true;
-                        if (currentIndex*2+1 > maxIndex)
-                            maxIndex = currentIndex*2+1;
-                    }
-                    else
-                        currentIndex = currentIndex*2+1;
-                }
-                else {
+                        if (currentIndex * 2 + 1 > maxIndex)
+                            maxIndex = currentIndex * 2 + 1;
+                    } else
+                        currentIndex = currentIndex * 2 + 1;
+                } else {
                     // go right
-                    if (tree[currentIndex*2+2] == null)
-                    {
-                        tree[currentIndex*2+2] = element;
+                    if (tree[currentIndex * 2 + 2] == null) {
+                        tree[currentIndex * 2 + 2] = element;
                         added = true;
-                        if (currentIndex*2+2 > maxIndex)
-                            maxIndex = currentIndex*2+2;
-                    }
-                    else
-                        currentIndex = currentIndex*2+2;
+                        if (currentIndex * 2 + 2 > maxIndex)
+                            maxIndex = currentIndex * 2 + 2;
+                    } else
+                        currentIndex = currentIndex * 2 + 2;
                 }
 
             }
         }
 
-        height = (int)(Math.log(maxIndex + 1) / Math.log(2)) + 1;
+        height = (int) (Math.log(maxIndex + 1) / Math.log(2)) + 1;
         count++;
     }
 
+    /**
+     * Searches for the index of the specified element in the binary search tree starting from the given index.
+     * This method performs a linear search through the tree's array starting at the given index and compares
+     * each element using the `compareTo` method. It returns the index of the element if found, or -1 if the
+     * element is not found in the tree.
+     *
+     * @param element the element to search for in the tree
+     * @param start   the index from which the search should begin
+     * @return the index of the element if found, or -1 if the element is not found
+     */
     private int findIndex(Comparable<T> element, int start) {
         for (int i = start; i < tree.length; i++) {
             if (tree[i] != null && element.compareTo((tree[i])) == 0) {
@@ -329,6 +337,7 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
      *
      * @param targetElement the element that the list will
      *                      have all instances of it removed
+     * @throws ElementNotFoundException element not found
      */
     @Override
     public void removeAllOccurrences(T targetElement) throws ElementNotFoundException {
@@ -347,9 +356,10 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
      * Removes and returns the smallest element from this tree.
      *
      * @return the smallest element from this tree.
+     * @throws EmptyCollectionException empty collection
      */
     @Override
-    public T removeMin() {
+    public T removeMin() throws EmptyCollectionException {
         if (isEmpty()) {
             throw new EmptyCollectionException("Empty collection");
         }
@@ -369,9 +379,10 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
      * Removes and returns the largest element from this tree.
      *
      * @return the largest element from this tree
+     * @throws EmptyCollectionException empty collection
      */
     @Override
-    public T removeMax() {
+    public T removeMax() throws EmptyCollectionException {
         if (isEmpty()) {
             throw new EmptyCollectionException("Empty collection");
         }
@@ -380,7 +391,8 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
 
         try {
             removeElement(result);
-        } catch (ElementNotFoundException e) {}
+        } catch (ElementNotFoundException e) {
+        }
 
         return result;
     }
@@ -389,9 +401,10 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
      * Returns a reference to the smallest element in this tree.
      *
      * @return a reference to the smallest element in this tree
+     * @throws EmptyCollectionException empty collection
      */
     @Override
-    public T findMin() {
+    public T findMin() throws EmptyCollectionException {
         if (isEmpty()) {
             throw new EmptyCollectionException("Empty collection");
         }
@@ -412,9 +425,10 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
      * Returns a reference to the largest element in this tree.
      *
      * @return a reference to the largest element in this tree
+     * @throws EmptyCollectionException empty collection
      */
     @Override
-    public T findMax() {
+    public T findMax() throws EmptyCollectionException {
         if (isEmpty()) {
             throw new EmptyCollectionException("Empty collection");
         }
