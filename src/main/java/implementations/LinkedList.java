@@ -19,6 +19,7 @@ public class LinkedList<T> {
 
     /**
      * Add a new element to the list
+     *
      * @param data the element to be added
      */
     public void add(T data) {
@@ -36,6 +37,7 @@ public class LinkedList<T> {
 
     /**
      * Add a new element to the list
+     *
      * @param element the element to be added
      * @throws EmptyCollectionException if the list is empty
      * @throws ElementNotFoundException if the element is not found
@@ -82,16 +84,26 @@ public class LinkedList<T> {
         if (node == null) {
             txt += "";
         } else {
-            txt += node.getElement() + "\n" + print(node.getNext()) ;
+            txt += node.getElement() + "\n" + print(node.getNext());
         }
 
         return txt;
     }
 
+    /**
+     * Prints the list to the standard output.
+     */
     public void print() {
         System.out.println(print(head));
     }
 
+    /**
+     * Replaces an existing element in the list with a new element.
+     *
+     * @param existingElement the element to be replaced
+     * @param newElement      the element to replace with
+     * @throws EmptyCollectionException if the list is empty
+     */
     public void replace(T existingElement, T newElement) throws EmptyCollectionException {
         if (head == null) {
             throw new EmptyCollectionException("Empty Collection");
@@ -99,6 +111,13 @@ public class LinkedList<T> {
         replaceRecursive(existingElement, newElement, head);
     }
 
+    /**
+     * Recursively replaces an existing element in the list with a new element.
+     *
+     * @param existingElement the element to be replaced
+     * @param newElement      the element to replace with
+     * @param node            the current node being checked
+     */
     public void replaceRecursive(T existingElement, T newElement, LinearNode<T> node) {
         if (node == null) {
             return;
@@ -111,6 +130,12 @@ public class LinkedList<T> {
         replaceRecursive(existingElement, newElement, node.getNext());
     }
 
+    /**
+     * Returns a string representation of the list.
+     * Elements are displayed in order, separated by newlines.
+     *
+     * @return a string representation of the list
+     */
     @Override
     public String toString() {
         String text = "";

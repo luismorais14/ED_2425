@@ -89,6 +89,13 @@ public class LinkedStack<T> implements StackADT<T> {
         return this.top;
     }
 
+
+    /**
+     * Returns a string representation of the elements in the sequence starting from this node.
+     * The elements are separated by newlines.
+     *
+     * @return a string representation of the sequence
+     */
     @Override
     public String toString() {
         String txt = "";

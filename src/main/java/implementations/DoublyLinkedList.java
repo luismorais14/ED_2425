@@ -11,11 +11,20 @@ public class DoublyLinkedList<T> {
     private int counter;
     private SequencialNode<T> head, tail;
 
+    /**
+     * Creates an empty doubly linked list.
+     */
     public DoublyLinkedList() {
         counter = 0;
         head = tail = null;
     }
 
+
+    /**
+     * Adds a new element to the beginning of the list.
+     *
+     * @param element the element to be added
+     */
     public void add(T element) {
         SequencialNode<T> newNode = new SequencialNode<T>(element);
 
@@ -30,6 +39,11 @@ public class DoublyLinkedList<T> {
         counter++;
     }
 
+    /**
+     * Removes the first node from the list.
+     *
+     * @throws EmptyCollectionException if the list is empty
+     */
     public void removeFirstNode() throws EmptyCollectionException {
         if (isEmpty()) {
             throw new EmptyCollectionException("Empty List");
