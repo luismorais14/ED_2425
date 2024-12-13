@@ -58,15 +58,23 @@ public class Reports {
             missionsArray.add(missionObject);
         }
 
-        try (FileWriter file = new FileWriter("Reports\\Paths.json")) {
+        String folderPath = "Reports";
+        File folder = new File(folderPath);
+
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        try (FileWriter file = new FileWriter(folderPath + "\\Paths.json")) {
             file.write(missionsArray.toJSONString());
             file.flush();
         } catch (IOException e) {
             System.err.println("Error while saving JSON: " + e.getMessage());
         }
     }
-
 }
+
+
 
 
 
