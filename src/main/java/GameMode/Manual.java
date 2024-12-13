@@ -111,15 +111,17 @@ public class Manual {
             listEntradaSaida();
             try {
                 inputNum = input.nextInt();
-                if (inputNum < 1 || inputNum > this.jogo.getEdificio().getNumEntradasSaidas()) {
+                if (inputNum >= 1 && inputNum <= this.jogo.getEdificio().getNumEntradasSaidas()) {
                     chooseDivisao = getDivisaoByIndex(inputNum);
                     aux = true;
                 } else {
                     System.out.println("Invalid Option. Please choose a valid entrance.");
+                    return;
                 }
 
                 if (chooseDivisao == null) {
                     System.out.println("Invalid Option. Please choose a valid entrance.");
+                    return;
                 } else {
                     System.out.println("Entered \"" + chooseDivisao.getNome() + "\"");
                     chooseDivisao.addCharacter(this.jogo.getPlayer());
