@@ -41,7 +41,7 @@ public class BinaryTreeNode<T> {
     /**
      * Returns the left child node of this node.
      *
-     * @return The left child node of type BinaryTreeNode<T>.
+     * @return The left child node.
      */
     public BinaryTreeNode<T> getLeft() {
         return left;
@@ -59,7 +59,7 @@ public class BinaryTreeNode<T> {
     /**
      * Returns the right child node of this node.
      *
-     * @return The right child node of type BinaryTreeNode<T>.
+     * @return The right child node.
      */
     public BinaryTreeNode<T> getRight() {
         return right;

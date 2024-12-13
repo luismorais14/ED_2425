@@ -113,7 +113,7 @@ public class Menus {
         }
     }
 
-    private void simulationTypeMenu() throws ElementNotFoundException {
+    private void simulationTypeMenu() throws ElementNotFoundException, JogoException {
         Scanner input = new Scanner(System.in);
         boolean aux = false;
         int inputNum = 0;
@@ -141,10 +141,12 @@ public class Menus {
 
             switch (inputNum) {
                 case 1:
+                    resetGame();
                     showMap();
                     manual.startGame();
                     return;
                 case 2:
+                    resetGame();
                     showMap();
                     auto.startGame();
                     break;
@@ -186,6 +188,15 @@ public class Menus {
         for (String linha : map) {
             System.out.println(linha);
         }
+    }
+
+    private void resetGame() throws JogoException {
+        this.jogo = new Jogo();
+        this.handler = new JSONHandler();
+        this.handler.importData(jogo);
+        this.manual = new Manual(jogo);
+        this.auto = new Automatic(jogo);
+        this.reports = new Reports(jogo);
     }
 }
 

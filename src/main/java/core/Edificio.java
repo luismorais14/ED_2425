@@ -88,7 +88,7 @@ public class Edificio {
 
     /**
      * Gets the graph's collection of divisions (vertices).
-     * This method returns the `GraphADT<Divisao>` instance that represents the entire graph of divisions.
+     * This method returns the Graph instance that represents the entire graph of divisions.
      * It provides access to all the vertices and their relationships in the graph.
      *
      * @return the graph containing all the divisions (vertices)
