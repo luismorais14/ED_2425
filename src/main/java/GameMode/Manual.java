@@ -128,7 +128,8 @@ public class Manual {
                 }
             } catch (Exception e) {
                 System.out.println("Invalid Option");
-                lixo = input.nextLine(); //limpar o buffer
+                lixo = input.nextLine();//limpar o buffer
+                return;
             }
 
             game(chooseDivisao);
