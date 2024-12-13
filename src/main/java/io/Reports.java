@@ -1,20 +1,16 @@
-package core;
+package io;
 
-import ADT.OrderedListADT;
-import ADT.QueueADT;
-import implementations.ArrayOrderedList;
-import implementations.LinkedQueue;
+import core.Divisao;
+import core.Jogo;
+import core.MissionManager;
+import core.MissionPath;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
-import java.util.Scanner;
 
 public class Reports {
     private Jogo jogo;
@@ -41,10 +37,11 @@ public class Reports {
     public void exportToJson() {
         JSONArray missionsArray = new JSONArray();
 
-        Iterator<MissionPath> missionIterator = this.jogo.getMissionPaths().iterator();
+        Iterator<MissionPath> missionIterator = MissionManager.getAllMissionPaths().iterator();
         while (missionIterator.hasNext()) {
             MissionPath missaoData = missionIterator.next();
             JSONObject missionObject = new JSONObject();
+
             missionObject.put("cod-missao", missaoData.getCodMissao());
 
             JSONArray pathsArray = new JSONArray();
@@ -57,10 +54,11 @@ public class Reports {
             }
 
             missionObject.put("paths", pathsArray);
+
             missionsArray.add(missionObject);
         }
 
-        try (FileWriter file = new FileWriter("Reports\\Paths.json", true)) {
+        try (FileWriter file = new FileWriter("Reports\\Paths.json")) {
             file.write(missionsArray.toJSONString());
             file.flush();
         } catch (IOException e) {

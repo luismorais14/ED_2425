@@ -173,6 +173,9 @@ public class Manual {
                             int versao = missao.getVersao();
                             this.jogo.addResult(new MissionResult(versao, MissionResultEnum.SUCCESS, vidaRestante));
                             this.jogo.addMissionPath(missao, this.jogo.getPaths());
+
+                            MissionManager.addMissionPath(this.jogo.getMissionPaths().first());
+
                         }
                     } else {
                         System.out.println("Mission failed!");
@@ -184,6 +187,8 @@ public class Manual {
                             int versao = missao.getVersao();
                             this.jogo.addResult(new MissionResult(versao, MissionResultEnum.FAILURE, vidaRestante));
                             this.jogo.addMissionPath(missao, this.jogo.getPaths());
+
+                            MissionManager.addMissionPath(this.jogo.getMissionPaths().first());
                         }
 
                     }

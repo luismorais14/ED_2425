@@ -5,7 +5,7 @@ import Exceptions.JogoException;
 import GameMode.Automatic;
 import GameMode.Manual;
 import core.Jogo;
-import core.Reports;
+import io.Reports;
 import io.JSONHandler;
 
 import java.util.Scanner;

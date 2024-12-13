@@ -8,6 +8,7 @@ import implementations.ArrayUnorderedList;
 import implementations.LinkedQueue;
 
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class Jogo {
     private final static int PLAYER_PODER = 50;
@@ -16,7 +17,7 @@ public class Jogo {
     private Edificio edificio;
     private Player player;
     private QueueADT<Divisao> paths;
-    private OrderedListADT<MissionResult> results;
+    private static OrderedListADT<MissionResult> results = new ArrayOrderedList<MissionResult>();
     private UnorderedListADT<MissionPath> missionPaths;
 
     /**
@@ -27,7 +28,6 @@ public class Jogo {
         this.edificio = new Edificio();
         this.player = new Player(PLAYER_PODER);
         this.paths = new LinkedQueue<Divisao>();
-        this.results = new ArrayOrderedList<MissionResult>();
         this.missionPaths = new ArrayUnorderedList<MissionPath>();
     }
 
@@ -44,7 +44,6 @@ public class Jogo {
         this.edificio = edificio;
         this.player = player;
         this.paths = new LinkedQueue<Divisao>();
-        this.results = new ArrayOrderedList<MissionResult>();
         this.missionPaths = new ArrayUnorderedList<MissionPath>();
     }
 
@@ -126,7 +125,7 @@ public class Jogo {
      * @param result the result of the simulation to be added
      */
     public void addResult(MissionResult result) {
-        this.results.add(result);
+        results.add(result);
     }
 
     /**
@@ -134,12 +133,62 @@ public class Jogo {
      * The results are printed in ascending order of life points remaining.
      */
     public void displaySortedResults() {
-        System.out.println("Simulation Results (sorted by remaining life points):");
-        Iterator<MissionResult> iterator = this.results.iterator();
-        while (iterator.hasNext()) {
-            MissionResult result = iterator.next();
+        Iterator<Missao> allMissions = this.missao.iterator();
+        int i = 1;
+        UnorderedListADT<Missao> availableMissions = new ArrayUnorderedList<>();
+
+        System.out.println("Choose a mission to see the results: ");
+        while (allMissions.hasNext()) {
+            Missao missao = allMissions.next();
+            availableMissions.addToFront(missao);
+            System.out.println(i + ". " + missao.getCodMissao());
+            i++;
+        }
+
+        Scanner input = new Scanner(System.in);
+        int choice = input.nextInt();
+
+        if (choice < 1 || choice > availableMissions.size()) {
+            System.out.println("Invalid choice!");
+            return;
+        }
+
+        Missao missaoSelecionada = null;
+        i = 1;
+        Iterator<Missao> missionIterator = availableMissions.iterator();
+        while (missionIterator.hasNext()) {
+            Missao missao = missionIterator.next();
+            if (i == choice) {
+                missaoSelecionada = missao;
+                break;
+            }
+            i++;
+        }
+
+        UnorderedListADT<MissionResult> filteredResults = new ArrayUnorderedList<>();
+        Iterator<MissionResult> resultIterator = results.iterator();
+        while (resultIterator.hasNext()) {
+            MissionResult result = resultIterator.next();
+            if (result.getVersao() == missaoSelecionada.getVersao()) {
+                filteredResults.addToFront(result);
+            }
+        }
+
+        OrderedListADT<MissionResult> sortedResults = new ArrayOrderedList<>();
+        Iterator<MissionResult> filteredIterator = filteredResults.iterator();
+        while (filteredIterator.hasNext()) {
+            MissionResult result = filteredIterator.next();
+            sortedResults.add(result);
+        }
+
+        System.out.println("Mission results: " + missaoSelecionada.getCodMissao());
+        System.out.println("Results:");
+        Iterator<MissionResult> sortedIterator = sortedResults.iterator();
+        while (sortedIterator.hasNext()) {
+            MissionResult result = sortedIterator.next();
             System.out.println(result.toString());
         }
+
     }
 
     /**
@@ -158,6 +207,7 @@ public class Jogo {
     public void addMissionPath(Missao missao, QueueADT<Divisao> paths) {
         UnorderedListADT<Divisao> pathsList = new ArrayUnorderedList<>();
         QueueADT<Divisao> tempQueue = new LinkedQueue<>();
+
         while (!paths.isEmpty()) {
             Divisao divisao = paths.dequeue();
             tempQueue.enqueue(divisao);
