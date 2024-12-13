@@ -17,6 +17,7 @@ public class Jogo {
     private Player player;
     private QueueADT<Divisao> paths;
     private OrderedListADT<MissionResult> results;
+    private UnorderedListADT<MissionPath> missionPaths;
 
     /**
      * Creates an empty game
@@ -27,6 +28,7 @@ public class Jogo {
         this.player = new Player(PLAYER_PODER);
         this.paths = new LinkedQueue<Divisao>();
         this.results = new ArrayOrderedList<MissionResult>();
+        this.missionPaths = new ArrayUnorderedList<MissionPath>();
     }
 
 
@@ -43,6 +45,7 @@ public class Jogo {
         this.player = player;
         this.paths = new LinkedQueue<Divisao>();
         this.results = new ArrayOrderedList<MissionResult>();
+        this.missionPaths = new ArrayUnorderedList<MissionPath>();
     }
 
     /**
@@ -138,4 +141,34 @@ public class Jogo {
             System.out.println(result.toString());
         }
     }
+
+    /**
+     * Getter for the game mission paths.
+     * @return the game mission paths
+     */
+    public UnorderedListADT<MissionPath> getMissionPaths() {
+        return missionPaths;
+    }
+
+    /**
+     * Adds a mission path to the game.
+     * @param missao the mission
+     * @param paths the path to be added
+     */
+    public void addMissionPath(Missao missao, QueueADT<Divisao> paths) {
+        UnorderedListADT<Divisao> pathsList = new ArrayUnorderedList<>();
+        QueueADT<Divisao> tempQueue = new LinkedQueue<>();
+        while (!paths.isEmpty()) {
+            Divisao divisao = paths.dequeue();
+            tempQueue.enqueue(divisao);
+            pathsList.addToFront(divisao);
+        }
+
+        while (!tempQueue.isEmpty()) {
+            paths.enqueue(tempQueue.dequeue());
+        }
+
+        this.missionPaths.addToFront(new MissionPath(missao.getCodMissao(), pathsList));
+    }
+
 }

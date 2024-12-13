@@ -3,6 +3,7 @@ package core;
 import ADT.OrderedListADT;
 import ADT.QueueADT;
 import implementations.ArrayOrderedList;
+import implementations.LinkedQueue;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -38,53 +39,35 @@ public class Reports {
      * Exports the routes prepared in each manual simulation so they can be used in meeting briefings.
      */
     public void exportToJson() {
-        JSONParser parser = new JSONParser();
-        String filePath = "Reports\\paths.json";
+        JSONArray missionsArray = new JSONArray();
 
-        try {
-            File file = new File(filePath);
+        Iterator<MissionPath> missionIterator = this.jogo.getMissionPaths().iterator();
+        while (missionIterator.hasNext()) {
+            MissionPath missaoData = missionIterator.next();
+            JSONObject missionObject = new JSONObject();
+            missionObject.put("cod-missao", missaoData.getCodMissao());
 
-            if (!file.exists()) {
-                file.getParentFile().mkdirs();
-                file.createNewFile();
+            JSONArray pathsArray = new JSONArray();
+            Iterator<Divisao> pathIterator = missaoData.getPaths().iterator();
+            while (pathIterator.hasNext()) {
+                Divisao path = pathIterator.next();
+                JSONObject pathObject = new JSONObject();
+                pathObject.put("Divisao", path.getNome());
+                pathsArray.add(pathObject);
             }
 
-            JSONArray existingMissionsArray;
-            try (FileReader reader = new FileReader(filePath)) {
-                existingMissionsArray = (JSONArray) parser.parse(reader);
-            } catch (ParseException | IOException e) {
-                existingMissionsArray = new JSONArray();
-            }
+            missionObject.put("paths", pathsArray);
+            missionsArray.add(missionObject);
+        }
 
-            Iterator<Missao> missaoIterator = jogo.getMissaoIterator();
-            while (missaoIterator.hasNext()) {
-                Missao missao = missaoIterator.next();
-
-                JSONObject missionObject = new JSONObject();
-                missionObject.put("cod-missao", missao.getCodMissao());
-
-                JSONArray pathsArray = new JSONArray();
-                QueueADT<Divisao> paths = jogo.getPaths();
-                while (!paths.isEmpty()) {
-                    Divisao divisao = paths.dequeue();
-                    JSONObject pathObject = new JSONObject();
-                    pathObject.put("Divisao: ", divisao.getNome());
-                    pathsArray.add(pathObject);
-                }
-                missionObject.put("paths", pathsArray);
-
-                existingMissionsArray.add(missionObject);
-            }
-
-            try (FileWriter fw = new FileWriter(filePath)) {
-                fw.write(existingMissionsArray.toJSONString());
-                fw.flush();
-            }
-
-        } catch (IOException ex) {
-            System.err.println("Error while appending to JSON file: " + ex.getMessage());
+        try (FileWriter file = new FileWriter("Reports\\Paths.json", true)) {
+            file.write(missionsArray.toJSONString());
+            file.flush();
+        } catch (IOException e) {
+            System.err.println("Error while saving JSON: " + e.getMessage());
         }
     }
+
 }
 
 
