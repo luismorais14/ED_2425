@@ -27,6 +27,16 @@ public class ArrayList<T> implements ListADT<T> {
     }
 
     /**
+     * Creates an empty list using the specified array.
+     * @param array the array of the list
+     */
+    public ArrayList(T[] array) {
+        this.array = array;
+        counter = array.length;
+        modCount = 0;
+    }
+
+    /**
      * Removes and returns the first element in the list.
      * @return the removed element
      * @throws EmptyCollectionException exception to thrown if the list is empty

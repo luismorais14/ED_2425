@@ -42,15 +42,14 @@ public class LinkedStack&lt;T&gt; implements StackADT&lt;T&gt; {
      */
     @Override
     public T pop() throws EmptyCollectionException {
-<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (isEmpty()) {</span>
-<span class="nc" id="L46">            throw new EmptyCollectionException(&quot;Stack&quot;);</span>
-        }
-<span class="nc" id="L48">        top--;</span>
-<span class="nc" id="L49">        LinearNode&lt;T&gt; nextElement = head.getNext();</span>
-<span class="nc" id="L50">        T result = head.getElement();</span>
-<span class="nc" id="L51">        head.setNext(nextElement.getNext());</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (isEmpty())</span>
+<span class="nc" id="L46">            throw new EmptyCollectionException(&quot;Stack is empty&quot;);</span>
 
-<span class="nc" id="L53">        return result;</span>
+<span class="nc" id="L48">        T result = head.getElement();</span>
+<span class="nc" id="L49">        head = head.getNext();</span>
+<span class="nc" id="L50">        top--;</span>
+
+<span class="nc" id="L52">        return result;</span>
     }
 
     /**
@@ -64,10 +63,10 @@ public class LinkedStack&lt;T&gt; implements StackADT&lt;T&gt; {
      */
     @Override
     public T peek() throws EmptyCollectionException {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (isEmpty()) {</span>
-<span class="nc" id="L68">            throw new EmptyCollectionException(&quot;Stack&quot;);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (isEmpty()) {</span>
+<span class="nc" id="L67">            throw new EmptyCollectionException(&quot;Stack&quot;);</span>
         }
-<span class="nc" id="L70">        return head.getElement();</span>
+<span class="nc" id="L69">        return head.getElement();</span>
     }
 
     /**
@@ -77,7 +76,7 @@ public class LinkedStack&lt;T&gt; implements StackADT&lt;T&gt; {
      */
     @Override
     public boolean isEmpty() {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">        return (this.size() == 0);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        return (this.size() == 0);</span>
     }
 
     /**
@@ -87,20 +86,20 @@ public class LinkedStack&lt;T&gt; implements StackADT&lt;T&gt; {
      */
     @Override
     public int size() {
-<span class="nc" id="L90">        return this.top;</span>
+<span class="nc" id="L89">        return this.top;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L95">        String txt = &quot;&quot;;</span>
-<span class="nc" id="L96">        LinearNode&lt;T&gt; current = head;</span>
+<span class="nc" id="L94">        String txt = &quot;&quot;;</span>
+<span class="nc" id="L95">        LinearNode&lt;T&gt; current = head;</span>
         
-<span class="nc bnc" id="L98" title="All 2 branches missed.">        while (current != null) {</span>
-<span class="nc" id="L99">            txt += current.getElement().toString() + &quot;\n&quot;;</span>
-<span class="nc" id="L100">            current = current.getNext();</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        while (current != null) {</span>
+<span class="nc" id="L98">            txt += current.getElement().toString() + &quot;\n&quot;;</span>
+<span class="nc" id="L99">            current = current.getNext();</span>
         }
         
-<span class="nc" id="L103">        return txt;</span>
+<span class="nc" id="L102">        return txt;</span>
     }
 
 }

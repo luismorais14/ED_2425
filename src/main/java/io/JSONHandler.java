@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class JSONHandler {
-    private UnorderedListADT<Divisao> divisionLists = new ArrayUnorderedList<>();
+    private UnorderedListADT<Divisao> divisionLists = new ArrayUnorderedList<Divisao>();
 
     /**
      * Reads the entire data from the .json file
@@ -66,7 +66,10 @@ public class JSONHandler {
 
             codMissao = (String) jsonObject.get("cod-missao");
 
-            jogo.getMissao().setCodMissao(codMissao);
+            Missao missao = new Missao();
+            missao.setCodMissao(codMissao);
+
+            jogo.addMissao(missao);
         } catch (ParseException e) {
             System.out.println("Parse Exception");
         } catch (FileNotFoundException e) {
@@ -92,7 +95,13 @@ public class JSONHandler {
 
             versao = ((Number) jsonObject.get("versao")).intValue();
 
-            jogo.getMissao().setVersao(versao);
+            Iterator<Missao> missaoIterator = jogo.getMissaoIterator();
+
+            while (missaoIterator.hasNext()) {
+                Missao missao = missaoIterator.next();
+                missao.setVersao(versao);
+            }
+
         } catch (ParseException e) {
             System.out.println("Parse Exception");
         } catch (FileNotFoundException e) {
@@ -142,7 +151,6 @@ public class JSONHandler {
         }
     }
 
-    //Perguntar ao stor se necessita de referencia
     private int randomHP() {
         Random rand = new Random();
         int min = 30;
@@ -158,6 +166,7 @@ public class JSONHandler {
      * @param divisaoNome the name of the division
      * @return the index of the found division, null if not.
      */
+
     private Divisao searchDivisao(String divisaoNome) {
         if (this.divisionLists.isEmpty()) {
             return null;
@@ -180,6 +189,7 @@ public class JSONHandler {
      *
      * @param jogo the game where the data will be saved
      */
+
     private void readInimigos(Jogo jogo) {
         JSONParser parser = new JSONParser();
         JSONArray ja;
@@ -219,6 +229,7 @@ public class JSONHandler {
      *
      * @param jogo the game where the data will be saved
      */
+
     private void readLigacoes(Jogo jogo) {
         JSONParser parser = new JSONParser();
         JSONArray ja;
@@ -259,6 +270,7 @@ public class JSONHandler {
      *
      * @param jogo the game where the data will be saved
      */
+
     private void readAlvo(Jogo jogo) {
         JSONParser parser = new JSONParser();
         String tipo = "";
@@ -278,7 +290,13 @@ public class JSONHandler {
 
             d1.setAlvo(alvo);
 
-            jogo.getMissao().setAlvo(alvo);
+            Iterator<Missao> missaoIterator = jogo.getMissaoIterator();
+
+            while (missaoIterator.hasNext()) {
+                Missao missao = missaoIterator.next();
+                missao.setAlvo(alvo);
+            }
+
         } catch (IOException e) {
             System.out.println("IO Exception");
         } catch (ParseException e) {
@@ -326,6 +344,12 @@ public class JSONHandler {
         }
 
     }
+
+    /**
+     * Reads the entrances/exits from the .json file
+     *
+     * @param jogo the game where the data will be saved
+     */
 
     private void readEntradasSaidas(Jogo jogo) {
         JSONParser parser = new JSONParser();

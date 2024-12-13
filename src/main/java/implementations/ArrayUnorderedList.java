@@ -4,6 +4,21 @@ import ADT.UnorderedListADT;
 import Exceptions.ElementNotFoundException;
 
 public class ArrayUnorderedList<T> extends ArrayList<T> implements UnorderedListADT<T> {
+    public ArrayUnorderedList() {
+        super();
+    }
+
+    /**
+     * Constructs an `ArrayUnorderedList` with the specified array of elements.
+     * This constructor initializes the list with the elements from the provided array.
+     * It calls the superclass constructor to set up the underlying array for the list.
+     *
+     * @param array The array of elements to initialize the unordered list with the elements from this array are copied into the list.
+     */
+    public ArrayUnorderedList(T[] array) {
+        super(array);
+    }
+
     /**
      * Adds the specified element to the front of this list.
      *
