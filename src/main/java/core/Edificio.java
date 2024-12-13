@@ -1,9 +1,11 @@
 package core;
 
 import ADT.GraphADT;
+import ADT.QueueADT;
 import ADT.UnorderedListADT;
 import implementations.ArrayUnorderedList;
 import implementations.GraphImpl;
+import implementations.LinkedQueue;
 
 import java.util.Iterator;
 
@@ -148,5 +150,47 @@ public class Edificio {
 
         return numEntradasSaidas;
     }
+
+    /**
+     * Calculates the distance between two divisions.
+     * @param start the starting division
+     * @param target the target division
+     * @return the distance between the two divisions
+     */
+    public int calculateDistance(Divisao start, Divisao target) {
+        QueueADT<Divisao> queue = new LinkedQueue<Divisao>();
+        UnorderedListADT<Divisao> visited = new ArrayUnorderedList<Divisao>();
+
+        queue.enqueue(start);
+        visited.addToFront(start);
+
+        int distance = 0;
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+
+            for (int i = 0; i < levelSize; i++) {
+                Divisao current = queue.dequeue();
+
+                if (current.equals(target)) {
+                    return distance;
+                }
+
+                Iterator<Divisao> iterator = divisoes.iteratorBFS(current);
+                while (iterator.hasNext()) {
+                    Divisao neighbor = iterator.next();
+                    if (!visited.contains(neighbor)) {
+                        queue.enqueue(neighbor);
+                        visited.addToFront(neighbor);
+                    }
+                }
+            }
+
+            distance++;
+        }
+
+        return Integer.MAX_VALUE;
+    }
+
 
 }

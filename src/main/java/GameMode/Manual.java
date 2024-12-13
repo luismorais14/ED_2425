@@ -6,6 +6,7 @@ import Exceptions.ElementNotFoundException;
 import core.*;
 import core.Character;
 import implementations.ArrayOrderedList;
+import implementations.ArrayUnorderedList;
 
 import java.util.Iterator;
 import java.util.Scanner;
@@ -23,6 +24,7 @@ public class Manual {
 
     /**
      * Creates a new manual game
+     *
      * @param jogo the game to be played
      */
     public Manual(Jogo jogo) {
@@ -143,7 +145,6 @@ public class Manual {
      *
      * @param currentDivisao the starting division of the game
      */
-
     private void game(Divisao currentDivisao) {
         Scanner input = new Scanner(System.in);
         boolean itemOnRoom = false;
@@ -188,7 +189,7 @@ public class Manual {
 
             itemOnRoom = false;
 
-            if (this.jogo.getPlayer().getVida() < 0) {
+            if (this.jogo.getPlayer().getVida() < 80) {
                 if (this.jogo.getPlayer().getNumberOfItems() > 0) {
                     System.out.println("You have " + this.jogo.getPlayer().getNumberOfItems() + " items in your backpack.");
                     System.out.println("Do you want to use any of them? (Y/N)");
@@ -290,45 +291,51 @@ public class Manual {
 
     /**
      * Handles the movement logic of the enemies in the building
+     *
      * @param currentDivisao the current division
      */
-
     private void enemyMovement(Divisao currentDivisao) {
-        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(currentDivisao);
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
 
         while (iterator.hasNext()) {
             Divisao current = iterator.next();
 
-            if (current != null && !current.equals(currentDivisao)) {
-                Iterator<Character> enemyIterator = current.getInimigos().iterator();
+            if (current.equals(currentDivisao)) {
+                continue;
+            }
 
-                while (enemyIterator.hasNext()) {
-                    Character enemy = enemyIterator.next();
+            Iterator<Character> enemyIterator = current.getInimigos().iterator();
 
-                    UnorderedListADT<Divisao> adjacentDivisions = this.jogo.getEdificio().getAdjacentDivisions(current);
+            while (enemyIterator.hasNext()) {
+                Character enemy = enemyIterator.next();
 
-                    if (!adjacentDivisions.isEmpty()) {
-                        int size = 0;
-                        Iterator<Divisao> adjIterator = adjacentDivisions.iterator();
-                        while (adjIterator.hasNext()) {
-                            adjIterator.next();
-                            size++;
-                        }
+                UnorderedListADT<Divisao> adjacentDivisions = this.jogo.getEdificio().getAdjacentDivisions(current);
+                UnorderedListADT<Divisao> validDivisions = new ArrayUnorderedList<>();
+                Iterator<Divisao> adjIterator = adjacentDivisions.iterator();
 
-                        int randomIndex = (int) (Math.random() * size);
+                while (adjIterator.hasNext()) {
+                    Divisao potentialDivision = adjIterator.next();
+                    int distance = this.jogo.getEdificio().calculateDistance(current, potentialDivision);
 
-                        adjIterator = adjacentDivisions.iterator();
-                        Divisao newDivision = null;
-                        for (int i = 0; i <= randomIndex; i++) {
-                            newDivision = adjIterator.next();
-                        }
+                    if (distance <= 2) {
+                        validDivisions.addToFront(potentialDivision);
+                    }
+                }
 
-                        try {
-                            current.removeCharacter(enemy);
-                            newDivision.addCharacter(enemy);
-                        } catch (Exception e) {
-                            System.out.println("Enemy not found.");
-                        }
+                if (!validDivisions.isEmpty()) {
+                    int randomIndex = (int) (Math.random() * validDivisions.size());
+
+                    adjIterator = validDivisions.iterator();
+                    Divisao newDivision = null;
+                    for (int i = 0; i <= randomIndex; i++) {
+                        newDivision = adjIterator.next();
+                    }
+
+                    try {
+                        current.removeCharacter(enemy);
+                        newDivision.addCharacter(enemy);
+                    } catch (Exception e) {
+                        System.out.println("Error moving the enemy: " + e.getMessage());
                     }
                 }
             }
