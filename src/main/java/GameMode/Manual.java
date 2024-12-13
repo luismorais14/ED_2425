@@ -235,7 +235,6 @@ public class Manual {
 
                 if (!currentDivisao.getInimigos().isEmpty()) {
                     System.out.println("ENEMY FASE: \n");
-                    System.out.println("*Enemies moved out!*");
 
                     enemyMovement(currentDivisao);
 
@@ -253,7 +252,6 @@ public class Manual {
                     System.out.println("You defeated all enemies in this division!");
                 }
             } else {
-                System.out.println("ENEMY FASE: \n");
                 enemyMovement(currentDivisao);
             }
 
