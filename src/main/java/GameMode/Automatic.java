@@ -256,21 +256,6 @@ public class Automatic {
     }
 
     /**
-     * Handles the target in the building
-     *
-     * @param div the current division
-     * @return true if the target is in that division, false if not
-     */
-    private boolean handleTarget(Divisao div) {
-        if (div.getAlvo() != null && !div.getAlvo().getTipo().isEmpty()) {
-            System.out.println("Alvo encontrado nesta divisão, corra!");
-            div.removeTarget();
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Handles interactions between the player and the enemies in the current division
      *
      * @param div the division where the interaction takes place
@@ -317,41 +302,47 @@ public class Automatic {
      * @param div the division where the interaction takes place
      */
     private void enemiesMovement(Divisao div) {
-        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator(div);
+        Iterator<Divisao> iterator = this.jogo.getEdificio().getDivisoesIterator();
 
         while (iterator.hasNext()) {
             Divisao current = iterator.next();
 
-            if (current != null && !current.equals(div)) {
-                Iterator<Character> enemyIterator = current.getInimigos().iterator();
+            if (current.equals(div)) {
+                continue;
+            }
 
-                while (enemyIterator.hasNext()) {
-                    Character enemy = enemyIterator.next();
+            Iterator<Character> enemyIterator = current.getInimigos().iterator();
 
-                    UnorderedListADT<Divisao> adjacentDivisions = this.jogo.getEdificio().getAdjacentDivisions(current);
+            while (enemyIterator.hasNext()) {
+                Character enemy = enemyIterator.next();
 
-                    if (!adjacentDivisions.isEmpty()) {
-                        int size = 0;
-                        Iterator<Divisao> adjIterator = adjacentDivisions.iterator();
-                        while (adjIterator.hasNext()) {
-                            adjIterator.next();
-                            size++;
-                        }
+                UnorderedListADT<Divisao> adjacentDivisions = this.jogo.getEdificio().getAdjacentDivisions(current);
+                UnorderedListADT<Divisao> validDivisions = new ArrayUnorderedList<>();
+                Iterator<Divisao> adjIterator = adjacentDivisions.iterator();
 
-                        int randomIndex = (int) (Math.random() * size);
+                while (adjIterator.hasNext()) {
+                    Divisao potentialDivision = adjIterator.next();
+                    int distance = this.jogo.getEdificio().calculateDistance(current, potentialDivision);
 
-                        adjIterator = adjacentDivisions.iterator();
-                        Divisao newDivision = null;
-                        for (int i = 0; i <= randomIndex; i++) {
-                            newDivision = adjIterator.next();
-                        }
+                    if (distance <= 2) {
+                        validDivisions.addToFront(potentialDivision);
+                    }
+                }
 
-                        try {
-                            current.removeCharacter(enemy);
-                            newDivision.addCharacter(enemy);
-                        } catch (Exception e) {
-                            System.out.println("Enemy not found.");
-                        }
+                if (!validDivisions.isEmpty()) {
+                    int randomIndex = (int) (Math.random() * validDivisions.size());
+
+                    adjIterator = validDivisions.iterator();
+                    Divisao newDivision = null;
+                    for (int i = 0; i <= randomIndex; i++) {
+                        newDivision = adjIterator.next();
+                    }
+
+                    try {
+                        current.removeCharacter(enemy);
+                        newDivision.addCharacter(enemy);
+                    } catch (Exception e) {
+                        System.out.println("Error moving the enemy: " + e.getMessage());
                     }
                 }
             }
