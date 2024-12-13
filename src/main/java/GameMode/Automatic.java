@@ -141,8 +141,14 @@ public class Automatic {
     }
 
     /**
-     * Dijkstra's algorithm to get the path with the minor cost
-     * From:
+     * Dijkstra's algorithm to get the path with the minor cost.
+     *
+     * Author: Professor Ricardo Santos / rjs@estg.ipp.pt
+     * Date: 12/12/2024
+     * Type: Algorithm
+     * Availability: Provided notes from Data Structures class. Graphs class subject.
+     *
+     * This algorithm was adapted.
      *
      * @param startDiv  the starting division
      * @param targetDiv the target index

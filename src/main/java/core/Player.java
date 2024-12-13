@@ -80,7 +80,7 @@ public class Player extends Character implements Attack {
                 this.setVida(100);
             }
 
-            System.out.println("Using item: " + item.toString());
+            System.out.println("Using item: " + item.getTipo().toString());
         } else {
             System.out.println("No items on the backpack");
         }

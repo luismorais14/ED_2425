@@ -38,3 +38,5 @@ jacocoTestReport {
     }
 }
 
+build.finalizedBy javadoc
+
