@@ -131,5 +131,22 @@ public class Edificio {
         return adjacentDivisions;
     }
 
+    /**
+     * Returns the number of entrances/exits in the building.
+     * @return the number of entrances/exits in the building
+     */
+    public int getNumEntradasSaidas() {
+        int numEntradasSaidas = 0;
+        Iterator<Divisao> iterator = this.divisoes.iteratorBFS(startVertex);
+
+        while (iterator.hasNext()) {
+            Divisao divisao = iterator.next();
+            if (divisao.isEntradaSaida()) {
+                numEntradasSaidas++;
+            }
+        }
+
+        return numEntradasSaidas;
+    }
 
 }

@@ -111,8 +111,12 @@ public class Manual {
             listEntradaSaida();
             try {
                 inputNum = input.nextInt();
-                chooseDivisao = getDivisaoByIndex(inputNum);
-                aux = true;
+                if (inputNum < 1 || inputNum > this.jogo.getEdificio().getNumEntradasSaidas()) {
+                    chooseDivisao = getDivisaoByIndex(inputNum);
+                    aux = true;
+                } else {
+                    System.out.println("Invalid Option. Please choose a valid entrance.");
+                }
 
                 if (chooseDivisao == null) {
                     System.out.println("Invalid Option. Please choose a valid entrance.");
