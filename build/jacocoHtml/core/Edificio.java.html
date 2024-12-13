@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Edificio.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ED_2425</a> &gt; <a href="index.source.html" class="el_package">core</a> &gt; <span class="el_source">Edificio.java</span></div><h1>Edificio.java</h1><pre class="source lang-java linenums">package core;
 
 import ADT.GraphADT;
+import ADT.QueueADT;
 import ADT.UnorderedListADT;
 import implementations.ArrayUnorderedList;
 import implementations.GraphImpl;
+import implementations.LinkedQueue;
 
 import java.util.Iterator;
 
@@ -14,10 +16,10 @@ public class Edificio {
     /**
      * Creates an empty building
      */
-<span class="fc" id="L17">    public Edificio() {</span>
-<span class="fc" id="L18">        divisoes = new GraphImpl&lt;Divisao&gt;();</span>
-<span class="fc" id="L19">        startVertex = null;</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L19">    public Edificio() {</span>
+<span class="fc" id="L20">        divisoes = new GraphImpl&lt;Divisao&gt;();</span>
+<span class="fc" id="L21">        startVertex = null;</span>
+<span class="fc" id="L22">    }</span>
 
     /**
      * Adds a new division on the building
@@ -25,15 +27,29 @@ public class Edificio {
      * @param divisao the new division
      */
     public void addDivison(Divisao divisao) {
-<span class="fc" id="L28">        this.divisoes.addVertex(divisao);</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L30">        this.divisoes.addVertex(divisao);</span>
+<span class="fc" id="L31">    }</span>
 
+    /**
+     * Sets the starting vertex for the graph traversal.
+     * This method assigns the given `startVertex` to the `startVertex` field of the graph.
+     * The `startVertex` will be used as the starting point for traversals such as BFS (Breadth-First Search).
+     *
+     * @param startVertex the vertex to be set as the starting point for traversals
+     */
     public void setStartVertex(Divisao startVertex) {
-<span class="fc" id="L32">        this.startVertex = startVertex;</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L41">        this.startVertex = startVertex;</span>
+<span class="fc" id="L42">    }</span>
 
+    /**
+     * Gets the starting vertex for the graph traversal.
+     * This method returns the current `startVertex` field, which represents the vertex
+     * that is used as the starting point for graph traversal operations.
+     *
+     * @return the current starting vertex of the graph
+     */
     public Divisao getStartVertex() {
-<span class="fc" id="L36">        return this.startVertex;</span>
+<span class="fc" id="L52">        return this.startVertex;</span>
     }
 
     /**
@@ -43,19 +59,42 @@ public class Edificio {
      * @param divisao2 the second division
      */
     public void addConnection(Divisao divisao1, Divisao divisao2) {
-<span class="fc" id="L46">        this.divisoes.addEdge(divisao1, divisao2);</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L62">        this.divisoes.addEdge(divisao1, divisao2);</span>
+<span class="fc" id="L63">    }</span>
 
+    /**
+     * Returns an iterator that iterates over the graph's vertices using BFS starting from the current `startVertex`.
+     * This method returns an iterator that can be used to traverse all the vertices in the graph
+     * starting from the vertex set by the `startVertex` field. The traversal follows the Breadth-First Search (BFS) algorithm.
+     *
+     * @return an iterator for traversing the graph's vertices using BFS from the current `startVertex`
+     */
     public Iterator getDivisoesIterator() {
-<span class="nc" id="L50">        return this.divisoes.iteratorBFS(startVertex);</span>
+<span class="nc" id="L73">        return this.divisoes.iteratorBFS(startVertex);</span>
     }
 
+    /**
+     * Returns an iterator that iterates over the graph's vertices using BFS starting from a specified vertex.
+     * This method allows the caller to specify a starting vertex for the traversal. It returns an iterator
+     * that follows the Breadth-First Search (BFS) algorithm, starting from the given `startVertex`.
+     *
+     * @param startVertex the vertex from which the BFS traversal will start
+     * @return an iterator for traversing the graph's vertices using BFS from the specified `startVertex`
+     */
     public Iterator getDivisoesIterator(Divisao startVertex) {
-<span class="nc" id="L54">        return this.divisoes.iteratorBFS(startVertex);</span>
+<span class="nc" id="L85">        return this.divisoes.iteratorBFS(startVertex);</span>
     }
 
+
+    /**
+     * Gets the graph's collection of divisions (vertices).
+     * This method returns the `GraphADT&lt;Divisao&gt;` instance that represents the entire graph of divisions.
+     * It provides access to all the vertices and their relationships in the graph.
+     *
+     * @return the graph containing all the divisions (vertices)
+     */
     public GraphADT&lt;Divisao&gt; getDivisoes() {
-<span class="nc" id="L58">        return divisoes;</span>
+<span class="nc" id="L97">        return divisoes;</span>
     }
 
     /**
@@ -66,12 +105,12 @@ public class Edificio {
      * @return true if there is an edge between the two divisions, false otherwise
      */
     private boolean hasEdge(Divisao divisao1, Divisao divisao2) {
-<span class="nc" id="L69">        boolean aux = false;</span>
+<span class="nc" id="L108">        boolean aux = false;</span>
 
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (this.divisoes instanceof GraphImpl) {</span>
-<span class="nc" id="L72">            aux = ((GraphImpl&lt;Divisao&gt;) this.divisoes).hasEdge(divisao1, divisao2);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        if (this.divisoes instanceof GraphImpl) {</span>
+<span class="nc" id="L111">            aux = ((GraphImpl&lt;Divisao&gt;) this.divisoes).hasEdge(divisao1, divisao2);</span>
         }
-<span class="nc" id="L74">        return aux;</span>
+<span class="nc" id="L113">        return aux;</span>
     }
 
     /**
@@ -81,19 +120,77 @@ public class Edificio {
      * @return a list of adjacent divisions
      */
     public UnorderedListADT&lt;Divisao&gt; getAdjacentDivisions(Divisao current) {
-<span class="nc" id="L84">        UnorderedListADT&lt;Divisao&gt; adjacentDivisions = new ArrayUnorderedList&lt;Divisao&gt;();</span>
+<span class="nc" id="L123">        UnorderedListADT&lt;Divisao&gt; adjacentDivisions = new ArrayUnorderedList&lt;Divisao&gt;();</span>
 
-<span class="nc" id="L86">        Iterator&lt;Divisao&gt; iterator = divisoes.iteratorBFS(startVertex);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        while (iterator.hasNext()) {</span>
-<span class="nc" id="L88">            Divisao division = iterator.next();</span>
-<span class="nc bnc" id="L89" title="All 4 branches missed.">            if (!division.equals(current) &amp;&amp; hasEdge(current, division)) {</span>
-<span class="nc" id="L90">                adjacentDivisions.addToFront(division);</span>
+<span class="nc" id="L125">        Iterator&lt;Divisao&gt; iterator = divisoes.iteratorBFS(startVertex);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        while (iterator.hasNext()) {</span>
+<span class="nc" id="L127">            Divisao division = iterator.next();</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">            if (!division.equals(current) &amp;&amp; hasEdge(current, division)) {</span>
+<span class="nc" id="L129">                adjacentDivisions.addToFront(division);</span>
             }
-<span class="nc" id="L92">        }</span>
+<span class="nc" id="L131">        }</span>
 
-<span class="nc" id="L94">        return adjacentDivisions;</span>
+<span class="nc" id="L133">        return adjacentDivisions;</span>
     }
 
+    /**
+     * Returns the number of entrances/exits in the building.
+     * @return the number of entrances/exits in the building
+     */
+    public int getNumEntradasSaidas() {
+<span class="nc" id="L141">        int numEntradasSaidas = 0;</span>
+<span class="nc" id="L142">        Iterator&lt;Divisao&gt; iterator = this.divisoes.iteratorBFS(startVertex);</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        while (iterator.hasNext()) {</span>
+<span class="nc" id="L145">            Divisao divisao = iterator.next();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            if (divisao.isEntradaSaida()) {</span>
+<span class="nc" id="L147">                numEntradasSaidas++;</span>
+            }
+<span class="nc" id="L149">        }</span>
+
+<span class="nc" id="L151">        return numEntradasSaidas;</span>
+    }
+
+    /**
+     * Calculates the distance between two divisions.
+     * @param start the starting division
+     * @param target the target division
+     * @return the distance between the two divisions
+     */
+    public int calculateDistance(Divisao start, Divisao target) {
+<span class="nc" id="L161">        QueueADT&lt;Divisao&gt; queue = new LinkedQueue&lt;Divisao&gt;();</span>
+<span class="nc" id="L162">        UnorderedListADT&lt;Divisao&gt; visited = new ArrayUnorderedList&lt;Divisao&gt;();</span>
+
+<span class="nc" id="L164">        queue.enqueue(start);</span>
+<span class="nc" id="L165">        visited.addToFront(start);</span>
+
+<span class="nc" id="L167">        int distance = 0;</span>
+
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        while (!queue.isEmpty()) {</span>
+<span class="nc" id="L170">            int levelSize = queue.size();</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">            for (int i = 0; i &lt; levelSize; i++) {</span>
+<span class="nc" id="L173">                Divisao current = queue.dequeue();</span>
+
+<span class="nc bnc" id="L175" title="All 2 branches missed.">                if (current.equals(target)) {</span>
+<span class="nc" id="L176">                    return distance;</span>
+                }
+
+<span class="nc" id="L179">                Iterator&lt;Divisao&gt; iterator = divisoes.iteratorBFS(current);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L181">                    Divisao neighbor = iterator.next();</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                    if (!visited.contains(neighbor)) {</span>
+<span class="nc" id="L183">                        queue.enqueue(neighbor);</span>
+<span class="nc" id="L184">                        visited.addToFront(neighbor);</span>
+                    }
+<span class="nc" id="L186">                }</span>
+            }
+
+<span class="nc" id="L189">            distance++;</span>
+<span class="nc" id="L190">        }</span>
+
+<span class="nc" id="L192">        return Integer.MAX_VALUE;</span>
+    }
 
 
 }

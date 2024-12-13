@@ -89,17 +89,24 @@ public class LinkedStack&lt;T&gt; implements StackADT&lt;T&gt; {
 <span class="nc" id="L89">        return this.top;</span>
     }
 
+
+    /**
+     * Returns a string representation of the elements in the sequence starting from this node.
+     * The elements are separated by newlines.
+     *
+     * @return a string representation of the sequence
+     */
     @Override
     public String toString() {
-<span class="nc" id="L94">        String txt = &quot;&quot;;</span>
-<span class="nc" id="L95">        LinearNode&lt;T&gt; current = head;</span>
+<span class="nc" id="L101">        String txt = &quot;&quot;;</span>
+<span class="nc" id="L102">        LinearNode&lt;T&gt; current = head;</span>
         
-<span class="nc bnc" id="L97" title="All 2 branches missed.">        while (current != null) {</span>
-<span class="nc" id="L98">            txt += current.getElement().toString() + &quot;\n&quot;;</span>
-<span class="nc" id="L99">            current = current.getNext();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        while (current != null) {</span>
+<span class="nc" id="L105">            txt += current.getElement().toString() + &quot;\n&quot;;</span>
+<span class="nc" id="L106">            current = current.getNext();</span>
         }
         
-<span class="nc" id="L102">        return txt;</span>
+<span class="nc" id="L109">        return txt;</span>
     }
 
 }

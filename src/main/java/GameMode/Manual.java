@@ -116,6 +116,8 @@ public class Manual {
                 if (inputNum >= 1 && inputNum <= this.jogo.getEdificio().getNumEntradasSaidas()) {
                     chooseDivisao = getDivisaoByIndex(inputNum);
                     aux = true;
+
+
                 } else {
                     System.out.println("Invalid Option. Please choose a valid entrance.");
                     return;
@@ -170,6 +172,7 @@ public class Manual {
                             int vidaRestante = this.jogo.getPlayer().getVida();
                             int versao = missao.getVersao();
                             this.jogo.addResult(new MissionResult(versao, MissionResultEnum.SUCCESS, vidaRestante));
+                            this.jogo.addMissionPath(missao, this.jogo.getPaths());
                         }
                     } else {
                         System.out.println("Mission failed!");
@@ -180,6 +183,7 @@ public class Manual {
                             int vidaRestante = this.jogo.getPlayer().getVida();
                             int versao = missao.getVersao();
                             this.jogo.addResult(new MissionResult(versao, MissionResultEnum.FAILURE, vidaRestante));
+                            this.jogo.addMissionPath(missao, this.jogo.getPaths());
                         }
 
                     }

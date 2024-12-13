@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Jogo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ED_2425</a> &gt; <a href="index.source.html" class="el_package">core</a> &gt; <span class="el_source">Jogo.java</span></div><h1>Jogo.java</h1><pre class="source lang-java linenums">package core;
 
+import ADT.OrderedListADT;
 import ADT.QueueADT;
 import ADT.UnorderedListADT;
+import implementations.ArrayOrderedList;
 import implementations.ArrayUnorderedList;
 import implementations.LinkedQueue;
 
@@ -14,82 +16,127 @@ public class Jogo {
     private Edificio edificio;
     private Player player;
     private QueueADT&lt;Divisao&gt; paths;
+    private OrderedListADT&lt;MissionResult&gt; results;
 
     /**
      * Creates an empty game
      */
-<span class="nc" id="L21">    public Jogo() {</span>
-<span class="nc" id="L22">        this.missao = new ArrayUnorderedList&lt;Missao&gt;();</span>
-<span class="nc" id="L23">        this.edificio = new Edificio();</span>
-<span class="nc" id="L24">        this.player = new Player(PLAYER_PODER);</span>
-<span class="nc" id="L25">        this.paths = new LinkedQueue&lt;Divisao&gt;();</span>
-<span class="nc" id="L26">    }</span>
+<span class="nc" id="L24">    public Jogo() {</span>
+<span class="nc" id="L25">        this.missao = new ArrayUnorderedList&lt;Missao&gt;();</span>
+<span class="nc" id="L26">        this.edificio = new Edificio();</span>
+<span class="nc" id="L27">        this.player = new Player(PLAYER_PODER);</span>
+<span class="nc" id="L28">        this.paths = new LinkedQueue&lt;Divisao&gt;();</span>
+<span class="nc" id="L29">        this.results = new ArrayOrderedList&lt;MissionResult&gt;();</span>
+<span class="nc" id="L30">    }</span>
 
 
     /**
      * Creates a new game, specifying the mission, the simulation type and the building
-     * @param missao the game mission
+     *
+     * @param missao   the game mission
      * @param edificio the game building
      */
-<span class="fc" id="L34">    public Jogo(Missao missao, Edificio edificio, Player player) {</span>
-<span class="fc" id="L35">        this.missao = new ArrayUnorderedList&lt;&gt;();</span>
-<span class="fc" id="L36">        this.missao.addToFront(missao);</span>
-<span class="fc" id="L37">        this.edificio = edificio;</span>
-<span class="fc" id="L38">        this.player = player;</span>
-<span class="fc" id="L39">        this.paths = new LinkedQueue&lt;Divisao&gt;();</span>
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L39">    public Jogo(Missao missao, Edificio edificio, Player player) {</span>
+<span class="fc" id="L40">        this.missao = new ArrayUnorderedList&lt;&gt;();</span>
+<span class="fc" id="L41">        this.missao.addToFront(missao);</span>
+<span class="fc" id="L42">        this.edificio = edificio;</span>
+<span class="fc" id="L43">        this.player = player;</span>
+<span class="fc" id="L44">        this.paths = new LinkedQueue&lt;Divisao&gt;();</span>
+<span class="fc" id="L45">        this.results = new ArrayOrderedList&lt;MissionResult&gt;();</span>
+<span class="fc" id="L46">    }</span>
 
     /**
      * Getter for the game mission
+     *
      * @return the game mission
      */
     public Iterator getMissaoIterator() {
-<span class="fc" id="L47">        return this.missao.iterator();</span>
+<span class="fc" id="L54">        return this.missao.iterator();</span>
     }
 
     /**
      * Setter for the game mission
+     *
      * @param missao the game mission
      */
     public void addMissao(Missao missao) {
-<span class="fc" id="L55">        this.missao.addToFront(missao);</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L63">        this.missao.addToFront(missao);</span>
+<span class="fc" id="L64">    }</span>
 
 
     /**
      * Getter for the game buiding
+     *
      * @return the game bulding
      */
     public Edificio getEdificio() {
-<span class="fc" id="L64">        return edificio;</span>
+<span class="fc" id="L73">        return edificio;</span>
     }
 
     /**
      * Setter for the game building
+     *
      * @param edificio the game building
      */
     public void setEdificio(Edificio edificio) {
-<span class="nc" id="L72">        this.edificio = edificio;</span>
-<span class="nc" id="L73">    }</span>
+<span class="nc" id="L82">        this.edificio = edificio;</span>
+<span class="nc" id="L83">    }</span>
 
     /**
      * Getter for the game player
+     *
      * @return the game player
      */
     public Player getPlayer() {
-<span class="nc" id="L80">        return this.player;</span>
+<span class="nc" id="L91">        return this.player;</span>
     }
 
+    /**
+     * Adds a division (path) to the game player's path.
+     *
+     * @param divisao the division (path) to be added
+     */
     public void addPath(Divisao divisao) {
-<span class="nc" id="L84">        this.paths.enqueue(divisao);</span>
-<span class="nc" id="L85">    }</span>
+<span class="nc" id="L100">        this.paths.enqueue(divisao);</span>
+<span class="nc" id="L101">    }</span>
 
+    /**
+     * Getter for the game player's paths queue.
+     *
+     * @return the queue of divisions (paths) the player is on
+     */
     public QueueADT&lt;Divisao&gt; getPaths() {
-<span class="nc" id="L88">        return this.paths;</span>
+<span class="nc" id="L109">        return this.paths;</span>
     }
 
+    /**
+     * Clears the paths of the player.
+     * This method resets the paths queue to an empty state.
+     */
     public void clearPaths() {
-<span class="nc" id="L92">        this.paths = new LinkedQueue&lt;Divisao&gt;();</span>
-<span class="nc" id="L93">    }</span>
+<span class="nc" id="L117">        this.paths = new LinkedQueue&lt;Divisao&gt;();</span>
+<span class="nc" id="L118">    }</span>
+
+    /**
+     * Adds a simulation result to the game.
+     *
+     * @param result the result of the simulation to be added
+     */
+    public void addResult(MissionResult result) {
+<span class="nc" id="L126">        this.results.add(result);</span>
+<span class="nc" id="L127">    }</span>
+
+    /**
+     * Displays the sorted simulation results based on remaining life points.
+     * The results are printed in ascending order of life points remaining.
+     */
+    public void displaySortedResults() {
+<span class="nc" id="L134">        System.out.println(&quot;Simulation Results (sorted by remaining life points):&quot;);</span>
+<span class="nc" id="L135">        Iterator&lt;MissionResult&gt; iterator = this.results.iterator();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        while (iterator.hasNext()) {</span>
+<span class="nc" id="L137">            MissionResult result = iterator.next();</span>
+<span class="nc" id="L138">            System.out.println(result.toString());</span>
+<span class="nc" id="L139">        }</span>
+<span class="nc" id="L140">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

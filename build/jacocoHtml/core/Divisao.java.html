@@ -70,11 +70,17 @@ public class Divisao {
         }
 <span class="fc" id="L71">    }</span>
 
+    /**
+     * Removes the character
+     *
+     * @param character the character to remove
+     * @throws ElementNotFoundException element not found
+     */
     public void removeCharacter(Character character) throws ElementNotFoundException {
-<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (this.character.contains(character)) {</span>
-<span class="nc" id="L75">            this.character.remove(character);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (this.character.contains(character)) {</span>
+<span class="nc" id="L81">            this.character.remove(character);</span>
         }
-<span class="nc" id="L77">    }</span>
+<span class="nc" id="L83">    }</span>
 
     /**
      * Getter for the characters List
@@ -82,23 +88,29 @@ public class Divisao {
      * @return the characters list
      */
     public UnorderedListADT&lt;Character&gt; getCharacters() {
-<span class="nc" id="L85">        return this.character;</span>
+<span class="nc" id="L91">        return this.character;</span>
     }
 
+
+    /**
+     * Getter for the enemies list
+     *
+     * @return the enemies list
+     */
     public UnorderedListADT&lt;Character&gt; getInimigos() {
-<span class="nc" id="L89">        UnorderedListADT&lt;Character&gt; inimigos = new ArrayUnorderedList&lt;&gt;();</span>
+<span class="nc" id="L101">        UnorderedListADT&lt;Character&gt; inimigos = new ArrayUnorderedList&lt;&gt;();</span>
 
-<span class="nc" id="L91">        Iterator&lt;Character&gt; iterator = this.character.iterator();</span>
+<span class="nc" id="L103">        Iterator&lt;Character&gt; iterator = this.character.iterator();</span>
 
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        while (iterator.hasNext()) {</span>
-<span class="nc" id="L94">            Character current = iterator.next();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        while (iterator.hasNext()) {</span>
+<span class="nc" id="L106">            Character current = iterator.next();</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">            if (current instanceof Inimigo) {</span>
-<span class="nc" id="L97">                inimigos.addToRear(current);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (current instanceof Inimigo) {</span>
+<span class="nc" id="L109">                inimigos.addToRear(current);</span>
             }
-<span class="nc" id="L99">        }</span>
+<span class="nc" id="L111">        }</span>
 
-<span class="nc" id="L101">        return inimigos;</span>
+<span class="nc" id="L113">        return inimigos;</span>
     }
 
     /**
@@ -107,7 +119,7 @@ public class Divisao {
      * @return the target on the division
      */
     public Alvo getAlvo() {
-<span class="nc" id="L110">        return alvo;</span>
+<span class="nc" id="L122">        return alvo;</span>
     }
 
     /**
@@ -116,8 +128,8 @@ public class Divisao {
      * @param alvo the target on the division
      */
     public void setAlvo(Alvo alvo) {
-<span class="fc" id="L119">        this.alvo = alvo;</span>
-<span class="fc" id="L120">    }</span>
+<span class="fc" id="L131">        this.alvo = alvo;</span>
+<span class="fc" id="L132">    }</span>
 
     /**
      * Getter for the item on the division
@@ -125,7 +137,7 @@ public class Divisao {
      * @return the item on the division
      */
     public Item getItem() {
-<span class="nc" id="L128">        return item;</span>
+<span class="nc" id="L140">        return item;</span>
     }
 
     /**
@@ -134,8 +146,8 @@ public class Divisao {
      * @param item the item on the division
      */
     public void setItem(Item item) {
-<span class="fc" id="L137">        this.item = item;</span>
-<span class="fc" id="L138">    }</span>
+<span class="fc" id="L149">        this.item = item;</span>
+<span class="fc" id="L150">    }</span>
 
     /**
      * Checks if the division is marked as an entrance/exit.
@@ -143,7 +155,7 @@ public class Divisao {
      * @return true if the division is an entrance/exit, false otherwise.
      */
     public boolean isEntradaSaida() {
-<span class="nc" id="L146">        return isEntradaSaida;</span>
+<span class="nc" id="L158">        return isEntradaSaida;</span>
     }
 
     /**
@@ -152,8 +164,8 @@ public class Divisao {
      * @param isEntradaSaida true to mark the division as an entrance/exit, false otherwise.
      */
     public void setEntradaSaida(boolean isEntradaSaida) {
-<span class="fc" id="L155">        this.isEntradaSaida = isEntradaSaida;</span>
-<span class="fc" id="L156">    }</span>
+<span class="fc" id="L167">        this.isEntradaSaida = isEntradaSaida;</span>
+<span class="fc" id="L168">    }</span>
 
     /**
      * Retrieves the number of characters currently in the division.
@@ -161,28 +173,37 @@ public class Divisao {
      * @return The number of characters in the division.
      */
     public int getNumCharacters() {
-<span class="nc" id="L164">        return character.size();</span>
+<span class="nc" id="L176">        return character.size();</span>
     }
 
     /**
      * Removes the item from the division, setting it to null.
      */
     public void removeItem() {
-<span class="nc" id="L171">        this.item = null;</span>
-<span class="nc" id="L172">    }</span>
+<span class="nc" id="L183">        this.item = null;</span>
+<span class="nc" id="L184">    }</span>
 
     /**
      * Removes the target from the division, setting it to null.
      */
     public void removeTarget() {
-<span class="nc" id="L178">        this.alvo = null;</span>
-<span class="nc" id="L179">    }</span>
+<span class="nc" id="L190">        this.alvo = null;</span>
+<span class="nc" id="L191">    }</span>
 
+
+    /**
+     * Converts the current object to a JSON representation.
+     * This method creates a new `JSONObject` and adds the object's properties to it.
+     * In this case, it adds the property &quot;nome&quot; with the value of the `nome` field
+     * of the current object.
+     *
+     * @return a JSONObject representing the current object with its properties.
+     */
     public JSONObject toJSONObject() {
-<span class="nc" id="L182">        JSONObject jsonDivisao = new JSONObject();</span>
-<span class="nc" id="L183">        jsonDivisao.put(&quot;nome&quot;, nome);</span>
+<span class="nc" id="L203">        JSONObject jsonDivisao = new JSONObject();</span>
+<span class="nc" id="L204">        jsonDivisao.put(&quot;nome&quot;, nome);</span>
 
-<span class="nc" id="L185">        return jsonDivisao;</span>
+<span class="nc" id="L206">        return jsonDivisao;</span>
     }
 
 }

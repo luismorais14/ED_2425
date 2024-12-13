@@ -8,9 +8,16 @@ public class ArrayUnorderedList&lt;T&gt; extends ArrayList&lt;T&gt; implements U
 <span class="fc" id="L8">        super();</span>
 <span class="fc" id="L9">    }</span>
 
+    /**
+     * Constructs an `ArrayUnorderedList` with the specified array of elements.
+     * This constructor initializes the list with the elements from the provided array.
+     * It calls the superclass constructor to set up the underlying array for the list.
+     *
+     * @param array The array of elements to initialize the unordered list with the elements from this array are copied into the list.
+     */
     public ArrayUnorderedList(T[] array) {
-<span class="nc" id="L12">        super(array);</span>
-<span class="nc" id="L13">    }</span>
+<span class="nc" id="L19">        super(array);</span>
+<span class="nc" id="L20">    }</span>
 
     /**
      * Adds the specified element to the front of this list.
@@ -19,18 +26,18 @@ public class ArrayUnorderedList&lt;T&gt; extends ArrayList&lt;T&gt; implements U
      */
     @Override
     public void addToFront(T element) {
-<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (counter == array.length - 1) {</span>
-<span class="fc" id="L23">            expandCapacity();</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (counter == array.length - 1) {</span>
+<span class="fc" id="L30">            expandCapacity();</span>
         }
 
-<span class="fc bfc" id="L26" title="All 2 branches covered.">        for (int i = counter; i &gt;= 0; i--) {</span>
-<span class="fc" id="L27">            array[i + 1] = array[i];</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        for (int i = counter; i &gt;= 0; i--) {</span>
+<span class="fc" id="L34">            array[i + 1] = array[i];</span>
         }
 
-<span class="fc" id="L30">        array[0] = element;</span>
-<span class="fc" id="L31">        counter++;</span>
-<span class="fc" id="L32">        super.modCount++;</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L37">        array[0] = element;</span>
+<span class="fc" id="L38">        counter++;</span>
+<span class="fc" id="L39">        super.modCount++;</span>
+<span class="fc" id="L40">    }</span>
 
     /**
      * Adds the specified element to the counter of this list.
@@ -39,14 +46,14 @@ public class ArrayUnorderedList&lt;T&gt; extends ArrayList&lt;T&gt; implements U
      */
     @Override
     public void addToRear(T element) {
-<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (counter == array.length - 1) {</span>
-<span class="nc" id="L43">            expandCapacity();</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (counter == array.length - 1) {</span>
+<span class="nc" id="L50">            expandCapacity();</span>
         }
 
-<span class="nc" id="L46">        array[counter] = element;</span>
-<span class="nc" id="L47">        counter++;</span>
-<span class="nc" id="L48">        super.modCount++;</span>
-<span class="nc" id="L49">    }</span>
+<span class="nc" id="L53">        array[counter] = element;</span>
+<span class="nc" id="L54">        counter++;</span>
+<span class="nc" id="L55">        super.modCount++;</span>
+<span class="nc" id="L56">    }</span>
 
     /**
      * Adds the specified element after the specified target.
@@ -56,23 +63,23 @@ public class ArrayUnorderedList&lt;T&gt; extends ArrayList&lt;T&gt; implements U
      */
     @Override
     public void addAfter(T element, T target) throws ElementNotFoundException {
-<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (counter == array.length - 1) {</span>
-<span class="nc" id="L60">            expandCapacity();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (counter == array.length - 1) {</span>
+<span class="nc" id="L67">            expandCapacity();</span>
         }
 
-<span class="nc" id="L63">        int index = find(target);</span>
+<span class="nc" id="L70">        int index = find(target);</span>
 
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (index == -1) {</span>
-<span class="nc" id="L66">            throw new ElementNotFoundException(&quot;Element Not found&quot;);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (index == -1) {</span>
+<span class="nc" id="L73">            throw new ElementNotFoundException(&quot;Element Not found&quot;);</span>
         }
 
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        for (int j = counter; j &gt; index; j--) {</span>
-<span class="nc" id="L70">            array[j] = array[j + 1];</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        for (int j = counter; j &gt; index; j--) {</span>
+<span class="nc" id="L77">            array[j] = array[j + 1];</span>
         }
 
-<span class="nc" id="L73">        array[index + 1] = element;</span>
-<span class="nc" id="L74">        counter++;</span>
-<span class="nc" id="L75">        super.modCount++;</span>
-<span class="nc" id="L76">    }</span>
+<span class="nc" id="L80">        array[index + 1] = element;</span>
+<span class="nc" id="L81">        counter++;</span>
+<span class="nc" id="L82">        super.modCount++;</span>
+<span class="nc" id="L83">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

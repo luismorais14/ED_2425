@@ -23,77 +23,101 @@ public class Missao {
 
     /**
      * Creates a mission specifying the mission code, the target, version and mission key
+     *
      * @param codMissao the mission code
-     * @param alvo the mission target
-     * @param versao the mission version
+     * @param alvo      the mission target
+     * @param versao    the mission version
      */
-<span class="nc" id="L30">    public Missao(String codMissao, Alvo alvo,String versao) {</span>
-<span class="nc" id="L31">        this.codMissao = codMissao;</span>
-<span class="nc" id="L32">        this.alvo = alvo;</span>
-<span class="nc" id="L33">        this.versao = Integer.parseInt(versao);</span>
-<span class="nc" id="L34">        result = new ArrayOrderedList&lt;MissionResult&gt;();</span>
-<span class="nc" id="L35">    }</span>
+<span class="nc" id="L31">    public Missao(String codMissao, Alvo alvo, String versao) {</span>
+<span class="nc" id="L32">        this.codMissao = codMissao;</span>
+<span class="nc" id="L33">        this.alvo = alvo;</span>
+<span class="nc" id="L34">        this.versao = Integer.parseInt(versao);</span>
+<span class="nc" id="L35">        result = new ArrayOrderedList&lt;MissionResult&gt;();</span>
+<span class="nc" id="L36">    }</span>
 
     /**
      * Getter for the mission code
+     *
      * @return the mission code
      */
     public String getCodMissao() {
-<span class="fc" id="L42">        return codMissao;</span>
+<span class="fc" id="L44">        return codMissao;</span>
     }
 
     /**
      * Setter for the mission code
+     *
      * @param codMissao the mission code
      */
     public void setCodMissao(String codMissao) {
-<span class="fc" id="L50">        this.codMissao = codMissao;</span>
-<span class="fc" id="L51">    }</span>
+<span class="fc" id="L53">        this.codMissao = codMissao;</span>
+<span class="fc" id="L54">    }</span>
 
     /**
      * Getter for the mission target
+     *
      * @return the mission target
      */
     public Alvo getAlvo() {
-<span class="nc" id="L58">        return alvo;</span>
+<span class="nc" id="L62">        return alvo;</span>
     }
 
     /**
      * Setter for the mission target
+     *
      * @param alvo the mission target
      */
     public void setAlvo(Alvo alvo) {
-<span class="fc" id="L66">        this.alvo = alvo;</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L71">        this.alvo = alvo;</span>
+<span class="fc" id="L72">    }</span>
 
     /**
      * Getter for the mission version
+     *
      * @return the mission version
      */
     public int getVersao() {
-<span class="fc" id="L74">        return versao;</span>
+<span class="fc" id="L80">        return versao;</span>
     }
 
     /**
      * Setter for the mission version
+     *
      * @param versao the mission version
      */
     public void setVersao(int versao) {
-<span class="fc" id="L82">        this.versao = versao;</span>
-<span class="fc" id="L83">    }</span>
+<span class="fc" id="L89">        this.versao = versao;</span>
+<span class="fc" id="L90">    }</span>
 
+
+    /**
+     * Getter for the list of mission results.
+     *
+     * @return an ordered list of mission results
+     */
     public OrderedListADT&lt;MissionResult&gt; getResult() {
-<span class="nc" id="L86">        return this.result;</span>
+<span class="nc" id="L99">        return this.result;</span>
     }
 
+    /**
+     * Returns an iterator for the mission results list.
+     *
+     * @return an iterator for the mission results
+     */
     public Iterator&lt;MissionResult&gt; getResultsIterator() {
-<span class="nc" id="L90">        return this.result.iterator();</span>
+<span class="nc" id="L108">        return this.result.iterator();</span>
     }
 
+    /**
+     * Sets the result of the mission by specifying the result status and the remaining life points.
+     *
+     * @param result       the mission result status (MissionResultEnum)
+     * @param vidaRestante the remaining life points after the mission
+     */
     public void setResult(MissionResultEnum result, int vidaRestante) {
-<span class="nc" id="L94">        MissionResult missionResult = new MissionResult(this.versao, result, vidaRestante);</span>
+<span class="nc" id="L118">        MissionResult missionResult = new MissionResult(this.versao, result, vidaRestante);</span>
 
-<span class="nc" id="L96">        this.result.add(missionResult);</span>
-<span class="nc" id="L97">    }</span>
+<span class="nc" id="L120">        this.result.add(missionResult);</span>
+<span class="nc" id="L121">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
