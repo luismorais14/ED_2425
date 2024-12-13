@@ -1,14 +1,11 @@
 package GameMode;
 
 import ADT.HeapADT;
-import ADT.ListADT;
-import ADT.StackADT;
 import ADT.UnorderedListADT;
 import Exceptions.ElementNotFoundException;
 import core.*;
 import core.Character;
 import implementations.*;
-import GameMode.Manual;
 
 
 import java.util.Iterator;
@@ -71,6 +68,7 @@ public class Automatic {
                 }
             }
         }
+
         return start;
     }
 
@@ -89,11 +87,28 @@ public class Automatic {
         }
 
         Divisao current = start;
-        Divisao next;
+        System.out.println("\nBest path to target division:");
+        showBestPath(path, current);
 
+        current = target;
+        target = startDivision();
 
+        path = calculateOptimalPath(current, target);
+
+        System.out.println("\nBest path to the exit:");
+        showBestPath(path, current);
+
+    }
+
+    /**
+     * Shows the best path to the target division or the exit, simulating all the movements
+     * @param path the path to be shown
+     * @param current the current division
+     * @throws ElementNotFoundException if the Character is not found
+     */
+    private void showBestPath(UnorderedListADT<Divisao> path, Divisao current) throws ElementNotFoundException {
         while (!path.isEmpty()) {
-            next = path.removeFirst();
+            Divisao next = path.removeFirst();
             playerMovement(current, next);
             handleItems(current);
             enemiesMovement(current);
@@ -105,7 +120,6 @@ public class Automatic {
                 System.out.print("End\n");
             }
         }
-
     }
 
     /**
@@ -287,7 +301,7 @@ public class Automatic {
 
         while (it.hasNext()) {
             Divisao div = it.next();
-            if (div.getAlvo() != null && !div.getAlvo().getTipo().equals("quimico")) {
+            if (div.getAlvo() != null && div.getAlvo().getTipo().equals("quimico")) {
                 target = div;
                 break;
             }
